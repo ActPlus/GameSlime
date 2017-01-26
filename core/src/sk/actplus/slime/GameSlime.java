@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameSlime extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+  
+  int kentus;
 	
 	@Override
 	public void create () {
