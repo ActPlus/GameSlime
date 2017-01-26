@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 
+import sk.actplus.slime.inputs.GameInputHandler;
+
 import static sk.actplus.slime.constants.Values.*;
 
 
