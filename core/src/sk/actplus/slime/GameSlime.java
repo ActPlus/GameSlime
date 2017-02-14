@@ -13,7 +13,8 @@ public class GameSlime extends ApplicationAdapter {
 	Texture img;
   
 
-	
+	// JEBEM BOHA, ZAJEBEM PLYN
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
