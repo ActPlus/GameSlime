@@ -21,7 +21,7 @@ public class PlayScreen implements Screen {
     public SpriteBatch batch;
     public OrthographicCamera camera;
 
-    GameInputHandler ;
+    GameInputHandler input;
 
     /**
      * Box2D Declaration

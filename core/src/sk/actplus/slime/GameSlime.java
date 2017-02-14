@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import sk.actplus.slime.screens.PlayScreen;
+import sk.actplus.slime.screens.*;
 
 public class GameSlime extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -17,7 +17,7 @@ public class GameSlime extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(batch))
+		setScreen(new PlayScreen(batch));
 	}
 
 	@Override
