@@ -14,6 +14,7 @@ public class Values {
 
     public static float WIDTH_CLIENT = Gdx.graphics.getWidth();
     public static float HEIGHT_CLIENT = Gdx.graphics.getHeight();
+    public static float PPM = 32;
 
     public static BitmapFont GUI_FONT = new BitmapFont();
     public static Color GUI_COLOR = Color.WHITE;
