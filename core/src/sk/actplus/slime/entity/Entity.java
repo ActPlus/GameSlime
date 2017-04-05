@@ -22,25 +22,9 @@ public class Entity extends BodyArray{
     private float xi,yi;
     public World world;
 
-    public Entity(World world,BodyDef.BodyType bodyType, float xi, float yi){
+    public Entity(World world){
         this.world = world;
-        this.xi = xi;
-        this.yi = yi;
-
-        BodyDef bodyDef = defineBody(bodyType,xi,yi,false);
-        CircleShape shape = new CircleShape();
-        shape.setRadius(PPM/2f);
-        FixtureDef fixtureDef = defineFixture(shape,0.5f,0f,0f);
-
-        Body body = createBody(bodyDef,fixtureDef);
-        this.add(body);
     }
-
-    public Entity(BodyDef bodyDef, FixtureDef fixtureDef){
-        Body body = createBody(bodyDef,fixtureDef);
-        this.add(body);
-    }
-
 
 
     /**
@@ -83,7 +67,7 @@ public class Entity extends BodyArray{
     public BodyDef defineBody(BodyDef.BodyType type, float xi, float yi, boolean rotation) {
         BodyDef def = new BodyDef();
         def.type = type;
-        def.position.set(xi*PPM,yi*PPM);
+        def.position.set(xi,yi);
         def.fixedRotation = rotation;
         return def;
     }

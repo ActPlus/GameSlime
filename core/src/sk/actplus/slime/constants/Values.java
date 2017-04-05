@@ -19,5 +19,5 @@ public class Values {
     public static BitmapFont GUI_FONT = new BitmapFont();
     public static Color GUI_COLOR = Color.WHITE;
 
-    public static Vector2 GRAVITY = new Vector2(0,-10);
+    public static Vector2 GRAVITY = new Vector2(0,-20);
 }

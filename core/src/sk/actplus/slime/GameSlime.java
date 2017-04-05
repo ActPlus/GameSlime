@@ -24,7 +24,7 @@ public class GameSlime extends Game {
 		clearScreen();
 		super.render();
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();

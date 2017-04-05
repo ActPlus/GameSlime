@@ -16,6 +16,7 @@ import static sk.actplus.slime.constants.Values.PPM;
 public class Block {
     public Body body;
     public static final short CATEGORY = 0x0100;
+
     public Block (World world, int x, int y){
 
 
