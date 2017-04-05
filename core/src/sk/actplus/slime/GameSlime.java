@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import sk.actplus.slime.screens.PlayScreen;
+import sk.actplus.slime.screens.PlayScreenTemp;
 
 public class GameSlime extends Game {
 	SpriteBatch batch;
@@ -15,7 +16,7 @@ public class GameSlime extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(batch));
+		setScreen(new PlayScreenTemp(batch));
 	}
 
 	@Override

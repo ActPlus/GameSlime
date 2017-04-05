@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -38,7 +39,7 @@ public class PlayScreen implements Screen {
     public PlayScreen(SpriteBatch batch){
         this.batch = batch;
         b2ddr = new Box2DDebugRenderer();
-        gameInputHandler = new GameInputHandler(this);
+        //gameInputHandler = new GameInputHandler(this);
 
         //constractors camera world player ememies (everything else needed in playscreen)
         camera = new OrthographicCamera();
@@ -46,25 +47,47 @@ public class PlayScreen implements Screen {
 
         world = new World(GRAVITY,false);
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(0/PPM,0/PPM);
-        camera.position.set(0,0,0);
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        Body firstBody = world.createBody(bodyDef);
+        BodyDef groundBody = new BodyDef();
+        groundBody.position.set(0/PPM,0/PPM);
+        camera.position.set(0,-1f,0);
+        groundBody.type = BodyDef.BodyType.StaticBody;
+        Body firstBody = world.createBody(groundBody);
 
-        FixtureDef fixtureDef = new FixtureDef();
+        FixtureDef groundFixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(1*PPM,1*PPM);
-        fixtureDef.shape = shape;
-        firstBody.createFixture(fixtureDef);
+        shape.setAsBox(5f,1f);
+        groundFixture.shape = shape;
+        firstBody.createFixture(groundFixture);
 
 
+        BodyDef slimeBody = new BodyDef();
+        FixtureDef slimeFixture = new FixtureDef();
 
-    }
+        for (int i = 0; i < 20; i++) {
+
+            for (int j = 0; j < 20; j++) {
+                slimeBody.position.set(i,j);
+                slimeBody.type = BodyDef.BodyType.KinematicBody;
+                Body slime = world.createBody(slimeBody);
 
 
-    @Override
-    public void show() {
+                CircleShape slimeShame = new CircleShape();
+                slimeShame.setRadius(1f);
+                slimeFixture.shape = slimeShame;
+                firstBody.createFixture(slimeFixture);
+            }
+
+        }
+
+        slimeBody.position.set(2f,2f);
+        slimeBody.type = BodyDef.BodyType.KinematicBody;
+        Body slime = world.createBody(slimeBody);
+
+
+        CircleShape slimeShame = new CircleShape();
+        slimeShame.setRadius(0.5f);
+        slimeFixture.shape = slimeShame;
+        firstBody.createFixture(slimeFixture);
 
     }
 
@@ -75,11 +98,14 @@ public class PlayScreen implements Screen {
     }
 
     @Override
+    public void show() {
+
+    }
+
+    @Override
     public void render(float delta) {
         update(delta);
-
-
-        b2ddr.render(world,camera.combined);
+        b2ddr.render(world,camera.combined.scl(PPM));
     }
 
     @Override
