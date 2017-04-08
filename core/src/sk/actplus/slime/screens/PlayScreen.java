@@ -47,7 +47,6 @@ public class PlayScreen implements Screen {
     public boolean jumped;
     public int score;
 
-
     /**
      * Box2D Declaration
      */

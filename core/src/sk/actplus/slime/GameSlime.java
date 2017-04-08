@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import sk.actplus.slime.screens.PlayScreen;
+import sk.actplus.slime.screens.*;
 
 public class GameSlime extends Game {
 	SpriteBatch batch;
