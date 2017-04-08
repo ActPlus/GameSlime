@@ -1,4 +1,4 @@
-apply plugin: "java"
+/*apply plugin: "java"
 apply plugin: "jetty"
 
 gwt {
@@ -67,3 +67,4 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 eclipse.project {
     name = appName + "-html"
 }
+*/

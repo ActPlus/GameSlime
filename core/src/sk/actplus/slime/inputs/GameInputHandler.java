@@ -13,41 +13,69 @@ import static sk.actplus.slime.constants.Values.*;
 
 public class GameInputHandler {
     PlayScreen screen;
+
     public GameInputHandler(PlayScreen screen) {
         this.screen = screen;
     }
 
-    public Entity getPlayer(){
-        return screen.player;
-    }
-
     public void handle(float delta) {
 
-        float horizontalForce = 1f;
+        /**
+         * If GAME OVER, waiting for input to Restart
+         */
+        if (screen.gameover) {
+            if (Gdx.input.justTouched()) {
+                screen.newGame(screen.batch);
+            }
+        } else if (PlayScreen.paused) {
+            /**
+             * If Paused waiting for input for unpausing
+             */
+            if (Gdx.input.justTouched()) {
+                screen.gui.touchToStartLabel.setVisible(false);
+                screen.gui.validate();
+                screen.paused = false;
+            }
 
-        if (DEBUG) {
-            // testovanie pociatocna sila horizontalna
-            horizontalForce = 0;
+        } else {
+
+            //Basic speed in NORMAL MODE
+            float horizontalForce = PLAYER_SPEED;
+
+            // Instant Game Over
+            if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+                screen.gameOver();
+            }
+
+            if (DEBUG) {
+                /**
+                 * If in DEBUG mode, you can move with Player
+                 */
+                horizontalForce = 0;
+
+                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+                    horizontalForce = PLAYER_SPEED;
+                if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+                    horizontalForce = -PLAYER_SPEED;
+            }
+
+
+            /**
+             * If touched then jump
+             */
+            if (Gdx.input.justTouched() && !screen.jumped) {
+                screen.jumped = true;
+                //PPM = PPM/3f;
+                //screen.camera.update();
+                screen.player.body.applyForceToCenter(0, -7 * GRAVITY.y, false);
+
+
+            }
+
+            /**
+             * Apply Horizontal Velocity
+             * */
+            screen.player.body.setLinearVelocity(horizontalForce, screen.player.body.getLinearVelocity().y);
         }
-            // testovanie gameover
-        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
-            screen.gameOver();
-        }
-
-        // testovanie posun v pravo/vlavo
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            horizontalForce = 2;
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            horizontalForce = -2;
-
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.justTouched()) {
-
-            screen.player.body.applyForceToCenter(0, 500, false);
-
-
-
-        screen.player.body.setLinearVelocity(horizontalForce*5, screen.player.body.getLinearVelocity().y);
-
     }
 }
