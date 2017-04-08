@@ -149,19 +149,4 @@ public class Entity extends BodyArray{
     public void createDistanceJointAtCenter(DistanceJointDef jointDef,Body firstBody, Body secondBody) {
         createDistanceJoint(jointDef,firstBody,secondBody,firstBody.getWorldCenter(),secondBody.getWorldCenter());
     }
-
-    /**
-     * @return X coordinate of Entity's Center in PPM
-     */
-    public float getXi() {
-        return xi;
-    }
-
-    /**
-     * @return Y coordinate of Entity's Center in PPM
-     */
-
-    public float getYi() {
-        return yi;
-    }
 }

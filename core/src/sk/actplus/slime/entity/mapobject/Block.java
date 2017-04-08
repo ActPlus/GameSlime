@@ -1,12 +1,27 @@
 package sk.actplus.slime.entity.mapobject;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.Random;
+
+import sk.actplus.slime.other.BodyArray;
+import sk.actplus.slime.other.LogicalOperations;
+
+import static sk.actplus.slime.constants.Files.SPRITE_BLOCK;
+import static sk.actplus.slime.constants.Files.SPRITE_BLOCK_TRAP;
+import static sk.actplus.slime.constants.Values.BLOCK_COOKIE_USER_DATA;
+import static sk.actplus.slime.constants.Values.BLOCK_TRAP_USER_DATA;
+import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
+import static sk.actplus.slime.constants.Values.HEIGHT_CLIENT;
 import static sk.actplus.slime.constants.Values.PPM;
+import static sk.actplus.slime.constants.Values.WIDTH_CLIENT;
 
 /**
  * Created by Kobra on 4.4.2017.
@@ -15,39 +30,54 @@ import static sk.actplus.slime.constants.Values.PPM;
 
 public class Block {
     public Body body;
-    public static final short CATEGORY = 0x0100;
+    static Random rand = new Random();
+    BodyArray blocks;
 
-    public Block (World world, int x, int y){
+    public Block(World world, BodyArray blocks, int x, int y, Sprite sprite, String userData) {
+        try {
+            this.blocks = blocks;
+            BodyDef def = new BodyDef();
+            def.type = BodyDef.BodyType.StaticBody;
+            def.position.set(x, y);
+            blocks.add(body = world.createBody(def));
 
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(0.5f, 0.5f);
 
-        BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.StaticBody;
-        float nextX = (x);
-        float nextY = (y);
-        def.position.set(nextX,nextY);
+            sprite.setBounds((x - 0.5f) * PPM + WIDTH_CLIENT / 2f, (y - 0.5f) * PPM + HEIGHT_CLIENT / 2f, PPM, PPM);
 
-        body = world.createBody(def);
+            FixtureDef fixDef = new FixtureDef();
+            fixDef.shape = shape;
+            fixDef.restitution = 0.4f;
+            fixDef.friction = 0f;
+            body.createFixture(fixDef);
+            body.setUserData(sprite);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.5f,0.5f);
+            for (Fixture fixture : body.getFixtureList()) {
+                fixture.setUserData(userData);
+            }
 
-        FixtureDef fixDef = new FixtureDef();
-        fixDef.shape = shape;
-        fixDef.restitution = 0.4f;
-        fixDef.friction=0f;
-        //fixDef.filter.categoryBits = CATEGORY;
-        //fixDef.filter.maskBits = (short)~CATEGORY;
-        body.createFixture(fixDef);
+            shape.dispose();
 
-        shape.dispose();
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
 
+        }
     }
 
-    public int getXi() {
-        return (int)(body.getPosition().x);
-    }
+    public static Block newRandomBlock(World world, BodyArray blocks, int x, int y) {
+        Sprite sprite = SPRITE_BLOCK;
+        String userData = BLOCK_USER_DATA;
 
-    public int getYi() {
-        return (int)(body.getPosition().y);
+
+        int randomInt = rand.nextInt(300);
+
+        //3% chance to generate trap block
+        if (LogicalOperations.isBetween(randomInt, 0, 3)) {
+            sprite = SPRITE_BLOCK_TRAP;
+            userData = BLOCK_TRAP_USER_DATA;
+        }
+
+        return new Block(world, blocks, x, y, sprite, userData);
     }
 }

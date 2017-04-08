@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,12 +25,12 @@ public class Jelly extends Player {
     public static final BodyDef.BodyType BODY_TYPE = BodyDef.BodyType.DynamicBody;
     public static final int NUM_SEGMENTS = 10;
 
-    public static final short OUTER_CATEGORY = 0x0200;
+    public static final short CATEGORY = 0x1000;
     public static final boolean FIXED_ROTATION = true;
 
-    public static final float INNER_RADIUS = 2f;
-    public static final float OUTER_RADIUS = 0.3f;
-    public static final float ORBITAL_SIDE = 5f;
+    public static final float INNER_RADIUS = 1f;
+    public static final float OUTER_RADIUS = 0.1f;
+    public static final float ORBITAL_SIDE = 2f;
 
     public static final float INNER_DENSITY = 0.4f;
     public static final float OUTER_DENSITY = 0.05f;
@@ -40,12 +41,12 @@ public class Jelly extends Player {
     public static final float INNER_FRICTION = 0f;
     public static final float OUTER_FRICTION = 0f;
 
-    public static final float INNER_FREQUENCY_HZ = 9f;
-    public static final float OUTER_FREQUENCY_HZ = 10f;
-    public static final float DIAGONAL_FREQUENCY_HZ = 0.5f;
+    public static final float INNER_FREQUENCY_HZ = 14f;
+    public static final float OUTER_FREQUENCY_HZ = 16f;
+    public static final float DIAGONAL_FREQUENCY_HZ = 4f;
 
     public static final float INNER_DAMPING = 1f;
-    public static final float OUTER_DAMPING = 0.5f;
+    public static final float OUTER_DAMPING = 1f;
     public static final float DIAGONAL_DAMPING = 1f;
 
     private World world;
@@ -76,7 +77,9 @@ public class Jelly extends Player {
         BodyDef bodyDefMain = defineBody(BODY_TYPE, xi, yi, FIXED_ROTATION);
         CircleShape shapeMain = new CircleShape();
         shapeMain.setRadius(INNER_RADIUS / 2);
-        FixtureDef fixtureDefMain = defineFixture(shapeMain, INNER_DENSITY, INNER_RESTITUTION, INNER_FRICTION);
+        FixtureDef fixtureDefMain = defineFixture(shapeMain, INNER_DENSITY, INNER_RESTITUTION, INNER_FRICTION,CATEGORY);
+        fixtureDefMain.filter.categoryBits = CATEGORY;
+        fixtureDefMain.filter.maskBits = (short)~CATEGORY;
 
         /**
          * Orbital's Body Definitions Definitions, Body Definition and Fixture Definition
@@ -85,10 +88,12 @@ public class Jelly extends Player {
         BodyDef bodyDefOrbital = defineBody(BODY_TYPE, xi, yi, FIXED_ROTATION);
         CircleShape shapeOrbital = new CircleShape();
         shapeOrbital.setRadius(OUTER_RADIUS / 2);
-        FixtureDef fixtureDefOrbital = defineFixture(shapeOrbital, OUTER_DENSITY, OUTER_RESTITUTION, OUTER_FRICTION, OUTER_CATEGORY);
+        FixtureDef fixtureDefOrbital = defineFixture(shapeOrbital, OUTER_DENSITY, OUTER_RESTITUTION, OUTER_FRICTION, CATEGORY);
 
         bodyMain = createBody(bodyDefMain, fixtureDefMain);
         body = bodyMain;
+
+
 
 
         /**
@@ -142,33 +147,36 @@ public class Jelly extends Player {
         createDistanceJointAtCenter(jointDefOUTER, leftBodies.first(), downBodies.get(downBodies.size - 1));
 
 
+        DistanceJointDef diagonalDistanceJointDef = defineDistanceJointDef(DIAGONAL_FREQUENCY_HZ, DIAGONAL_DAMPING, false);
 
-        DistanceJointDef diagonalDistanceJointDef = defineDistanceJointDef(DIAGONAL_FREQUENCY_HZ,DIAGONAL_DAMPING,false);
-
-        for (int i = 1; i < NUM_SEGMENTS-2; i++) {
-            createDistanceJointAtCenter(diagonalDistanceJointDef, upBodies.get(upBodies.size-i-1), rightBodies.get(i));
-            createDistanceJointAtCenter(diagonalDistanceJointDef, upBodies.get(i), leftBodies.get(leftBodies.size-i-1));
-            createDistanceJointAtCenter(diagonalDistanceJointDef, downBodies.get(i), rightBodies.get(rightBodies.size-i-1));
-            createDistanceJointAtCenter(diagonalDistanceJointDef, leftBodies.get(leftBodies.size-i-1), downBodies.get(i));
+        for (int i = 1; i < NUM_SEGMENTS - 2; i++) {
+            createDistanceJointAtCenter(diagonalDistanceJointDef, upBodies.get(upBodies.size - i - 1), rightBodies.get(i));
+            createDistanceJointAtCenter(diagonalDistanceJointDef, upBodies.get(i), leftBodies.get(leftBodies.size - i - 1));
+            createDistanceJointAtCenter(diagonalDistanceJointDef, downBodies.get(i), rightBodies.get(rightBodies.size - i - 1));
+            createDistanceJointAtCenter(diagonalDistanceJointDef, leftBodies.get(leftBodies.size - i - 1), downBodies.get(i));
 
         }
     }
 
 
     public void initializeBodyList(BodyArray bodyArray, Body bodyMain, float[][] points, BodyDef bodyDef, FixtureDef fixDef) {
-        for (int i = 1; i < NUM_SEGMENTS-1; i++) {
+        for (int i = 1; i < NUM_SEGMENTS - 1; i++) {
             // Remember to divide by PTM_RATIO to convert to Box2d coordinates
             Vector2 circlePosition = new Vector2(points[i][0], points[i][1]);
             Vector2 v2 = bodyMain.getPosition().cpy().add(circlePosition);
             bodyDef.position.set(v2);
 
             // Create the body and fixture
-            Body body = createBody(bodyDef,fixDef);
+            Body body = createBody(bodyDef, fixDef);
 
             // Add the body to the array to connect joints to it
             // later. b2Body is a C++ object, so must wrap it
             // in NSValue when inserting into it NSMutableArray
             bodyArray.add(body);
+        }
+
+        for (Body body: bodyArray) {
+            body.getFixtureList().first().setUserData("player");
         }
     }
 

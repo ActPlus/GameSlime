@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import sk.actplus.slime.screens.PlayScreen;
-import sk.actplus.slime.screens.PlayScreenTemp;
 
 import static sk.actplus.slime.constants.Values.*;
 
@@ -13,57 +12,70 @@ import static sk.actplus.slime.constants.Values.*;
  */
 
 public class GameInputHandler {
-    PlayScreenTemp screen;
+    PlayScreen screen;
 
-    public GameInputHandler(PlayScreenTemp screen) {
+    public GameInputHandler(PlayScreen screen) {
         this.screen = screen;
     }
 
-    /*public Entity getPlayer(){
-        return screen.player;
-    }*/
-
     public void handle(float delta) {
 
-        float horizontalForce = 2f;
-
-        /*if (DEBUG) {
-            //System.out.println(Gdx.input.isKeyPressed(Input.Keys.UP));
-            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-
-                screen.camera.position.set(screen.camera.position.x,screen.camera.position.y+0.5f,0);
+        /**
+         * If GAME OVER, waiting for input to Restart
+         */
+        if (screen.gameover) {
+            if (Gdx.input.justTouched()) {
+                screen.newGame(screen.batch);
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                screen.camera.position.set(screen.camera.position.x,screen.camera.position.y-0.5f,0);
+        } else if (PlayScreen.paused) {
+            /**
+             * If Paused waiting for input for unpausing
+             */
+            if (Gdx.input.justTouched()) {
+                screen.gui.touchToStartLabel.setVisible(false);
+                screen.gui.validate();
+                screen.paused = false;
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                screen.camera.position.set(screen.camera.position.x+0.5f,screen.camera.position.y,0);
+        } else {
+
+            //Basic speed in NORMAL MODE
+            float horizontalForce = PLAYER_SPEED;
+
+            // Instant Game Over
+            if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+                screen.gameOver();
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                screen.camera.position.set(screen.camera.position.x-0.5f,screen.camera.position.y,0);
-            }
-        }*/
+            if (DEBUG) {
+                /**
+                 * If in DEBUG mode, you can move with Player
+                 */
+                horizontalForce = 0;
 
-        // testovanie gameover
-        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
-            //   screen.gameOver();
+                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+                    horizontalForce = PLAYER_SPEED;
+                if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+                    horizontalForce = -PLAYER_SPEED;
+            }
+
+
+            /**
+             * If touched then jump
+             */
+            if (Gdx.input.justTouched() && !screen.jumped) {
+                screen.jumped = true;
+                //PPM = PPM/3f;
+                //screen.camera.update();
+                screen.player.body.applyForceToCenter(0, -7 * GRAVITY.y, false);
+
+
+            }
+
+            /**
+             * Apply Horizontal Velocity
+             * */
+            screen.player.body.setLinearVelocity(horizontalForce, screen.player.body.getLinearVelocity().y);
         }
-
-        // testovanie posun v pravo/vlavo
-        /*if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            horizontalForce = 2;
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            horizontalForce = -2;*/
-
-
-        if (Gdx.input.justTouched()) {
-               screen.player.body.applyForceToCenter(0, 1000, false);
-        }
-
-        screen.player.body.setLinearVelocity(horizontalForce*10, screen.player.body.getLinearVelocity().y);
-        screen.camera.position.set(screen.player.body.getPosition().x,screen.player.body.getPosition().y,0);
-        screen.camera.update();
     }
 }
