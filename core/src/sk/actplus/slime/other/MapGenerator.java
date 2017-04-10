@@ -37,7 +37,7 @@ public class MapGenerator {
     int lastY;
 
     MovableCamera camera;
-    BodyArray blocks, movingBlocks;
+    BodyArray blocks;
     EnemyArray enemies;
     LightArray lights;
     World world;
@@ -56,7 +56,7 @@ public class MapGenerator {
      * @param rayHandler           - Renders, updates all lights
      */
 
-    public MapGenerator(World world, Jelly player, MovableCamera camera, Vector2 startGeneratingAtPos, BodyArray blocks, LightArray lights, BodyArray movingBlocks, EnemyArray enemies, RayHandler rayHandler) {
+    public MapGenerator(World world, Jelly player, MovableCamera camera, Vector2 startGeneratingAtPos, BodyArray blocks, LightArray lights, EnemyArray enemies, RayHandler rayHandler) {
         currentX = (int) startGeneratingAtPos.x;
         currentY = (int) startGeneratingAtPos.y;
         this.player = player;
@@ -64,7 +64,6 @@ public class MapGenerator {
         this.blocks = blocks;
         this.lights = lights;
         this.enemies = enemies;
-        this.movingBlocks = movingBlocks;
         this.world = world;
         this.rayHandler = rayHandler;
 
@@ -88,7 +87,7 @@ public class MapGenerator {
     }
 
     public void update() {
-        deleteJunkBodies();
+        deleteJunkBodies(world);
         generateIfNeeded();
     }
 
@@ -154,22 +153,22 @@ public class MapGenerator {
         }
 
         if (rand.nextInt(30) == 0) {
-            float rayLength = rand.nextInt(20) + 10;
-            lights.add(new PointLight(rayHandler, 150, new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 0.95f), rayLength, currentX + rayLength, currentY + 25 + rand.nextInt(15)));
+            float rayLength = rand.nextInt(30) + 0;
+            lights.add(new PointLight(rayHandler, 150, new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 0.95f), rayLength, currentX + rayLength, currentY +5 + rand.nextInt(10)));
         }
 
         if (rand.nextInt(40) == 0) {
-            movingBlocks.add(new MovingBlock(world, currentX, player.body.getPosition().y, 2, 10, new Vector2(-20, 0)).body);
+            new MovingBlock(world, currentX, player.body.getPosition().y, new Vector2(-14, 0), "lefter");
         }
 
         if (rand.nextInt(30) == 0) {
-            enemies.add(new Enemy(world, currentX, (int) player.body.getPosition().y + 10, movingBlocks, player));
+            enemies.add(new Enemy(world, currentX, (int) player.body.getPosition().y + 10, player));
         }
 
         currentX++;
     }
 
-    public void deleteJunkBodies() {
+    public void deleteJunkBodies(World world) {
         /**
          * Delete bodies if out of camera
          */
@@ -206,16 +205,26 @@ public class MapGenerator {
             }
         }
 
-        if (movingBlocks.size != 0) {
-            for (int i = 0; i < movingBlocks.size; i++) {
-                if ((movingBlocks.get(i).getPosition().x < (camera.position.x - WIDTH_CLIENT / PPM / 2f))
-                        || (movingBlocks.get(i).getPosition().x > (camera.position.x + WIDTH_CLIENT / PPM / 2f))
-                        || (movingBlocks.get(i).getPosition().y < (camera.position.y - HEIGHT_CLIENT / PPM / 2f))
-                        || (movingBlocks.get(i).getPosition().y > (camera.position.y + HEIGHT_CLIENT / PPM / 2f))
-                        ) {
+        BodyArray bodies = new BodyArray();
+        world.getBodies(bodies);
 
-                    world.destroyBody(movingBlocks.get(i));
-                    movingBlocks.removeIndex(i);
+        if (bodies.size != 0) {
+            for (int i = 0; i < bodies.size; i++) {
+                if (bodies.getBody(i).getFixtureList().get(0).getUserData() != null) {
+                    if (bodies.getBody(i).getFixtureList().get(0).getUserData() == "shoot") {
+                        if ((bodies.get(i).getPosition().x < (camera.position.x - WIDTH_CLIENT / PPM / 2f))
+                                || (bodies.get(i).getPosition().x > (camera.position.x + WIDTH_CLIENT / PPM / 2f))
+                                || (bodies.get(i).getPosition().y < (camera.position.y - HEIGHT_CLIENT / PPM / 2f))
+                                || (bodies.get(i).getPosition().y > (camera.position.y + HEIGHT_CLIENT / PPM / 2f))
+                                ) {
+
+                            world.destroyBody(bodies.get(i));
+                        }
+                    } else {
+                        if ((bodies.getBody(i).getPosition().x < (camera.position.x - WIDTH_CLIENT / PPM / 2f))) {
+                            world.destroyBody(bodies.getBody(i));
+                        }
+                    }
                 }
             }
         }

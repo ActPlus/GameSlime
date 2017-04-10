@@ -71,16 +71,17 @@ public class PlayScreen implements Screen {
 
     public GUI gui = new GUI();
 
-    Texture textureBlock  = new Texture("textures/brick.png");
-    Texture textureTrap = new Texture("textures/trap.png");
-
     Random rand = new Random();
+
+    double ellapsedTime;
+
+    public byte zoomState;
 
 
     public PlayScreen(SpriteBatch batch) {
         newGame(batch);
 
-        movingBlocks.add(new MovingBlock(world,WIDTH_CLIENT/PPM, HEIGHT_CLIENT/2/PPM-1, 2f, 10f, new Vector2(rand.nextInt(20)-40,0)).body);
+        new MovingBlock(world,WIDTH_CLIENT/PPM, HEIGHT_CLIENT/2/PPM-1, new Vector2(rand.nextInt(20)-40,0),"lefter");
     }
 
     @Override
@@ -103,7 +104,7 @@ public class PlayScreen implements Screen {
 
             if (body.getUserData() != null) {
                 sprite = (Sprite) body.getUserData();
-                sprite.setBounds((body.getPosition().x-0.5f - camera.position.x)*PPM+WIDTH_CLIENT/2f, (body.getPosition().y-0.5f - camera.position.y)*PPM+HEIGHT_CLIENT/2f,PPM,PPM);
+                sprite.setBounds(((body.getPosition().x-0.5f - camera.position.x)*PPM/camera.zoom+WIDTH_CLIENT/2f), ((body.getPosition().y-0.5f - camera.position.y)*PPM/camera.zoom+HEIGHT_CLIENT/2f),PPM/camera.zoom,PPM/camera.zoom);
                 sprite.draw(batch);
             }
             /*
@@ -130,21 +131,30 @@ public class PlayScreen implements Screen {
         world.step(WORLD_STEP * ((paused) ? 0 : 1), 6, 2);
 
 
-        Filter filter = new Filter();
-        filter.categoryBits = 0x1000;
-        filter.maskBits = (short)~0x1000;
         if (destroyBodies.size > 0) {
             for (int i = 0; i < destroyBodies.size; i++) {
-                destroyBodies.get(i).getFixtureList().get(0).setFilterData(filter);
-
+                destroyBodies.get(i).getFixtureList().get(0).setUserData("block");
             }
         }
         checkGameOver();
+
         camera.cameraUpdate();
         mapGenerator.update();
         input.handle(delta);
         enemies.update();
 
+        ellapsedTime++;
+
+        if (zoomState==1) {
+            camera.zoomOut();
+        } else {
+
+            if (camera.zoom >= 1) {
+                camera.zoomIn();
+                //camera.zoom = 1;
+            }
+
+        }
     }
 
     public void gameOver() {
@@ -155,6 +165,7 @@ public class PlayScreen implements Screen {
 
     public void newGame(SpriteBatch batch) {
         score=0;
+        ellapsedTime=0;
         paused = true;
         gameover = false;
         this.batch = batch;
@@ -176,12 +187,11 @@ public class PlayScreen implements Screen {
 
         rayHandler = new RayHandler(world);
         player = new Jelly(world, 0, 15);
-        camera = new MovableCamera(player.body, new Vector2(0, 2));
-        camera.viewportWidth = WIDTH_CLIENT / PPM;
-        camera.viewportHeight = HEIGHT_CLIENT / PPM;
-        mapGenerator = new MapGenerator(world, player, camera, new Vector2(-WIDTH_CLIENT / 2, 0), blocks, lights, movingBlocks, enemies, rayHandler);
+        camera = new MovableCamera(player.body, new Vector2(0, 2),WIDTH_CLIENT/PPM, HEIGHT_CLIENT/PPM);
+        mapGenerator = new MapGenerator(world, player, camera, new Vector2(-WIDTH_CLIENT / 2, 0), blocks, lights, enemies, rayHandler);
         fps = new FpsCounter(gui);
         jumped= false;
+        zoomState = 0;
     }
 
     private void checkGameOver() {
@@ -231,8 +241,6 @@ public class PlayScreen implements Screen {
         batch.dispose();
         gui.dispose();
         rayHandler.dispose();
-        textureTrap.dispose();
-        textureBlock.dispose();
     }
 
 }

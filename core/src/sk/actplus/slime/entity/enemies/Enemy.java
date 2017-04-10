@@ -26,7 +26,6 @@ import static sk.actplus.slime.constants.Values.SHOOT_SPEED;
 
 public class Enemy extends Player implements Updateable {
     Random rand = new Random();
-    BodyArray shots;
     Jelly player;
 
     public static final BodyDef.BodyType BODY_TYPE = BodyDef.BodyType.KinematicBody;
@@ -42,7 +41,7 @@ public class Enemy extends Player implements Updateable {
 
 
 
-    public Enemy(World world, int x, int y, BodyArray shots, Jelly player) {
+    public Enemy(World world, int x, int y, Jelly player) {
         super(world);
 
         /**
@@ -54,7 +53,6 @@ public class Enemy extends Player implements Updateable {
         FixtureDef fixtureDefMain = defineFixture(shapeMain,DENSITY,RESTITUTION,FRICTION);
         body = createBody(bodyDefMain,fixtureDefMain);
 
-        this.shots = shots;
         this.player = player;
 }
 
@@ -69,15 +67,15 @@ public class Enemy extends Player implements Updateable {
         }
 
         //1/20Chance to shoot
-        if (rand.nextInt(50)==0) {
+        if (rand.nextInt(25)==0) {
 
             angle = (float)Math.toRadians(LogicalOperations.getAngle(player.body.getPosition(),body.getPosition()));
 
             Vector2 direction = new Vector2(SHOOT_SPEED*(float)Math.cos(angle), SHOOT_SPEED*(float)Math.sin(angle));
 
-            MovingBlock shoot = new MovingBlock(world,body.getPosition().x, body.getPosition().y, SHOOT_WIDTH, SHOOT_HEIGHT,  direction);
+            MovingBlock shoot = new MovingBlock(world,body.getPosition().x, body.getPosition().y, SHOOT_WIDTH, SHOOT_HEIGHT,  direction,"shoot");
             shoot.body.setTransform(shoot.body.getWorldCenter(),(float)Math.toRadians(Math.toDegrees(angle)+90));
-            shots.add(shoot.body);
+            body.setTransform(shoot.body.getWorldCenter(),(float)Math.toRadians(Math.toDegrees(angle)+90));
         }
 
     }

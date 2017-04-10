@@ -49,7 +49,6 @@ public class Jelly extends Player {
     public static final float OUTER_DAMPING = 1f;
     public static final float DIAGONAL_DAMPING = 1f;
 
-    private World world;
     private Body bodyMain;
 
     private float upLine[][] = new float[NUM_SEGMENTS][2];

@@ -64,6 +64,7 @@ public class GameInputHandler {
              * If touched then jump
              */
             if (Gdx.input.justTouched() && !screen.jumped) {
+                screen.zoomState = 1;
                 screen.jumped = true;
                 //PPM = PPM/3f;
                 //screen.camera.update();

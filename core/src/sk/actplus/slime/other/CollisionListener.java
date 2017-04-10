@@ -39,13 +39,17 @@ public class CollisionListener implements ContactListener {
             }
 
             if (((fixAData == "block") && (fixBData == "player")) || ((fixAData == "player") && (fixBData == "block"))) {
-                screen.jumped = false;
+                    screen.jumped = false;
+                    screen.zoomState =0;
+                //screen.camera.reset();
                 //PPM = finalPPM;
 
             }
 
             if (((fixAData == "cookie") && (fixBData == "player")) || ((fixAData == "player") && (fixBData == "cookie"))) {
                 screen.score++;
+                screen.jumped = false;
+                screen.zoomState =0;
 
                 if (fixAData.toString() == "cookie") {
                     loop:for (int i = 0; i < screen.blocks.size; i++) {
