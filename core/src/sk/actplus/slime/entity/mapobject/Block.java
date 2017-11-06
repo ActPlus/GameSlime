@@ -59,6 +59,7 @@ public class Block {
             sprite.setSize(width,height);
             body.setUserData(sprite);
 
+
             for (Fixture fixture : body.getFixtureList()) {
                 fixture.setUserData(userData);
             }

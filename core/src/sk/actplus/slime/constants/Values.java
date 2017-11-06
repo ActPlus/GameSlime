@@ -18,12 +18,15 @@ public class Values {
     public static float HEIGHT_CLIENT = Gdx.graphics.getHeight();
 
 
+    public static Vector2 GRAVITY = new Vector2(0,-40);
 
-    public static float PPM = 32;
+
+    public static float PPM = 16;
     public static float WORLD_STEP = 1 / 60f;
 
     //SPEED IS IN m/s in m/update it is -20*WORLD_STEP=0.333
-    public static float PLAYER_SPEED = 10f * PPM/32;
+    public static float PLAYER_SPEED = 10f;
+    public static float PLAYER_JUMP = -7 * GRAVITY.y;
     public static float SHOOT_SPEED = PLAYER_SPEED*2.2f;
     public static float FOLLOWER_SPEED = PLAYER_SPEED*0.5f;
     public static float MOVING_BLOCK_SPEED = PLAYER_SPEED * 0.15f;
@@ -31,8 +34,6 @@ public class Values {
 
     public static Color GUI_COLOR = Color.WHITE;
     public static int GUI_FONT_SIZE = (int)(150*HEIGHT_CLIENT/WIDTH_CLIENT);
-
-    public static Vector2 GRAVITY = new Vector2(0,-40);
 
     public static int HEIGHTGEN_HIGH = 6;
     public static int HEIGHTGEN_MED = HEIGHTGEN_HIGH/3*2;

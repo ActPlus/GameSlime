@@ -42,15 +42,24 @@ public class CollisionListener implements ContactListener {
                     screen.jumped = false;
                     screen.zoomState =0;
 
-                if (fixAData == "block"){
-                    contact.getFixtureA().getBody().setType(BodyDef.BodyType.DynamicBody);
-                    screen.world.setGravity(GRAVITY);
+
+                final Body ballA = (Body) contact.getFixtureA().getBody();
+                final Body ballB = (Body) contact.getFixtureB().getBody();
+
+                if (((fixAData == "block") && (fixBData == "player")) || ((fixAData == "player") && (fixBData == "block"))) {
+
+                    if (fixAData == "block"){
+                        ballA.setType(BodyDef.BodyType.DynamicBody);
+                    }
+
+                    if (fixBData == "block"){
+                        ballB.setType(BodyDef.BodyType.DynamicBody);
+                    }
+                    //screen.camera.reset();
+                    //PPM = finalPPM;
+
                 }
 
-                if (fixBData == "block"){
-                    contact.getFixtureB().getBody().setType(BodyDef.BodyType.DynamicBody);
-                   screen.world.setGravity(GRAVITY);
-                }
                 //screen.camera.reset();
                 //PPM = finalPPM;
 

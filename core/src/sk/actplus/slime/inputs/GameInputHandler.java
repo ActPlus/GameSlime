@@ -68,7 +68,7 @@ public class GameInputHandler {
                 screen.jumped = true;
                 //PPM = PPM/3f;
                 //screen.camera.update();
-                screen.player.body.applyForceToCenter(0, -7 * GRAVITY.y, false);
+                screen.player.body.applyForceToCenter(0, PLAYER_JUMP, false);
 
 
             }
