@@ -1,17 +1,16 @@
 package sk.actplus.slime.other;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import sk.actplus.slime.screens.GUI;
 import sk.actplus.slime.screens.PlayScreen;
 
-import static sk.actplus.slime.constants.Values.PPM;
-import static sk.actplus.slime.constants.Values.finalPPM;
+import static sk.actplus.slime.constants.Values.GRAVITY;
 
 /**
  * Created by Ja on 8.4.2017.
@@ -30,6 +29,7 @@ public class CollisionListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
 
+
         if ((contact.getFixtureA().getUserData() != null) && (contact.getFixtureB().getUserData() != null)) {
             String fixAData, fixBData;
             fixAData = contact.getFixtureA().getUserData().toString();
@@ -41,6 +41,16 @@ public class CollisionListener implements ContactListener {
             if (((fixAData == "block") && (fixBData == "player")) || ((fixAData == "player") && (fixBData == "block"))) {
                     screen.jumped = false;
                     screen.zoomState =0;
+
+                if (fixAData == "block"){
+                    contact.getFixtureA().getBody().setType(BodyDef.BodyType.DynamicBody);
+                    screen.world.setGravity(GRAVITY);
+                }
+
+                if (fixBData == "block"){
+                    contact.getFixtureB().getBody().setType(BodyDef.BodyType.DynamicBody);
+                   screen.world.setGravity(GRAVITY);
+                }
                 //screen.camera.reset();
                 //PPM = finalPPM;
 

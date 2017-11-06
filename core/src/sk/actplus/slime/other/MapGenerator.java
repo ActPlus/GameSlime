@@ -29,21 +29,13 @@ import static sk.actplus.slime.constants.Values.WIDTH_CLIENT;
 
 public class MapGenerator {
 
-    Random rand;
+    static Random rand = new Random();
+    OptimizeAlgorithm algorithm;
 
 
-    int currentX;
-    int currentY = 0;
-    int lastY;
-
-    MovableCamera camera;
-    BodyArray blocks;
-    EnemyArray enemies;
-    LightArray lights;
-    World world;
-    RayHandler rayHandler;
-    Jelly player;
-
+    static int currentX;
+    static int currentY = 0;
+    static int lastY;
 
     /**
      * Constructor of Map Generator, gets ready for generating
@@ -56,53 +48,45 @@ public class MapGenerator {
      * @param rayHandler           - Renders, updates all lights
      */
 
-    public MapGenerator(World world, Jelly player, MovableCamera camera, Vector2 startGeneratingAtPos, BodyArray blocks, LightArray lights, EnemyArray enemies, RayHandler rayHandler) {
+    public MapGenerator(World world, MovableCamera camera, Vector2 startGeneratingAtPos, BodyArray blocks, LightArray lights, RayHandler rayHandler) {
         currentX = (int) startGeneratingAtPos.x;
         currentY = (int) startGeneratingAtPos.y;
-        this.player = player;
-        this.camera = camera;
-        this.blocks = blocks;
-        this.lights = lights;
-        this.enemies = enemies;
-        this.world = world;
-        this.rayHandler = rayHandler;
-
-        rand = new Random();
-
+        algorithm = new OptimizeAlgorithm();
         lights.add(new PointLight(rayHandler, 50, new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 0.95f), 150, currentX + 15, currentY + 15 + rand.nextInt(10)));
-        generateInitialBodies(new Vector2(camera.position.x, camera.position.y));
+        generateInitialBodies(world,blocks,new Vector2(camera.position.x, camera.position.y));
     }
 
 
     /**
      * Generate Bodies While(OnScreen) Random height
      */
-    private void generateInitialBodies(Vector2 cameraPos) {
+    private void generateInitialBodies(World world, BodyArray blocks, Vector2 cameraPos) {
         currentX = (int) (cameraPos.x - WIDTH_CLIENT / PPM / 2f);
         while ((currentX < cameraPos.x + WIDTH_CLIENT / PPM / 2f)) {
             currentY = currentY + rand.nextInt(3) - 1;
             Block.newRandomBlock(world, blocks, currentX, currentY);
+            //algorithm.optimizeWorld(world,blocks);
             currentX++;
         }
     }
 
-    public void update() {
-        deleteJunkBodies(world);
-        generateIfNeeded();
+    public void update(World world, BodyArray blocks, MovableCamera camera, EnemyArray enemies, Jelly player, LightArray lights, RayHandler rayHandler) {
+        deleteJunkBodies(world,blocks,camera,enemies,lights);
+        generateIfNeeded(world,blocks,camera,enemies, player,lights,rayHandler);
+
     }
 
-    public void generateIfNeeded() {
+    public void generateIfNeeded(World world, BodyArray blocks, MovableCamera camera, EnemyArray enemies, Jelly player, LightArray lights, RayHandler rayHandler) {
         /**
          * Generate new Block if needed
          */
-        if (blocks.get(blocks.size - 1).getPosition().x < (camera.position.x + WIDTH_CLIENT / PPM / 2f)) {
-            generate();
+        if (blocks.get(blocks.size - 1).getPosition().x < (camera.position.x + WIDTH_CLIENT / PPM / 2.5f)) {
+            generate(world,blocks,enemies, player,lights,rayHandler);
         }
     }
 
-    public void generate() {
+    public void generate(World world, BodyArray blocks, EnemyArray enemies, Jelly player, LightArray lights, RayHandler rayHandler) {
         lastY = currentY;
-
 
         int randomNumber = rand.nextInt(100);
 
@@ -145,7 +129,6 @@ public class MapGenerator {
             } else {
                 Block.newRandomBlock(world, blocks, currentX, currentY);
             }
-
         }
 
         if (rand.nextInt(10) == 0) {
@@ -165,13 +148,16 @@ public class MapGenerator {
             enemies.add(new Enemy(world, currentX, (int) player.body.getPosition().y + 10, player));
         }
 
+        //algorithm.optimizeWorld(world,blocks);
+
         currentX++;
     }
 
-    public void deleteJunkBodies(World world) {
+    public void deleteJunkBodies(World world, BodyArray blocks, MovableCamera camera, EnemyArray enemies, LightArray lights) {
         /**
          * Delete bodies if out of camera
          */
+
         //int num_of_deleted_bodies = 0;
         //int num_of_deleted_lights = 0;
         if ((blocks.size != 0)) {

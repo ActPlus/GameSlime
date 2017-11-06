@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class Values {
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
 
 
 
@@ -19,8 +19,7 @@ public class Values {
 
 
 
-    public static final float finalPPM = 32;
-    public static float PPM = finalPPM;
+    public static float PPM = 32;
     public static float WORLD_STEP = 1 / 60f;
 
     //SPEED IS IN m/s in m/update it is -20*WORLD_STEP=0.333

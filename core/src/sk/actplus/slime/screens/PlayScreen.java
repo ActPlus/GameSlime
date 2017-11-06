@@ -3,13 +3,11 @@ package sk.actplus.slime.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
@@ -31,7 +29,6 @@ import static sk.actplus.slime.constants.Values.HEIGHT_CLIENT;
 import static sk.actplus.slime.constants.Values.PPM;
 import static sk.actplus.slime.constants.Values.WIDTH_CLIENT;
 import static sk.actplus.slime.constants.Values.WORLD_STEP;
-import static sk.actplus.slime.constants.Values.finalPPM;
 
 /**
  * Created by timol on 5.12.2016.
@@ -104,20 +101,9 @@ public class PlayScreen implements Screen {
 
             if (body.getUserData() != null) {
                 sprite = (Sprite) body.getUserData();
-                sprite.setBounds(((body.getPosition().x-0.5f - camera.position.x)*PPM/camera.zoom+WIDTH_CLIENT/2f), ((body.getPosition().y-0.5f - camera.position.y)*PPM/camera.zoom+HEIGHT_CLIENT/2f),PPM/camera.zoom,PPM/camera.zoom);
+                sprite.setBounds(((body.getPosition().x-0.5f - camera.position.x)*PPM/camera.zoom+WIDTH_CLIENT/2f), ((body.getPosition().y-0.5f- camera.position.y)*PPM/camera.zoom+HEIGHT_CLIENT/2f),PPM/camera.zoom,PPM/camera.zoom);
                 sprite.draw(batch);
             }
-            /*
-
-            float y=(body.getPosition().y-0.5f - camera.position.y)*PPM+HEIGHT_CLIENT/2f;
-            int nums = 1;
-            while (y-nums*PPM > (camera.position.y*PPM-HEIGHT_CLIENT)) {
-                sprite = new Sprite(textureBlock);
-                sprite.setBounds((body.getPosition().x-0.5f - camera.position.x)*PPM+WIDTH_CLIENT/2f, y-nums*PPM,PPM,PPM);
-                sprite.draw(batch);
-                nums++;
-            }
-            */
         }
 
         batch.end();
@@ -127,25 +113,22 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float delta) {
-
+        //world.setGravity(GRAVITY);
         world.step(WORLD_STEP * ((paused) ? 0 : 1), 6, 2);
-
-
-        if (destroyBodies.size > 0) {
-            for (int i = 0; i < destroyBodies.size; i++) {
-                destroyBodies.get(i).getFixtureList().get(0).setUserData("block");
-            }
-        }
+        //world.setGravity(GRAVITY);
         checkGameOver();
 
         camera.cameraUpdate();
-        mapGenerator.update();
+        mapGenerator.update(world,blocks,camera,enemies,player,lights,rayHandler);
+
+
         input.handle(delta);
         enemies.update();
 
-        ellapsedTime++;
 
-        if (zoomState==1) {
+        ellapsedTime++;
+       // world.setGravity(GRAVITY);
+        /*if (zoomState==1) {
             camera.zoomOut();
         } else {
 
@@ -154,7 +137,7 @@ public class PlayScreen implements Screen {
                 //camera.zoom = 1;
             }
 
-        }
+        }*/
     }
 
     public void gameOver() {
@@ -183,15 +166,16 @@ public class PlayScreen implements Screen {
         world.setContactListener(new CollisionListener(this,gui));
         input = new GameInputHandler(this);
         b2ddr = new Box2DDebugRenderer();
-        //b2ddr.setDrawJoints(false);
+        b2ddr.setDrawJoints(false);
 
         rayHandler = new RayHandler(world);
         player = new Jelly(world, 0, 15);
         camera = new MovableCamera(player.body, new Vector2(0, 2),WIDTH_CLIENT/PPM, HEIGHT_CLIENT/PPM);
-        mapGenerator = new MapGenerator(world, player, camera, new Vector2(-WIDTH_CLIENT / 2, 0), blocks, lights, enemies, rayHandler);
+        mapGenerator = new MapGenerator(world, camera, new Vector2(-WIDTH_CLIENT / 2, 0), blocks, lights, rayHandler);
         fps = new FpsCounter(gui);
         jumped= false;
         zoomState = 0;
+
     }
 
     private void checkGameOver() {

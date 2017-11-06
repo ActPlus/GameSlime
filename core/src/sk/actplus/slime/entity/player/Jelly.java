@@ -30,7 +30,7 @@ public class Jelly extends Player {
 
     public static final float INNER_RADIUS = 1f;
     public static final float OUTER_RADIUS = 0.1f;
-    public static final float ORBITAL_SIDE = 2f;
+    public static final float ORBITAL_SIDE = 2.5f;
 
     public static final float INNER_DENSITY = 0.4f;
     public static final float OUTER_DENSITY = 0.05f;

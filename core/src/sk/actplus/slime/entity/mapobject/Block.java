@@ -29,11 +29,16 @@ import static sk.actplus.slime.constants.Values.WIDTH_CLIENT;
 
 
 public class Block {
-    public Body body;
     static Random rand = new Random();
+    public Body body;
     BodyArray blocks;
 
-    public Block(World world, BodyArray blocks, int x, int y, Sprite sprite, String userData) {
+    public Block(World world, BodyArray blocks, float x, float y, Sprite sprite, String userData) {
+        this(world, blocks, x, y, 1f, 1f, sprite, userData);
+    }
+
+    public Block(World world, BodyArray blocks, float x, float y, float width, float height, Sprite sprite, String userData) {
+
         try {
             this.blocks = blocks;
             BodyDef def = new BodyDef();
@@ -42,15 +47,16 @@ public class Block {
             blocks.add(body = world.createBody(def));
 
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(0.5f, 0.5f);
+            shape.setAsBox(width / 2, height / 2);
 
-            sprite.setBounds((x - 0.5f) * PPM + WIDTH_CLIENT / 2f, (y - 0.5f) * PPM + HEIGHT_CLIENT / 2f, PPM, PPM);
+            sprite.setBounds((x - width / 2) * PPM + WIDTH_CLIENT / 2f, (y - height / 2f) * PPM + HEIGHT_CLIENT / 2f, PPM * width, PPM * height);
 
             FixtureDef fixDef = new FixtureDef();
             fixDef.shape = shape;
             fixDef.restitution = 0.4f;
             fixDef.friction = 0f;
             body.createFixture(fixDef);
+            sprite.setSize(width,height);
             body.setUserData(sprite);
 
             for (Fixture fixture : body.getFixtureList()) {
@@ -64,6 +70,7 @@ public class Block {
 
         }
     }
+
 
     public static Block newRandomBlock(World world, BodyArray blocks, int x, int y) {
         Sprite sprite = SPRITE_BLOCK;
