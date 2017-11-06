@@ -1,0 +1,440 @@
+
+{
+  "collisionbitplanes" : 
+  {
+    "names" : 
+    [
+      "bitplane1",
+      "bitplane2",
+      "bitplane3",
+      "bitplane4",
+      "bitplane5",
+      "bitplane6",
+      "bitplane7",
+      "bitplane8",
+      "bitplane9",
+      "bitplane10",
+      "bitplane11",
+      "bitplane12",
+      "bitplane13",
+      "bitplane14",
+      "bitplane15",
+      "bitplane16",
+      "bitplane17",
+      "bitplane18",
+      "bitplane19",
+      "bitplane20",
+      "bitplane21",
+      "bitplane22",
+      "bitplane23",
+      "bitplane24",
+      "bitplane25",
+      "bitplane26",
+      "bitplane27",
+      "bitplane28",
+      "bitplane29",
+      "bitplane30",
+      "bitplane31",
+      "bitplane32"
+    ]
+  },
+  "customPropertyDefs" : 
+  [
+    
+    {
+      "class" : "world",
+      "displayName" : "bodies2Custom",
+      "name" : "bodies2Custom",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "GameInfo",
+      "name" : "GameInfo",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "bodiesCommonCustom",
+      "name" : "bodiesCommonCustom",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "fixture",
+      "displayName" : "TextureMask",
+      "name" : "TextureMask",
+      "type" : "string"
+    }
+  ],
+  "metaworld" : 
+  {
+    "allowSleep" : true,
+    "autoClearForces" : true,
+    "continuousPhysics" : true,
+    "customProperties" : 
+    [
+      
+      {
+        "int" : 2,
+        "name" : "bodies2Custom"
+      },
+      
+      {
+        "int" : 4321,
+        "name" : "bodiesCommonCustom"
+      }
+    ],
+    "exportOptions" : 
+    {
+      "compactCommonFloats" : true,
+      "saveFullPathForImages" : false,
+      "saveImagePathsRelativeToRUBEFile" : false,
+      "useHumanReadableFloats" : true,
+      "usePrettyPrint" : true
+    },
+    "gravity" : 0,
+    "metabody" : 
+    [
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 25,
+            "name" : "fixture2",
+            "restitution" : 1,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 2.612537622451782,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 3.814697265625000e-006 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 10,
+        "linearVelocity" : 0,
+        "massData-I" : 73.17623901367188,
+        "massData-center" : 
+        {
+          "x" : 3.814697265625000e-006,
+          "y" : 0
+        },
+        "massData-mass" : 21.44247817993164,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : 71.07764434814453,
+          "y" : 90.79309844970703
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 26,
+            "name" : "fixture2",
+            "restitution" : 1,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 2.612537622451782,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 3.814697265625000e-006 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 11,
+        "linearVelocity" : 0,
+        "massData-I" : 73.17623901367188,
+        "massData-center" : 
+        {
+          "x" : 3.814697265625000e-006,
+          "y" : 0
+        },
+        "massData-mass" : 21.44247817993164,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : 95.85523986816406,
+          "y" : 36.52619934082031
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 27,
+            "name" : "fixture2",
+            "restitution" : 1,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 2.612537622451782,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 3.814697265625000e-006 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 12,
+        "linearVelocity" : 0,
+        "massData-I" : 73.17623901367188,
+        "massData-center" : 
+        {
+          "x" : 3.814697265625000e-006,
+          "y" : 0
+        },
+        "massData-mass" : 21.44247817993164,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : 54.42392349243164,
+          "y" : 49.32120132446289
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 28,
+            "name" : "fixture2",
+            "restitution" : 1,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 2.612537622451782,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 3.814697265625000e-006 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 13,
+        "linearVelocity" : 0,
+        "massData-I" : 73.17623901367188,
+        "massData-center" : 
+        {
+          "x" : 3.814697265625000e-006,
+          "y" : 0
+        },
+        "massData-mass" : 21.44247817993164,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : 54.22083282470703,
+          "y" : 78.97299957275391
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 29,
+            "name" : "fixture2",
+            "restitution" : 1,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 2.612537622451782,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 3.814697265625000e-006 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 14,
+        "linearVelocity" : 0,
+        "massData-I" : 73.17623901367188,
+        "massData-center" : 
+        {
+          "x" : 3.814697265625000e-006,
+          "y" : 0
+        },
+        "massData-mass" : 21.44247817993164,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : 95.65214538574219,
+          "y" : 95.24089813232422
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 30,
+            "name" : "fixture2",
+            "restitution" : 1,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 2.612537622451782,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 3.814697265625000e-006 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 15,
+        "linearVelocity" : 0,
+        "massData-I" : 73.17623901367188,
+        "massData-center" : 
+        {
+          "x" : 3.814697265625000e-006,
+          "y" : 0
+        },
+        "massData-mass" : 21.44247817993164,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : 96.46444702148438,
+          "y" : 64.55329895019531
+        },
+        "type" : "dynamic"
+      }
+    ],
+    "metaimage" : 
+    [
+      
+      {
+        "aspectScale" : 1,
+        "body" : 14,
+        "center" : 0,
+        "file" : "images/toyzrockinghorse.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 1,
+        "name" : "image0",
+        "opacity" : 1,
+        "scale" : 5.616001605987549
+      }
+    ],
+    "positionIterations" : 3,
+    "stepsPerSecond" : 60.0,
+    "subStepping" : false,
+    "velocityIterations" : 8,
+    "warmStarting" : true
+  }
+}
