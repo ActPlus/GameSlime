@@ -1,0 +1,924 @@
+
+{
+  "collisionbitplanes" : 
+  {
+    "names" : 
+    [
+      "bitplane1",
+      "bitplane2",
+      "bitplane3",
+      "bitplane4",
+      "bitplane5",
+      "bitplane6",
+      "bitplane7",
+      "bitplane8",
+      "bitplane9",
+      "bitplane10",
+      "bitplane11",
+      "bitplane12",
+      "bitplane13",
+      "bitplane14",
+      "bitplane15",
+      "bitplane16",
+      "bitplane17",
+      "bitplane18",
+      "bitplane19",
+      "bitplane20",
+      "bitplane21",
+      "bitplane22",
+      "bitplane23",
+      "bitplane24",
+      "bitplane25",
+      "bitplane26",
+      "bitplane27",
+      "bitplane28",
+      "bitplane29",
+      "bitplane30",
+      "bitplane31",
+      "bitplane32"
+    ]
+  },
+  "customPropertyDefs" : 
+  [
+    
+    {
+      "class" : "body",
+      "displayName" : "GameInfo",
+      "name" : "GameInfo",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomVec2",
+      "name" : "testCustomVec2",
+      "type" : "vec2"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomInt",
+      "name" : "testCustomInt",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomFloat",
+      "name" : "testCustomFloat",
+      "type" : "float"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomString",
+      "name" : "testCustomString",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "fixture",
+      "displayName" : "TextureMask",
+      "name" : "TextureMask",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomBool",
+      "name" : "testCustomBool",
+      "type" : "bool"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomColor",
+      "name" : "testCustomColor",
+      "type" : "color"
+    }
+  ],
+  "metaworld" : 
+  {
+    "allowSleep" : true,
+    "autoClearForces" : true,
+    "continuousPhysics" : true,
+    "customProperties" : 
+    [
+      
+      {
+        "int" : 8675309,
+        "name" : "testCustomInt"
+      },
+      
+      {
+        "float" : 1.25,
+        "name" : "testCustomFloat"
+      },
+      
+      {
+        "name" : "testCustomString",
+        "string" : "Excelsior!"
+      },
+      
+      {
+        "name" : "testCustomVec2",
+        "vec2" : 
+        {
+          "x" : 314159.0,
+          "y" : 21718.0
+        }
+      },
+      
+      {
+        "bool" : true,
+        "name" : "testCustomBool"
+      },
+      
+      {
+        "color" : [ 17, 29, 43, 61 ],
+        "name" : "testCustomColor"
+      }
+    ],
+    "exportOptions" : 
+    {
+      "compactCommonFloats" : true,
+      "saveFullPathForImages" : false,
+      "saveImagePathsRelativeToRUBEFile" : false,
+      "useHumanReadableFloats" : true,
+      "usePrettyPrint" : true
+    },
+    "gravity" : 
+    {
+      "x" : 0,
+      "y" : -40.0
+    },
+    "metabody" : 
+    [
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 1.570796370506287,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 7,
+            "name" : "fixture14",
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 3.745710372924805,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 1,
+        "linearVelocity" : 0,
+        "name" : "body9",
+        "position" : 
+        {
+          "x" : -9.349742889404297,
+          "y" : 63.90687942504883
+        },
+        "type" : "kinematic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : -1.570796370506287,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 16,
+            "name" : "fixture13",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -5.928199768066406,
+                5.928205490112305,
+                5.928205490112305,
+                -5.928199768066406
+              ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+            }
+          }
+        ],
+        "id" : 2,
+        "linearVelocity" : 
+        {
+          "x" : -1.950557582119927e-008,
+          "y" : -3.583108991733752e-005
+        },
+        "massData-I" : 139.8802337646484,
+        "massData-center" : 
+        {
+          "x" : 2.851282033589087e-006,
+          "y" : -2.483526939656144e-009
+        },
+        "massData-mass" : 11.85640525817871,
+        "name" : "body7",
+        "position" : 
+        {
+          "x" : -16.88502883911133,
+          "y" : 76.75743103027344
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "name" : "GameInfo",
+            "string" : "SURFACE"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 1,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                25.08861160278320,
+                51.28842926025391,
+                49.56591033935547,
+                23.36610031127930
+              ],
+              "y" : 
+              [
+                11.51708602905273,
+                21.39258575439453,
+                25.96242713928223,
+                16.08693313598633
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "filter-categoryBits" : 4,
+            "friction" : 0.5,
+            "id" : 2,
+            "name" : "fixture5",
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 1,
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.5,
+                100.0,
+                100.0,
+                93.84930419921875,
+                86.75531005859375,
+                75.41677856445313,
+                62.33473205566406,
+                56.34645462036133,
+                50.16338348388672,
+                44.62432479858398,
+                36.38561630249023,
+                26.15283393859863,
+                14.39508438110352,
+                5.039858341217041,
+                -0.5
+              ],
+              "y" : 
+              [
+                -50.50,
+                -50.50,
+                -37.91857910156250,
+                -44.47422409057617,
+                -47.30048751831055,
+                -48.45790863037109,
+                -46.66598510742188,
+                -43.45474243164063,
+                -34.76478576660156,
+                -43.19722747802734,
+                -47.02894592285156,
+                -48.17876815795898,
+                -46.38066864013672,
+                -41.43391418457031,
+                -33.89025497436523
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "filter-categoryBits" : 4,
+            "friction" : 0.5,
+            "id" : 3,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.5, 100.0, 100.0, -0.5 ],
+              "y" : [ 49.50, 49.50, 50.50, 50.50 ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "filter-categoryBits" : 4,
+            "friction" : 0.5,
+            "id" : 4,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.5, 0.5, 0.5, -0.5 ],
+              "y" : [ -50.0, -50.0, 50.0, 50.0 ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "filter-categoryBits" : 4,
+            "friction" : 0.5,
+            "id" : 5,
+            "name" : "fixture7",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 99.0, 100.0, 100.0, 99.0 ],
+              "y" : [ -50.0, -50.0, 50.0, 50.0 ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 6,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.9281902313232422,
+                26.04417991638184,
+                27.35463523864746,
+                0.3822646141052246
+              ],
+              "y" : 
+              [
+                33.60401153564453,
+                26.09090995788574,
+                30.79551124572754,
+                38.30860900878906
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 8,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -1.164329528808594,
+                25.80803871154785,
+                27.11849403381348,
+                0.1461257934570313
+              ],
+              "y" : 
+              [
+                5.078250885009766,
+                -2.434850692749023,
+                2.269750595092773,
+                9.782848358154297
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 9,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                25.08861160278320,
+                51.28842926025391,
+                49.56591033935547,
+                23.36610031127930
+              ],
+              "y" : 
+              [
+                -17.29204940795898,
+                -7.416549682617188,
+                -2.846708297729492,
+                -12.72220230102539
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 10,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -1.164329528808594,
+                25.80803871154785,
+                27.11849403381348,
+                0.1461257934570313
+              ],
+              "y" : 
+              [
+                -24.43930435180664,
+                -31.95240592956543,
+                -27.24780464172363,
+                -19.73470687866211
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 11,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                48.85931396484375,
+                75.83168029785156,
+                77.14213562011719,
+                50.16976928710938
+              ],
+              "y" : 
+              [
+                21.56085205078125,
+                14.04775047302246,
+                18.75235176086426,
+                26.26544952392578
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 12,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                99.11612701416016,
+                72.14376068115234,
+                73.45421600341797,
+                100.4265823364258
+              ],
+              "y" : 
+              [
+                38.30860900878906,
+                30.79550933837891,
+                26.09091186523438,
+                33.60401153564453
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 13,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                99.11612701416016,
+                72.14376068115234,
+                73.45421600341797,
+                100.4265823364258
+              ],
+              "y" : 
+              [
+                9.971759796142578,
+                2.458660125732422,
+                -2.245937347412109,
+                5.267162322998047
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 14,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                48.85931396484375,
+                75.83168029785156,
+                77.14213562011719,
+                50.16976928710938
+              ],
+              "y" : 
+              [
+                -7.484420776367188,
+                -14.99752235412598,
+                -10.29292106628418,
+                -2.779823303222656
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 15,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                99.11612701416016,
+                72.14376068115234,
+                73.45421600341797,
+                100.4265823364258
+              ],
+              "y" : 
+              [
+                -18.83737373352051,
+                -26.35047340393066,
+                -31.05507087707520,
+                -23.54197120666504
+              ]
+            }
+          },
+          
+          {
+            "customProperties" : 
+            [
+              
+              {
+                "name" : "TextureMask",
+                "string" : "images/brick.png"
+              }
+            ],
+            "density" : 1,
+            "filter-categoryBits" : 4,
+            "friction" : 0.5,
+            "id" : 17,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                49.61637496948242,
+                50.61637496948242,
+                50.61637496948242,
+                49.61637496948242
+              ],
+              "y" : [ -33.04748153686523, -33.04748153686523, 50.0, 50.0 ]
+            }
+          }
+        ],
+        "id" : 3,
+        "linearVelocity" : 0,
+        "name" : "body0",
+        "position" : 
+        {
+          "x" : 0,
+          "y" : 50.0
+        },
+        "type" : "static"
+      }
+    ],
+    "metaimage" : 
+    [
+      
+      {
+        "aspectScale" : 1,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : -0.2019119262695313,
+          "y" : 6.254570007324219
+        },
+        "file" : "images/toyzrockinghorse.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 1,
+        "name" : "horseleft",
+        "opacity" : 1,
+        "scale" : 14.81212902069092
+      }
+    ],
+    "metajoint" : 
+    [
+      
+      {
+        "anchorA" : 
+        {
+          "x" : 3.671646118164063,
+          "y" : -0.05494546890258789
+        },
+        "anchorB" : 
+        {
+          "x" : 7.740654945373535,
+          "y" : -0.3851494491100311
+        },
+        "bodyA" : 1,
+        "bodyB" : 2,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 1,
+        "length" : 12.99030017852783,
+        "name" : "joint1",
+        "type" : "distance"
+      },
+      
+      {
+        "anchorA" : 
+        {
+          "x" : 2.861022949218750e-005,
+          "y" : -3.051757812500000e-005
+        },
+        "anchorB" : 
+        {
+          "x" : -16.88500022888184,
+          "y" : 26.75740051269531
+        },
+        "bodyA" : 2,
+        "bodyB" : 3,
+        "collideConnected" : false,
+        "enableLimit" : false,
+        "enableMotor" : false,
+        "id" : 2,
+        "lowerLimit" : 0,
+        "maxMotorTorque" : 0,
+        "motorSpeed" : 0,
+        "name" : "joint0",
+        "referenceAngle" : 0,
+        "type" : "revolute",
+        "upperLimit" : 0
+      }
+    ],
+    "positionIterations" : 3,
+    "stepsPerSecond" : 60.0,
+    "subStepping" : false,
+    "velocityIterations" : 8,
+    "warmStarting" : true
+  }
+}
