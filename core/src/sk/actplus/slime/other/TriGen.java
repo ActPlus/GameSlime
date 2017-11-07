@@ -31,7 +31,7 @@ public class TriGen {
         return null;
     }
 
-    public static Vector2[] lastVertexes = {new Vector2(0,0.5f),new Vector2(0.8f,2f)};
+    public static Vector2[] lastVertexes = {new Vector2(0,3f),new Vector2(0.8f,4.2f)};
     static Random rand = new Random();
     public static Body generateTriangle(World world){
 
@@ -48,7 +48,7 @@ public class TriGen {
 
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.StaticBody;
-        def.position.set(getCenterPoint(vertices));
+        def.position.set(new Vector2(0,0));
         body = world.createBody(def);
 
         FixtureDef fixDef = new FixtureDef();

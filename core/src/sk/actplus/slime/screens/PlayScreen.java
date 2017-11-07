@@ -121,7 +121,7 @@ public class PlayScreen implements Screen {
         checkGameOver();
 
         camera.cameraUpdate();
-        mapGenerator.update(world,blocks,camera,enemies,player,lights,rayHandler);
+        //mapGenerator.update(world,blocks,camera,enemies,player,lights,rayHandler);
 
 
         input.handle(delta);
@@ -180,7 +180,7 @@ public class PlayScreen implements Screen {
         zoomState = 0;
 
 
-        TriGen.generateMore(world,6);
+        TriGen.generateMore(world,250);
 
     }
 
