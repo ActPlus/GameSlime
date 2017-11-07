@@ -21,7 +21,7 @@ public class Values {
     public static Vector2 GRAVITY = new Vector2(0,-40);
 
 
-    public static float PPM = 16;
+    public static float PPM = 64;
     public static float WORLD_STEP = 1 / 60f;
 
     //SPEED IS IN m/s in m/update it is -20*WORLD_STEP=0.333

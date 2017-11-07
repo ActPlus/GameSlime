@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
+import jdk.nashorn.internal.ir.Block;
 import sk.actplus.slime.screens.GUI;
 import sk.actplus.slime.screens.PlayScreen;
 
@@ -20,10 +21,12 @@ public class CollisionListener implements ContactListener {
 
     PlayScreen screen;
     GUI gui;
+    BodyArray blocks;
 
-    public CollisionListener(PlayScreen screen, GUI gui) {
+    public CollisionListener(PlayScreen screen, GUI gui, BodyArray blocks) {
         this.screen = screen;
         this.gui = gui;
+        this.blocks = blocks;
     }
 
     @Override
@@ -49,11 +52,11 @@ public class CollisionListener implements ContactListener {
                 if (((fixAData == "block") && (fixBData == "player")) || ((fixAData == "player") && (fixBData == "block"))) {
 
                     if (fixAData == "block"){
-                        ballA.setType(BodyDef.BodyType.DynamicBody);
+
                     }
 
                     if (fixBData == "block"){
-                        ballB.setType(BodyDef.BodyType.DynamicBody);
+                        //ballB.setType(BodyDef.BodyType.KinematicBody);
                     }
                     //screen.camera.reset();
                     //PPM = finalPPM;
@@ -108,4 +111,5 @@ public class CollisionListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+
 }

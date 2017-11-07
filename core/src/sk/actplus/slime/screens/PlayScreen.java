@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -127,6 +128,7 @@ public class PlayScreen implements Screen {
 
 
         ellapsedTime++;
+
        // world.setGravity(GRAVITY);
         /*if (zoomState==1) {
             camera.zoomOut();
@@ -163,7 +165,7 @@ public class PlayScreen implements Screen {
         gui.updateScore(0);
 
         world = new World(GRAVITY, false);
-        world.setContactListener(new CollisionListener(this,gui));
+        world.setContactListener(new CollisionListener(this,gui,blocks));
         input = new GameInputHandler(this);
         b2ddr = new Box2DDebugRenderer();
         b2ddr.setDrawJoints(false);
