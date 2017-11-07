@@ -24,6 +24,7 @@ import sk.actplus.slime.other.FpsCounter;
 import sk.actplus.slime.other.LightArray;
 import sk.actplus.slime.other.MapGenerator;
 import sk.actplus.slime.other.MovableCamera;
+import sk.actplus.slime.other.TriGen;
 
 import static sk.actplus.slime.constants.Values.GRAVITY;
 import static sk.actplus.slime.constants.Values.HEIGHT_CLIENT;
@@ -177,6 +178,9 @@ public class PlayScreen implements Screen {
         fps = new FpsCounter(gui);
         jumped= false;
         zoomState = 0;
+
+
+        TriGen.generateMore(world,6);
 
     }
 
