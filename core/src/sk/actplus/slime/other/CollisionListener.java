@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
+import jdk.nashorn.internal.ir.Block;
 import sk.actplus.slime.screens.GUI;
 import sk.actplus.slime.screens.PlayScreen;
 
@@ -20,10 +21,12 @@ public class CollisionListener implements ContactListener {
 
     PlayScreen screen;
     GUI gui;
+    BodyArray blocks;
 
-    public CollisionListener(PlayScreen screen, GUI gui) {
+    public CollisionListener(PlayScreen screen, GUI gui, BodyArray blocks) {
         this.screen = screen;
         this.gui = gui;
+        this.blocks = blocks;
     }
 
     @Override
@@ -42,15 +45,24 @@ public class CollisionListener implements ContactListener {
                     screen.jumped = false;
                     screen.zoomState =0;
 
-                if (fixAData == "block"){
-                    contact.getFixtureA().getBody().setType(BodyDef.BodyType.DynamicBody);
-                    screen.world.setGravity(GRAVITY);
+
+                final Body ballA = (Body) contact.getFixtureA().getBody();
+                final Body ballB = (Body) contact.getFixtureB().getBody();
+
+                if (((fixAData == "block") && (fixBData == "player")) || ((fixAData == "player") && (fixBData == "block"))) {
+
+                    if (fixAData == "block"){
+
+                    }
+
+                    if (fixBData == "block"){
+                        //ballB.setType(BodyDef.BodyType.KinematicBody);
+                    }
+                    //screen.camera.reset();
+                    //PPM = finalPPM;
+
                 }
 
-                if (fixBData == "block"){
-                    contact.getFixtureB().getBody().setType(BodyDef.BodyType.DynamicBody);
-                   screen.world.setGravity(GRAVITY);
-                }
                 //screen.camera.reset();
                 //PPM = finalPPM;
 
@@ -99,4 +111,5 @@ public class CollisionListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+
 }

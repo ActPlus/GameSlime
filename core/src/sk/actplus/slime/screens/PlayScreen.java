@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -23,6 +24,7 @@ import sk.actplus.slime.other.FpsCounter;
 import sk.actplus.slime.other.LightArray;
 import sk.actplus.slime.other.MapGenerator;
 import sk.actplus.slime.other.MovableCamera;
+import sk.actplus.slime.other.TriGen;
 
 import static sk.actplus.slime.constants.Values.GRAVITY;
 import static sk.actplus.slime.constants.Values.HEIGHT_CLIENT;
@@ -119,7 +121,7 @@ public class PlayScreen implements Screen {
         checkGameOver();
 
         camera.cameraUpdate();
-        mapGenerator.update(world,blocks,camera,enemies,player,lights,rayHandler);
+        //mapGenerator.update(world,blocks,camera,enemies,player,lights,rayHandler);
 
 
         input.handle(delta);
@@ -127,6 +129,7 @@ public class PlayScreen implements Screen {
 
 
         ellapsedTime++;
+
        // world.setGravity(GRAVITY);
         /*if (zoomState==1) {
             camera.zoomOut();
@@ -163,7 +166,7 @@ public class PlayScreen implements Screen {
         gui.updateScore(0);
 
         world = new World(GRAVITY, false);
-        world.setContactListener(new CollisionListener(this,gui));
+        world.setContactListener(new CollisionListener(this,gui,blocks));
         input = new GameInputHandler(this);
         b2ddr = new Box2DDebugRenderer();
         b2ddr.setDrawJoints(false);
@@ -175,6 +178,9 @@ public class PlayScreen implements Screen {
         fps = new FpsCounter(gui);
         jumped= false;
         zoomState = 0;
+
+
+        TriGen.generateMore(world,250);
 
     }
 
