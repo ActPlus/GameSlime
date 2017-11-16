@@ -11,6 +11,7 @@ import java.util.Random;
 import sk.actplus.slime.entity.interfaces.Updateable;
 import sk.actplus.slime.entity.mapobject.MovingBlock;
 import sk.actplus.slime.entity.player.Jelly;
+import sk.actplus.slime.entity.player.JellyFix;
 import sk.actplus.slime.entity.player.Player;
 import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.other.LogicalOperations;
@@ -26,7 +27,7 @@ import static sk.actplus.slime.constants.Values.SHOOT_SPEED;
 
 public class Enemy extends Player implements Updateable {
     Random rand = new Random();
-    Jelly player;
+    JellyFix player;
 
     public static final BodyDef.BodyType BODY_TYPE = BodyDef.BodyType.KinematicBody;
     public static final boolean FIXED_ROTATION = true;
@@ -41,7 +42,7 @@ public class Enemy extends Player implements Updateable {
 
 
 
-    public Enemy(World world, int x, int y, Jelly player) {
+    public Enemy(World world, int x, int y, JellyFix player) {
         super(world);
 
         /**

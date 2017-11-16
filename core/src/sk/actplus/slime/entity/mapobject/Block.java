@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
 
+import sk.actplus.slime.constants.Category;
 import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.other.LogicalOperations;
 
@@ -55,6 +56,10 @@ public class Block {
             fixDef.shape = shape;
             fixDef.restitution = 0.4f;
             fixDef.friction = 0f;
+
+            fixDef.filter.categoryBits = Category.MAPOBJECT_BLOCK;
+            fixDef.filter.maskBits = (short)~Category.JELLY_HITBOX;
+
             body.createFixture(fixDef);
             sprite.setSize(width,height);
             body.setUserData(sprite);

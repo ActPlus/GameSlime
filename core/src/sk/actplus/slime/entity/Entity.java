@@ -108,6 +108,14 @@ public class Entity extends BodyArray{
         return fixDef;
     }
 
+    public FixtureDef defineFixture(Shape shape, float density, float restitution, float friction, short category, short maskbit) {
+        FixtureDef fixDef;
+        fixDef = defineFixture(shape,density,restitution,friction);
+        fixDef.filter.categoryBits = category;
+        fixDef.filter.maskBits = (short)~maskbit;
+        return fixDef;
+    }
+
 
     /**
      * Creates Distance Joint Def with Properties.
@@ -145,6 +153,11 @@ public class Entity extends BodyArray{
      * @param firstBody - first Box2D Body
      * @param secondBody - second Box2D Body
      */
+
+    public void createDistanceJointSpec(DistanceJointDef jointDef,Body firstBody, Body secondBody) {
+
+        createDistanceJoint(jointDef,firstBody,secondBody,firstBody.getWorldCenter(),firstBody.getWorldCenter());
+    }
 
     public void createDistanceJointAtCenter(DistanceJointDef jointDef,Body firstBody, Body secondBody) {
         createDistanceJoint(jointDef,firstBody,secondBody,firstBody.getWorldCenter(),secondBody.getWorldCenter());
