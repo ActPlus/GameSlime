@@ -115,7 +115,7 @@ public class MapGenerator {
 
             /**
              * If more then 95, MEANS there is 5% chance to go HIGH
-             */
+             *///
 
             currentY = currentY + rand.nextInt(heightGenFactor * 2 + 1) - heightGenFactor;
 
