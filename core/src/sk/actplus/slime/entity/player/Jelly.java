@@ -38,8 +38,8 @@ public class Jelly extends Player {
     public static final float OUTER_RESTITUTION = 0f;
     public static final float INNER_RESTITUTION = 0f;
 
-    public static final float INNER_FRICTION = 0f;
-    public static final float OUTER_FRICTION = 0f;
+    public static final float INNER_FRICTION = 1f;
+    public static final float OUTER_FRICTION = 1f;
 
     public static final float INNER_FREQUENCY_HZ = 14f;
     public static final float OUTER_FREQUENCY_HZ = 16f;

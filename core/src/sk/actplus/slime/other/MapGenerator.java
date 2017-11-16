@@ -13,6 +13,7 @@ import sk.actplus.slime.entity.enemies.Enemy;
 import sk.actplus.slime.entity.mapobject.MovingBlock;
 import sk.actplus.slime.entity.mapobject.Block;
 import sk.actplus.slime.entity.player.Jelly;
+import sk.actplus.slime.entity.player.JellyFix;
 
 import static sk.actplus.slime.constants.Files.SPRITE_BLOCK_COOKIE;
 import static sk.actplus.slime.constants.Values.BLOCK_COOKIE_USER_DATA;
@@ -70,13 +71,13 @@ public class MapGenerator {
         }
     }
 
-    public void update(World world, BodyArray blocks, MovableCamera camera, EnemyArray enemies, Jelly player, LightArray lights, RayHandler rayHandler) {
+    public void update(World world, BodyArray blocks, MovableCamera camera, EnemyArray enemies, JellyFix player, LightArray lights, RayHandler rayHandler) {
         deleteJunkBodies(world,blocks,camera,enemies,lights);
         generateIfNeeded(world,blocks,camera,enemies, player,lights,rayHandler);
 
     }
 
-    public void generateIfNeeded(World world, BodyArray blocks, MovableCamera camera, EnemyArray enemies, Jelly player, LightArray lights, RayHandler rayHandler) {
+    public void generateIfNeeded(World world, BodyArray blocks, MovableCamera camera, EnemyArray enemies, JellyFix player, LightArray lights, RayHandler rayHandler) {
         /**
          * Generate new Block if needed
          */
@@ -85,7 +86,7 @@ public class MapGenerator {
         }
     }
 
-    public void generate(World world, BodyArray blocks, EnemyArray enemies, Jelly player, LightArray lights, RayHandler rayHandler) {
+    public void generate(World world, BodyArray blocks, EnemyArray enemies, JellyFix player, LightArray lights, RayHandler rayHandler) {
         lastY = currentY;
 
         int randomNumber = rand.nextInt(100);
@@ -114,7 +115,7 @@ public class MapGenerator {
 
             /**
              * If more then 95, MEANS there is 5% chance to go HIGH
-             */
+             *///
 
             currentY = currentY + rand.nextInt(heightGenFactor * 2 + 1) - heightGenFactor;
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
 
+import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
 import static sk.actplus.slime.constants.Values.HEIGHT_CLIENT;
 import static sk.actplus.slime.constants.Values.PPM;
 import static sk.actplus.slime.constants.Values.WIDTH_CLIENT;
@@ -35,11 +36,18 @@ public class TriGen {
     static Random rand = new Random();
     public static Body generateTriangle(World world){
 
+
+
+
         Body body;
         Vector2[] vertices = new Vector2[3];
         vertices[0] = lastVertexes[0];
         vertices[1] = lastVertexes[1];
-        vertices[2] = new Vector2(getCenterPoint(lastVertexes).x+rand.nextFloat()*2.5f,getCenterPoint(lastVertexes).y+rand.nextFloat()*4-2f);
+        //vertices[2] = new Vector2(getCenterPoint(lastVertexes).x+rand.nextFloat()*7,getCenterPoint(lastVertexes).y+rand.nextFloat()*50-25f);
+
+        for (int i = 2; i < 3; i++) {
+            vertices[i] = new Vector2(getCenterPoint(lastVertexes).x+rand.nextFloat()*7,getCenterPoint(lastVertexes).y+rand.nextFloat()*50-25f);
+        }
         lastVertexes =  getOkVertexes(vertices);
 
         PolygonShape shape = new PolygonShape();
@@ -55,10 +63,14 @@ public class TriGen {
         fixDef.shape = shape;
         fixDef.restitution = 0.4f;
         fixDef.friction = 0f;
+
+
         body.createFixture(fixDef);
         shape.dispose();
 
-        //2nd triangle
+        for (Fixture fixture : body.getFixtureList()) {
+            fixture.setUserData(BLOCK_USER_DATA);
+        }
 
 
         return null;

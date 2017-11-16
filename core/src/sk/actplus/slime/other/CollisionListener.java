@@ -44,24 +44,22 @@ public class CollisionListener implements ContactListener {
             if (((fixAData == "block") && (fixBData == "player")) || ((fixAData == "player") && (fixBData == "block"))) {
                     screen.jumped = false;
                     screen.zoomState =0;
+                System.out.println("HIIIIIIT");
 
 
-                final Body ballA = (Body) contact.getFixtureA().getBody();
-                final Body ballB = (Body) contact.getFixtureB().getBody();
-
+/*
                 if (((fixAData == "block") && (fixBData == "player")) || ((fixAData == "player") && (fixBData == "block"))) {
 
                     if (fixAData == "block"){
-
+                        //contact.getFixtureA().setUserData("nogravity");
                     }
 
                     if (fixBData == "block"){
-                        //ballB.setType(BodyDef.BodyType.KinematicBody);
-                    }
-                    //screen.camera.reset();
-                    //PPM = finalPPM;
+                        //contact.getFixtureB().setUserData("nogravity");
 
-                }
+                    }
+
+                }*/
 
                 //screen.camera.reset();
                 //PPM = finalPPM;

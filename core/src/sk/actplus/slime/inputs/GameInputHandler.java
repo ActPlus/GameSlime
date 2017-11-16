@@ -2,6 +2,7 @@ package sk.actplus.slime.inputs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.physics.box2d.Body;
 
 import sk.actplus.slime.screens.PlayScreen;
 
@@ -68,7 +69,11 @@ public class GameInputHandler {
                 screen.jumped = true;
                 //PPM = PPM/3f;
                 //screen.camera.update();
-                screen.player.body.applyForceToCenter(0, PLAYER_JUMP, false);
+                //screen.player.body.applyForceToCenter(0, PLAYER_JUMP/10f, false);
+
+
+                    screen.player.bodies.applyForceToCenter(0, PLAYER_JUMP/100f, false);
+
 
 
             }
