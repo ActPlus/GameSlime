@@ -11,10 +11,8 @@ import java.util.Random;
 import sk.actplus.slime.constants.Category;
 import sk.actplus.slime.entity.interfaces.Updateable;
 import sk.actplus.slime.entity.mapobject.MovingBlock;
-import sk.actplus.slime.entity.player.Jelly;
 import sk.actplus.slime.entity.player.JellyFix;
 import sk.actplus.slime.entity.player.Player;
-import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.other.LogicalOperations;
 
 import static sk.actplus.slime.constants.Values.FOLLOWER_SPEED;
@@ -47,7 +45,7 @@ public class Enemy extends Player implements Updateable {
         super(world);
 
         /**
-         * Creates Main Player Body, controlled by Input
+         * Creates Main ExpectsInput Body, controlled by Input
          */
         BodyDef bodyDefMain = defineBody(BODY_TYPE, x,y,FIXED_ROTATION);
         PolygonShape shapeMain = new PolygonShape();

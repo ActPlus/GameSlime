@@ -25,15 +25,15 @@ public class GameScreen implements Screen{
 
     private final Vector2 GRAVITY = new Vector2(0,-10);
     public static float PPM = 32;
-    private final float CLIENT_WIDTH = Gdx.graphics.getWidth();
-    private final float CLIENT_HEIGHT = Gdx.graphics.getHeight();
+    public static final float CLIENT_WIDTH = Gdx.graphics.getWidth();
+    public static final float CLIENT_HEIGHT = Gdx.graphics.getHeight();
 
 
     public GameScreen() {
         world = new World(GRAVITY,false);
         camera = new MovableCamera(0,0,CLIENT_WIDTH,CLIENT_HEIGHT);
         b2ddr = new Box2DDebugRenderer();
-        game = new Game(world);
+        game = new Game(world,camera);
 
 
     }

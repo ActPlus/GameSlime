@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
 
+import sk.actplus.slime.version2.entities.EntityArray;
 import sk.actplus.slime.version2.entities.Triangle;
 
 /**
@@ -22,6 +23,7 @@ class MapGenerator {
     protected Triangle last;
 
     public static final float MAX_RADIUS = 2.5f;
+    public static final float SCREEN_GEN_BORDER_X = GameScreen.CLIENT_WIDTH*1.5f;
 
     public MapGenerator(World world, OrthographicCamera camera,Vector2[] startingEdge, Vector2 C) {
         this.world = world;
@@ -37,6 +39,14 @@ class MapGenerator {
     }
 
 
+    public EntityArray generateIfNeeded(EntityArray entities){
+
+        while (last.getC().x < SCREEN_GEN_BORDER_X)
+            entities.add(generate(last));
+        return entities;
+    }
+
+
     public Triangle generate(Triangle last) {
         Triangle tri;
         Vector2[] newShared = new Vector2[2];
@@ -47,7 +57,7 @@ class MapGenerator {
 
         do {
 
-            newC = getRandomPoint(0, last, newShared);
+            newC = getRandomPoint(-MAX_RADIUS-getDeltaX(), last, newShared);
             tri = new Triangle(world, new Vector2[]{newShared[0], newShared[1], newC}, camera);
         } while(!isColliding(tri));
 
@@ -101,26 +111,37 @@ class MapGenerator {
         int offset = 180;
         Angle angle;
 
-        do {
+            float random_x;
+            float random_y;
+
             radius = rand.nextFloat() * MAX_RADIUS;
             angle = new Angle(rand.nextFloat() * 180 + getAngleFromSlope(slope));
 
-            if (isPointAbove(getSlope(last.getSharedSide()), last.getC())) {
-                offset = -offset;
-            }
-
-            angle.setDeg(angle.getDeg() + offset);
-        } while((Math.cos(angle.getDeg()*radius)+center.x)>limitX);
-
-        Vector2 point = new Vector2((float)(Math.cos(angle.getDeg()*radius)+center.x),(float)(Math.sin(angle.getDeg()*radius))+center.y);
-
-        //TODO: IMPLEMENT no circular motion
-
-
-        if(getDeltaX()<0){
-            //point.y =
+        if (isPointAbove(getSlope(last.getSharedSide()), last.getC())) {
+            offset = -offset;
         }
 
+        angle.setDeg(angle.getDeg() + offset);
+
+            if(getDeltaX()<0){
+                random_x=rand.nextFloat()*(limitX-MAX_RADIUS);
+                if (random_x<=0) {
+                    random_y=(float)Math.sqrt(Math.pow(radius,2)-Math.pow(random_x,2));
+                } else {
+                    random_y=(float)Math.sin(angle.getDeg());
+                }
+
+
+
+            } else {
+
+                random_x = (float)(Math.cos(angle.getDeg()*radius)+center.x);
+                random_y = (float)(Math.sin(angle.getDeg()*radius))+center.y;
+
+
+            }
+
+        Vector2 point = new Vector2(random_x,random_y);
         return point;
 
     }

@@ -15,7 +15,6 @@ import java.util.Random;
 
 import box2dLight.RayHandler;
 import sk.actplus.slime.entity.mapobject.MovingBlock;
-import sk.actplus.slime.entity.player.Jelly;
 import sk.actplus.slime.entity.player.JellyFix;
 import sk.actplus.slime.inputs.GameInputHandler;
 import sk.actplus.slime.other.BodyArray;
@@ -25,7 +24,6 @@ import sk.actplus.slime.other.FpsCounter;
 import sk.actplus.slime.other.LightArray;
 import sk.actplus.slime.other.MapGenerator;
 import sk.actplus.slime.other.MovableCamera;
-import sk.actplus.slime.other.TriGen;
 
 import static sk.actplus.slime.constants.Values.GRAVITY;
 import static sk.actplus.slime.constants.Values.HEIGHT_CLIENT;
@@ -51,7 +49,6 @@ public class PlayScreen implements Screen {
      * Box2D Declaration
      */
     public SpriteBatch batch;
-    Sprite sprite;
     public MovableCamera camera;
 
 
@@ -106,8 +103,9 @@ public class PlayScreen implements Screen {
                 body.setType(BodyDef.BodyType.DynamicBody);
             }
 
+
             if (body.getUserData() != null) {
-                sprite = (Sprite) body.getUserData();
+                Sprite sprite = (Sprite) body.getUserData();
                 sprite.setBounds(((body.getPosition().x-0.5f - camera.position.x)*PPM/camera.zoom+WIDTH_CLIENT/2f), ((body.getPosition().y-0.5f- camera.position.y)*PPM/camera.zoom+HEIGHT_CLIENT/2f),PPM/camera.zoom,PPM/camera.zoom);
                 sprite.draw(batch);
             }
@@ -126,13 +124,14 @@ public class PlayScreen implements Screen {
         camera.cameraUpdate();
         mapGenerator.update(world,blocks,camera,enemies,player,lights,rayHandler);
 
+//        batch.draw();
+
 
         input.handle(delta);
         enemies.update();
 
 
         ellapsedTime++;
-
         /*if (zoomState==1) {
             camera.zoomOut();
         } else {
@@ -181,8 +180,8 @@ public class PlayScreen implements Screen {
         jumped= false;
         zoomState = 0;
 
-
-        //TriGen.generateMore(world,250);
+        //TriGen.setStartingPoint(new Vector2(2,1));
+        //TriGen.generateMore(world,300);
 
     }
 

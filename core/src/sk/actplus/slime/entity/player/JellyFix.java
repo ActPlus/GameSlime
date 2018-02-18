@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 
 import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.constants.Category;
@@ -65,14 +64,14 @@ public class JellyFix extends Player {
 
         /**
          * Main Body's Definitions, Body Definition and Fixture Definition
-         * Creates Main Player Body, controlled by Input
+         * Creates Main ExpectsInput Body, controlled by Input
          * */
 
         BodyDef bodyDefMain = defineBody(BODY_TYPE, xi, yi, HITBOX_ROTATION);
         PolygonShape shapeMain = new PolygonShape();
         shapeMain.setAsBox(HITBOX_SIDE /2f, HITBOX_SIDE /2f);
 
-        FixtureDef fixtureDefMain = defineFixture(shapeMain, HITBOX_DENSITY, HITBOX_RESTITUTION, HITBOX_FRICTION, HITBOX_category);
+        FixtureDef fixtureDefMain = defineFixture(shapeMain, HITBOX_DENSITY, HITBOX_RESTITUTION, HITBOX_FRICTION, HITBOX_category,HITBOX_category);
 
         /**
          * Orbital's Body Definitions Definitions, Body Definition and Fixture Definition

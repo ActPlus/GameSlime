@@ -32,7 +32,7 @@ public class MovingBlock extends Entity {
     public MovingBlock(World world, float xi, float yi, Vector2 direction, String userData) {
         super(world);
         /**
-         * Creates Main Player Body, controlled by Input
+         * Creates Main ExpectsInput Body, controlled by Input
          */
 
         BodyDef bodyDefMain = defineBody(BODY_TYPE, xi-0.1f, yi, FIXED_ROTATION);
@@ -55,7 +55,7 @@ public class MovingBlock extends Entity {
     public MovingBlock(World world, float xi, float yi, float width, float height, Vector2 direction, String userData) {
         super(world);
         /**
-         * Creates Main Player Body, controlled by Input
+         * Creates Main ExpectsInput Body, controlled by Input
          */
 
         BodyDef bodyDefMain = defineBody(BODY_TYPE, xi-0.1f, yi, FIXED_ROTATION);

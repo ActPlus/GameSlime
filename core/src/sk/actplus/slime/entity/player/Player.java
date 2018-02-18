@@ -32,7 +32,7 @@ public class Player extends Entity {
     public Player(World world, float xi, float yi) {
         super(world);
         /**
-         * Creates Main Player Body, controlled by Input
+         * Creates Main ExpectsInput Body, controlled by Input
          */
         BodyDef bodyDefMain = defineBody(BODY_TYPE, xi,yi,FIXED_ROTATION);
         PolygonShape shapeMain = new PolygonShape();

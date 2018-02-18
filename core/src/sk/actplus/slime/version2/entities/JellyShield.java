@@ -1,5 +1,7 @@
 package sk.actplus.slime.version2.entities;
 
+import com.badlogic.gdx.physics.box2d.World;
+
 import sk.actplus.slime.version2.Shield;
 
 /**
@@ -8,6 +10,10 @@ import sk.actplus.slime.version2.Shield;
 
 public class JellyShield extends Player {
     Shield shield;
+
+    public JellyShield(World world) {
+        super(world);
+    }
 
     @Override
     public void render() {
