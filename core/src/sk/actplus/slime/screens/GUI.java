@@ -91,7 +91,7 @@ public class GUI {
     }
 
     /**
-     * Show GameOver message
+     * Show GameOverGUI message
      */
     public void gameOver() {
         gameOverLabel.setVisible(true);

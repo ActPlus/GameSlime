@@ -1,4 +1,4 @@
-package sk.actplus.slime.version2.entities;
+package sk.actplus.slime.version2.entity;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

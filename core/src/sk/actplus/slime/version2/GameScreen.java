@@ -2,13 +2,14 @@ package sk.actplus.slime.version2;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
-import sk.actplus.slime.version2.entities.EntityArray;
-import sk.actplus.slime.version2.entities.Player;
+import sk.actplus.slime.version2.gui.DebugInGameGUI;
+import sk.actplus.slime.version2.gui.GUI;
 
 import static sk.actplus.slime.constants.Values.WORLD_STEP;
 
@@ -17,62 +18,81 @@ import static sk.actplus.slime.constants.Values.WORLD_STEP;
  */
 
 public class GameScreen implements Screen{
-    private InputMultiplexer mux;
-    private World world;
-    private Box2DDebugRenderer b2ddr;
-    private MovableCamera camera;
-    private Game game;
-
     private final Vector2 GRAVITY = new Vector2(0,-10);
     public static float PPM = 32;
     public static final float CLIENT_WIDTH = Gdx.graphics.getWidth();
     public static final float CLIENT_HEIGHT = Gdx.graphics.getHeight();
 
+    protected InputMultiplexer muxInput;
+    private World world;
+    private Box2DDebugRenderer b2ddr;
+    protected MovableCamera camera;
+    private Game game;
+    private GUI gui;
+
+
+
 
     public GameScreen() {
         world = new World(GRAVITY,false);
-        camera = new MovableCamera(0,0,CLIENT_WIDTH,CLIENT_HEIGHT);
+        camera = new MovableCamera(0,0,CLIENT_WIDTH/PPM,CLIENT_HEIGHT/PPM);
         b2ddr = new Box2DDebugRenderer();
-        game = new Game(world,camera);
+        muxInput = new InputMultiplexer();
+        Gdx.input.setInputProcessor(muxInput);
+        game = new Game(this,muxInput);
+        //TODO GUI
+        //gui = new DebugInGameGUI();
 
 
     }
 
     @Override
     public void show() {
-
+        game.load();
     }
 
     @Override
     public void render(float delta) {
-        game.render();
+        game.render(delta);
         b2ddr.render(world,camera.combined);
-        update();
+        update(delta);
     }
 
-    public void update() {
-        game.update();
+    public void update(float delta) {
         world.step(WORLD_STEP * ((game.isPaused()) ? 0 : 1), 6, 2);
+        //SET UPS Updates per second to be fixed on all devices win...
+        game.update(delta);
+    }
+
+    public void addInputProcessor(InputProcessor processor) {
+        muxInput.addProcessor(processor);
+    }
+
+    public void removeInputProcessor(InputProcessor processor) {
+        muxInput.removeProcessor(processor);
     }
 
     @Override
     public void resize(int width, int height) {
-
+        camera.resize(width,height);
+        //gui.resize(width,height);
     }
 
     @Override
     public void pause() {
         game.pause();
+        game.save();
     }
 
     @Override
     public void resume() {
         game.resume();
+        game.load();
     }
 
     @Override
     public void hide() {
-
+        game.save();
     }
 
     @Override
@@ -80,5 +100,10 @@ public class GameScreen implements Screen{
         world.dispose();
         b2ddr.dispose();
         game.dispose();
+
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

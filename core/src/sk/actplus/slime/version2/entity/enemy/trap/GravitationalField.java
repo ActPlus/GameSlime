@@ -1,4 +1,4 @@
-package sk.actplus.slime.version2.entities;
+package sk.actplus.slime.version2.entity.enemy.trap;
 
 /**
  * Created by Ja on 17.2.2018.
