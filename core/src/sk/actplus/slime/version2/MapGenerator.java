@@ -1,14 +1,13 @@
 package sk.actplus.slime.version2;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
 
-import sk.actplus.slime.version2.entities.EntityArray;
-import sk.actplus.slime.version2.entities.Triangle;
+import sk.actplus.slime.version2.entity.EntityArray;
+import sk.actplus.slime.version2.entity.mapentity.Triangle;
 
 /**
  * Created by Ja on 17.2.2018.
@@ -17,6 +16,7 @@ import sk.actplus.slime.version2.entities.Triangle;
 class MapGenerator {
     Random rand;
     protected World world;
+    protected GameScreen screen;
     protected OrthographicCamera camera;
     protected Vector2 transition;
     protected int numOfFails;
@@ -25,24 +25,22 @@ class MapGenerator {
     public static final float MAX_RADIUS = 2.5f;
     public static final float SCREEN_GEN_BORDER_X = GameScreen.CLIENT_WIDTH*1.5f;
 
-    public MapGenerator(World world, OrthographicCamera camera,Vector2[] startingEdge, Vector2 C) {
-        this.world = world;
-        this.camera = camera;
+    public MapGenerator(GameScreen screen, OrthographicCamera camera,Vector2[] startingEdge, Vector2 C) {
+        this.world = screen.getWorld();
+        this.screen = screen;
         rand = new Random();
         numOfFails = 0;
-
-
-
-
-        last = new Triangle(world,new Vector2[]{startingEdge[0],startingEdge[1],C},camera);
+        transition = new Vector2(0,0);
+        last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},camera);
         generate(last);
     }
 
 
     public EntityArray generateIfNeeded(EntityArray entities){
 
-        while (last.getC().x < SCREEN_GEN_BORDER_X)
+        while (last.getC().x < SCREEN_GEN_BORDER_X) {
             entities.add(generate(last));
+        }
         return entities;
     }
 
@@ -58,7 +56,7 @@ class MapGenerator {
         do {
 
             newC = getRandomPoint(-MAX_RADIUS-getDeltaX(), last, newShared);
-            tri = new Triangle(world, new Vector2[]{newShared[0], newShared[1], newC}, camera);
+            tri = new Triangle(screen, new Vector2[]{newShared[0], newShared[1], newC}, camera);
         } while(!isColliding(tri));
 
 
@@ -71,6 +69,12 @@ class MapGenerator {
         }
 
         setLast(tri);
+        System.out.println(tri);
+
+
+            System.out.println(tri.getSharedSide()[0] + " , " + tri.getSharedSide()[1] + " , " + tri.getC());
+            System.out.println("--------------------");
+            tri.generateTriangle(world);
 
         return tri;
     }
@@ -126,7 +130,7 @@ class MapGenerator {
             if(getDeltaX()<0){
                 random_x=rand.nextFloat()*(limitX-MAX_RADIUS);
                 if (random_x<=0) {
-                    random_y=(float)Math.sqrt(Math.pow(radius,2)-Math.pow(random_x,2));
+                    random_y=(float)Math.sqrt(Math.abs(Math.pow(radius,2)-Math.pow(random_x,2)));
                 } else {
                     random_y=(float)Math.sin(angle.getDeg());
                 }
@@ -140,6 +144,7 @@ class MapGenerator {
 
 
             }
+        System.out.println(random_y);
 
         Vector2 point = new Vector2(random_x,random_y);
         return point;

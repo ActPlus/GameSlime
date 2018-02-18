@@ -1,4 +1,4 @@
-package sk.actplus.slime.version2.entities;
+package sk.actplus.slime.version2.entity.mapentity;
 
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.graphics.Color;
@@ -8,18 +8,28 @@ package sk.actplus.slime.version2.entities;
     import com.badlogic.gdx.graphics.VertexAttributes.Usage;
     import com.badlogic.gdx.graphics.VertexAttribute;
     import com.badlogic.gdx.math.Vector2;
+    import com.badlogic.gdx.physics.box2d.Body;
+    import com.badlogic.gdx.physics.box2d.BodyDef;
+    import com.badlogic.gdx.physics.box2d.Fixture;
+    import com.badlogic.gdx.physics.box2d.FixtureDef;
+    import com.badlogic.gdx.physics.box2d.PolygonShape;
     import com.badlogic.gdx.physics.box2d.World;
+
+    import sk.actplus.slime.constants.Category;
+    import sk.actplus.slime.version2.GameScreen;
     import sk.actplus.slime.version2.VertexShader;
-    import sun.security.provider.certpath.Vertex;
+    import sk.actplus.slime.version2.entity.Entity;
+
+    import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
 
 /**
  * Created by Ja on 17.2.2018.
  */
 
-public class Triangle extends Entity{
-    private Vector2[] sharedSide;
-    private Vector2 C;
-    private Graphics graphics;
+public class Triangle extends Entity {
+    protected Vector2[] sharedSide;
+    protected Vector2 C;
+    protected Graphics graphics;
 
     public Vector2[] getSharedSide() {
         return sharedSide;
@@ -39,8 +49,8 @@ public class Triangle extends Entity{
 
     private OrthographicCamera camera;
 
-    public Triangle(World world,Vector2 []  vertex, OrthographicCamera camera) {
-        super(world);
+    public Triangle(GameScreen screen, Vector2 []  vertex, OrthographicCamera camera) {
+        super(screen);
         sharedSide = new Vector2[]{vertex[0],vertex[1]};
         C = vertex[2];
         this.camera = camera;
@@ -48,21 +58,71 @@ public class Triangle extends Entity{
     }
 
     @Override
-    public void handleCollision() {
-        super.handleCollision();
+    public void render(float delta) {
+        //TODO OpenGL Triangle graphics radial gradients in vertex, depending on seed color:-> darker, normal, light
+        //graphics.flush(camera);
     }
 
     @Override
-    public void render() {
-        super.render();
-        graphics.flush(camera);
+    public void handleCollision(short collisionBIT) {
+        switch (collisionBIT){
+
+            //TODO collision switch
+        }
+
 
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void destroy() {
+
     }
+
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+    }
+
+    public Body generateTriangle(World world){
+
+        Body body;
+
+        Vector2[] vertices = new Vector2[3];
+        vertices[0] = sharedSide[0];
+        vertices[1] = sharedSide[1];
+        vertices[2] = C;
+
+        PolygonShape shape = new PolygonShape();
+        shape.set(vertices);
+
+
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.StaticBody;
+        def.position.set(0,0);
+        body = world.createBody(def);
+        //triangles.add(body);
+
+
+        FixtureDef fixDef = new FixtureDef();
+        fixDef.shape = shape;
+        fixDef.restitution = 0.4f;
+        fixDef.friction = 0f;
+        fixDef.filter.categoryBits = Category.MAPOBJECT_TRIANGLE;
+        fixDef.filter.maskBits = Category.JELLY;
+
+
+        body.createFixture(fixDef);
+        shape.dispose();
+
+        for (Fixture fixture : body.getFixtureList()) {
+            fixture.setUserData(BLOCK_USER_DATA);
+        }
+
+
+        return body;
+    }
+
 
     public class Graphics{
         private Mesh mesh;

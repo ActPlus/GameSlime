@@ -22,6 +22,7 @@ import static sk.actplus.slime.version2.GameScreen.PPM;
         float width;
         float height;
 
+
         public MovableCamera(int x, int y, float width, float height){
             position.set(x,y,0);
             transition = new Vector2(x,y);
@@ -55,5 +56,7 @@ import static sk.actplus.slime.version2.GameScreen.PPM;
             viewportHeight = height/PPM;
             update();
         }
+
+
     }
 
