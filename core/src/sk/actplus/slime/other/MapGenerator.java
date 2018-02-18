@@ -2,7 +2,6 @@ package sk.actplus.slime.other;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
@@ -12,7 +11,6 @@ import box2dLight.RayHandler;
 import sk.actplus.slime.entity.enemies.Enemy;
 import sk.actplus.slime.entity.mapobject.MovingBlock;
 import sk.actplus.slime.entity.mapobject.Block;
-import sk.actplus.slime.entity.player.Jelly;
 import sk.actplus.slime.entity.player.JellyFix;
 
 import static sk.actplus.slime.constants.Files.SPRITE_BLOCK_COOKIE;

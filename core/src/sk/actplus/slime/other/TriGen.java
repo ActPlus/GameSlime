@@ -1,6 +1,5 @@
 package sk.actplus.slime.other;
 
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,58 +10,67 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
 
+import sk.actplus.slime.constants.Category;
+
 import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
-import static sk.actplus.slime.constants.Values.HEIGHT_CLIENT;
-import static sk.actplus.slime.constants.Values.PPM;
-import static sk.actplus.slime.constants.Values.WIDTH_CLIENT;
 
 /**
  * Created by Ja on 7.11.2017.
  */
 
 public class TriGen {
-
-    public static BodyArray generateMore(World world, int howMuch){
+    public static void generateMore(World world, int howMuch){
         BodyArray triangles = new BodyArray();
         for (int i = 0; i < howMuch; i++) {
             triangles.add(generateTriangle(world));
         }
-
-
-        return null;
     }
 
-    public static Vector2[] lastVertexes = {new Vector2(0,3f),new Vector2(0.8f,4.2f)};
     static Random rand = new Random();
+
+    public static BodyArray triangles= new BodyArray();
+    private static Vector2[] lastVertexes = new Vector2[2];
+
+    public static void setStartingPoint(Vector2 startingPos){
+        lastVertexes[0] = new Vector2(startingPos.x-4*rand.nextFloat(),startingPos.y-4*rand.nextFloat());
+        lastVertexes[1] = new Vector2(startingPos.x-4*rand.nextFloat(),startingPos.y+4*rand.nextFloat());
+    }
+
     public static Body generateTriangle(World world){
-
-
-
 
         Body body;
         Vector2[] vertices = new Vector2[3];
+
         vertices[0] = lastVertexes[0];
         vertices[1] = lastVertexes[1];
-        //vertices[2] = new Vector2(getCenterPoint(lastVertexes).x+rand.nextFloat()*7,getCenterPoint(lastVertexes).y+rand.nextFloat()*50-25f);
+        vertices[2] = new Vector2(getCenterPoint(lastVertexes).x+rand.nextFloat()*4f,getCenterPoint(lastVertexes).y+2f-rand.nextFloat()*4f);
 
-        for (int i = 2; i < 3; i++) {
-            vertices[i] = new Vector2(getCenterPoint(lastVertexes).x+rand.nextFloat()*7,getCenterPoint(lastVertexes).y+rand.nextFloat()*50-25f);
-        }
+
+
+
         lastVertexes =  getOkVertexes(vertices);
-
+        Vector2 center = getCenterPoint(vertices);
+        /*for (int i = 0; i < 3; i++) {
+            vertices[i].x-=center.x;
+            vertices[i].y-=center.y;
+        }*/
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);
 
 
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.StaticBody;
-        def.position.set(new Vector2(0,0));
+        def.position.set(0,0);
         body = world.createBody(def);
+        triangles.add(body);
+
 
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = shape;
         fixDef.restitution = 0.4f;
         fixDef.friction = 0f;
+        fixDef.filter.categoryBits = Category.MAPOBJECT_TRIANGLE;
+        fixDef.filter.maskBits = Category.JELLY;
 
 
         body.createFixture(fixDef);
@@ -73,20 +81,18 @@ public class TriGen {
         }
 
 
-        return null;
+        return body;
     }
 
     public static Vector2 getCenterPoint(Vector2[] v) {
-        float n = 0;
         float sumX=0, sumY=0;
         for (int i = 0; i < v.length; i++) {
-            n++;
             sumX+=v[i].x;
             sumY+=v[i].y;
         }
 
 
-        return new Vector2(sumX/n,sumY/n);
+        return new Vector2(sumX/v.length,sumY/v.length);
     }
 
     public static Vector2[] getOkVertexes(Vector2[] v) {

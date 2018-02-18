@@ -50,7 +50,7 @@ public class GameInputHandler {
 
             if (DEBUG) {
                 /**
-                 * If in DEBUG mode, you can move with Player
+                 * If in DEBUG mode, you can move with ExpectsInput
                  */
                 horizontalForce = 0;
 
