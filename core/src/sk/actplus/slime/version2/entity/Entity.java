@@ -20,6 +20,11 @@ public abstract class Entity {
     protected GameScreen screen;
     protected boolean setToDestroy;
     protected boolean destroyed;
+
+    public Body getBody() {
+        return body;
+    }
+
     protected Body body;
 
     public Entity(GameScreen screen) {

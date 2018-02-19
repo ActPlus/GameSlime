@@ -53,6 +53,7 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
 
     private int score;
     private PlayerInputProcessor inputProccesor;
+    public BodyArray bodies;
 
     public Player(GameScreen screen, InputMultiplexer mux) {
         super(screen);
@@ -62,13 +63,22 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
         mux.addProcessor(inputProccesor);
     }
 
+    public void applyForce(float vx, float vy) {
+        bodies.applyForceToCenter(vx,vy,false);
+    }
+
+    public void setVelocity(float vx, float vy) {
+        bodies.setLinearVelocity(vx,vy);
+    }
+
 
 
     private Body createJellyBody(float xi, float yi) {
 
         Neighbors bodyParticles[][] = new Neighbors[NUM_SEGMENTS][NUM_SEGMENTS];
-        BodyArray bodies = new BodyArray();
+        bodies = new BodyArray();
         Body body;
+
 
         /**
          * Main Body's Definitions, Body Definition and Fixture Definition
