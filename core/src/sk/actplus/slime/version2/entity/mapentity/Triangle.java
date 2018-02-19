@@ -19,6 +19,7 @@ package sk.actplus.slime.version2.entity.mapentity;
     import sk.actplus.slime.version2.GameScreen;
     import sk.actplus.slime.version2.VertexShader;
     import sk.actplus.slime.version2.entity.Entity;
+    import sk.actplus.slime.version2.input.Side;
 
     import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
 
@@ -27,8 +28,11 @@ package sk.actplus.slime.version2.entity.mapentity;
  */
 
 public class Triangle extends Entity {
+    public static final float MAX_RADIUS = 2.5f;
+
     protected Vector2[] sharedSide;
     protected Vector2 C;
+    protected Vector2 center;
     protected Graphics graphics;
 
     public Vector2[] getSharedSide() {
@@ -55,6 +59,7 @@ public class Triangle extends Entity {
         C = vertex[2];
         this.camera = camera;
         graphics = new Graphics(new Vector2[]{sharedSide[0],sharedSide[1],C});
+        center = getCenterPoint();
     }
 
     @Override
@@ -69,15 +74,12 @@ public class Triangle extends Entity {
 
             //TODO collision switch
         }
-
-
     }
 
     @Override
     public void destroy() {
 
     }
-
 
     @Override
     public void update(float delta) {
@@ -123,6 +125,59 @@ public class Triangle extends Entity {
         return body;
     }
 
+    public Vector2 getCenterPoint() {
+        Vector2[] v = new Vector2[]{sharedSide[0],sharedSide[1],C};
+
+        float sumX=0, sumY=0;
+        for (int i = 0; i < v.length; i++) {
+            sumX+=v[i].x;
+            sumY+=v[i].y;
+        }
+
+
+        return new Vector2(sumX/v.length,sumY/v.length);
+    }
+
+    public static Vector2 getCenterPoint(Vector2[] vertex) {
+        Vector2[] v = new Vector2[]{vertex[0],vertex[1],vertex[2]};
+
+        float sumX=0, sumY=0;
+        for (int i = 0; i < v.length; i++) {
+            sumX+=v[i].x;
+            sumY+=v[i].y;
+        }
+
+
+        return new Vector2(sumX/v.length,sumY/v.length);
+    }
+
+    public boolean isTooFar(Vector2 other) {
+        float dx = other.x-center.x;
+        float dy = other.y-center.y;
+
+        float distance = (float)Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
+
+        if(distance >= MAX_RADIUS*1.5f) {
+            return true;
+        }
+
+
+        return false;
+    }
+
+    public static boolean isTooFar(Vector2 newTriangle, Vector2 other) {
+        float dx = other.x-newTriangle.x;
+        float dy = other.y-newTriangle.y;
+
+        float distance = (float)Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
+
+        if(distance >= MAX_RADIUS*1.5f) {
+            return true;
+        }
+
+
+        return false;
+    }
 
     public class Graphics{
         private Mesh mesh;

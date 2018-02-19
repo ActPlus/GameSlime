@@ -3,11 +3,14 @@ package sk.actplus.slime.version2;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
 
+import sk.actplus.slime.version2.entity.Entity;
 import sk.actplus.slime.version2.entity.EntityArray;
 import sk.actplus.slime.version2.entity.mapentity.Triangle;
+import sk.actplus.slime.version2.input.Side;
 
 /**
  * Created by Ja on 17.2.2018.
@@ -25,27 +28,28 @@ class MapGenerator {
     public static final float MAX_RADIUS = 2.5f;
     public static final float SCREEN_GEN_BORDER_X = GameScreen.CLIENT_WIDTH*1.5f;
 
-    public MapGenerator(GameScreen screen, OrthographicCamera camera,Vector2[] startingEdge, Vector2 C) {
+    public MapGenerator(GameScreen screen, Array<Triangle> triangles,Vector2[] startingEdge, Vector2 C) {
         this.world = screen.getWorld();
         this.screen = screen;
         rand = new Random();
         numOfFails = 0;
         transition = new Vector2(0,0);
-        last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},camera);
-        generate(last);
+        last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},screen.camera);
+        generate(last,triangles);
     }
 
 
-    public EntityArray generateIfNeeded(EntityArray entities){
+    public Array<Triangle> generateIfNeeded(Array<Triangle> entities){
 
         while (last.getC().x < SCREEN_GEN_BORDER_X) {
-            entities.add(generate(last));
+            entities.add(generate(last,entities));
         }
+        String textl;
         return entities;
     }
 
 
-    public Triangle generate(Triangle last) {
+    public Triangle generate(Triangle last, Array<Triangle> entities) {
         Triangle tri;
         Vector2[] newShared = new Vector2[2];
         Vector2 newC;
@@ -57,7 +61,7 @@ class MapGenerator {
 
             newC = getRandomPoint(-MAX_RADIUS-getDeltaX(), last, newShared);
             tri = new Triangle(screen, new Vector2[]{newShared[0], newShared[1], newC}, camera);
-        } while(!isColliding(tri));
+        } while(!isColliding(new Vector2[]{newShared[0],newShared[1],newC},entities));
 
 
         Vector2 tempTransition = new Vector2(tri.getC().x-last.getC().x,tri.getC().y-last.getC().y);
@@ -69,17 +73,13 @@ class MapGenerator {
         }
 
         setLast(tri);
-        System.out.println(tri);
-
-
-            System.out.println(tri.getSharedSide()[0] + " , " + tri.getSharedSide()[1] + " , " + tri.getC());
-            System.out.println("--------------------");
             tri.generateTriangle(world);
 
+        System.out.println("Dinished generation");
         return tri;
     }
 
-    public boolean isPointAbove(float slope, Vector2 point){
+    private boolean isPointAbove(float slope, Vector2 point){
         if(point.y>slope*point.x) {
             return true;
         }
@@ -134,17 +134,10 @@ class MapGenerator {
                 } else {
                     random_y=(float)Math.sin(angle.getDeg());
                 }
-
-
-
             } else {
-
                 random_x = (float)(Math.cos(angle.getDeg()*radius)+center.x);
                 random_y = (float)(Math.sin(angle.getDeg()*radius))+center.y;
-
-
             }
-        System.out.println(random_y);
 
         Vector2 point = new Vector2(random_x,random_y);
         return point;
@@ -158,7 +151,32 @@ class MapGenerator {
         return false;
     }
 
-    public boolean isColliding(Triangle newTriangle) {
+    public boolean isColliding(Vector2[] vertex,  Array<Triangle> entities) {
+        Side[] newSide = new Side[]{
+                new Side(vertex[0],vertex[2]),
+                new Side(vertex[1],vertex[2])};
+
+        for (Triangle triangle: entities) {
+
+            //if (!Triangle.isTooFar(Triangle.getCenterPoint(vertex), triangle.getCenterPoint())) {
+
+                //oldSide
+                Side[] side = new Side[]{
+                        new Side(triangle.getSharedSide()[0], triangle.getC()),
+                        new Side(triangle.getSharedSide()[1], triangle.getC()),
+                        new Side(triangle.getSharedSide()[0], triangle.getSharedSide()[1])};
+                for (int i = 0; i < 2; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (newSide[i].isIntersecting(side[j], true)) {
+                            System.out.println("Generated Triangle");
+                            return true;
+                        }
+                    }
+                }
+
+            //}
+            return false;
+        }
         return true;
     }
 

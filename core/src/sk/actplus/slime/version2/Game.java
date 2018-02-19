@@ -19,6 +19,7 @@ public class Game {
     private boolean paused;
     private String savePath;
     private InputMultiplexer mux;
+    GameArray array;
 
     public
     Game(GameScreen screen, InputMultiplexer mux) {
@@ -26,16 +27,16 @@ public class Game {
         this.screen = screen;
         this.mux = mux;
         entities = new EntityArray();
-        mapGen= new MapGenerator(screen,screen.camera,new Vector2[]{new Vector2(-7,-4),new Vector2(2,-6)},new Vector2(6,0));
+        array = new GameArray();
+        mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-7,-4),new Vector2(2,-6)},new Vector2(6,0));
+
 
         Player player= new Player(screen,mux);
 
         entities.add(player);
         paused = false;
 
-        for (int i = 0; i < 50; i++) {
-           entities.add(mapGen.generate(mapGen.last));
-        }
+
     }
 
 
@@ -44,8 +45,16 @@ public class Game {
         entities.render(delta);
     }
 
+    private float dx = 0;
     public void update(float delta) {
+        dx+=delta;
         entities.update(delta);
+        if(dx>=2) {
+            dx =0;
+            System.out.println("Generating");
+            array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
+        }
+
     }
 
     public void dispose() {
