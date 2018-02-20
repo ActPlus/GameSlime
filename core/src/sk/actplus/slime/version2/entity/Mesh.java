@@ -5,4 +5,13 @@ package sk.actplus.slime.version2.entity;
  */
 
 public class Mesh {
+    private int NUMBER_OF_SEGMETS = 3 ;
+    private int
+
+
+    private int
+
+    public Mesh(){
+
+    }
 }
