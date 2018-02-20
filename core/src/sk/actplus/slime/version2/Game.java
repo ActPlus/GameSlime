@@ -52,7 +52,7 @@ public class Game {
         if(dx>=2) {
             dx =0;
             System.out.println("Generating");
-            array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
+            //array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
         }
 
     }
