@@ -1,0 +1,196 @@
+
+{
+  "collisionbitplanes" : 
+  {
+    "names" : 
+    [
+      "bitplane1",
+      "bitplane2",
+      "bitplane3",
+      "bitplane4",
+      "bitplane5",
+      "bitplane6",
+      "bitplane7",
+      "bitplane8",
+      "bitplane9",
+      "bitplane10",
+      "bitplane11",
+      "bitplane12",
+      "bitplane13",
+      "bitplane14",
+      "bitplane15",
+      "bitplane16",
+      "bitplane17",
+      "bitplane18",
+      "bitplane19",
+      "bitplane20",
+      "bitplane21",
+      "bitplane22",
+      "bitplane23",
+      "bitplane24",
+      "bitplane25",
+      "bitplane26",
+      "bitplane27",
+      "bitplane28",
+      "bitplane29",
+      "bitplane30",
+      "bitplane31",
+      "bitplane32"
+    ]
+  },
+  "customPropertyDefs" : 
+  [
+    
+    {
+      "class" : "fixture",
+      "displayName" : "TextureMask",
+      "name" : "TextureMask",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomBool",
+      "name" : "testCustomBool",
+      "type" : "bool"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomString",
+      "name" : "testCustomString",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomVec2",
+      "name" : "testCustomVec2",
+      "type" : "vec2"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "GameInfo",
+      "name" : "GameInfo",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomFloat",
+      "name" : "testCustomFloat",
+      "type" : "float"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomInt",
+      "name" : "testCustomInt",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "world",
+      "displayName" : "testCustomColor",
+      "name" : "testCustomColor",
+      "type" : "color"
+    }
+  ],
+  "metaworld" : 
+  {
+    "allowSleep" : true,
+    "autoClearForces" : true,
+    "continuousPhysics" : true,
+    "customProperties" : 
+    [
+      
+      {
+        "int" : 8675309,
+        "name" : "testCustomInt"
+      },
+      
+      {
+        "float" : 1.25,
+        "name" : "testCustomFloat"
+      },
+      
+      {
+        "name" : "testCustomString",
+        "string" : "Excelsior!"
+      },
+      
+      {
+        "name" : "testCustomVec2",
+        "vec2" : 
+        {
+          "x" : 314159.0,
+          "y" : 21718.0
+        }
+      },
+      
+      {
+        "bool" : true,
+        "name" : "testCustomBool"
+      },
+      
+      {
+        "color" : [ 17, 29, 43, 61 ],
+        "name" : "testCustomColor"
+      }
+    ],
+    "exportOptions" : 
+    {
+      "compactCommonFloats" : true,
+      "saveFullPathForImages" : false,
+      "saveImagePathsRelativeToRUBEFile" : false,
+      "useHumanReadableFloats" : true,
+      "usePrettyPrint" : true
+    },
+    "gravity" : 
+    {
+      "x" : 0,
+      "y" : -40.0
+    },
+    "metaimage" : 
+    [
+      
+      {
+        "aspectScale" : 1,
+        "center" : 
+        {
+          "x" : 31.06195068359375,
+          "y" : 28.66593551635742
+        },
+        "file" : "images/toyzrockinghorse.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 2,
+        "name" : "image0",
+        "opacity" : 1,
+        "scale" : 8.876935958862305
+      },
+      
+      {
+        "aspectScale" : -1,
+        "center" : 
+        {
+          "x" : 70.42314147949219,
+          "y" : 29.98928833007813
+        },
+        "file" : "images/toyzrockinghorse.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 10,
+        "name" : "image0",
+        "opacity" : 1,
+        "scale" : 8.876935958862305
+      }
+    ],
+    "positionIterations" : 3,
+    "stepsPerSecond" : 60.0,
+    "subStepping" : false,
+    "velocityIterations" : 8,
+    "warmStarting" : true
+  }
+}

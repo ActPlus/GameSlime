@@ -1,0 +1,184 @@
+
+{
+	"allowSleep" : true,
+	"autoClearForces" : true,
+	"collisionbitplanes" : 
+	{
+		"names" : 
+		[
+			"bitplane1",
+			"bitplane2",
+			"bitplane3",
+			"bitplane4",
+			"bitplane5",
+			"bitplane6",
+			"bitplane7",
+			"bitplane8",
+			"bitplane9",
+			"bitplane10",
+			"bitplane11",
+			"bitplane12",
+			"bitplane13",
+			"bitplane14",
+			"bitplane15",
+			"bitplane16",
+			"bitplane17",
+			"bitplane18",
+			"bitplane19",
+			"bitplane20",
+			"bitplane21",
+			"bitplane22",
+			"bitplane23",
+			"bitplane24",
+			"bitplane25",
+			"bitplane26",
+			"bitplane27",
+			"bitplane28",
+			"bitplane29",
+			"bitplane30",
+			"bitplane31",
+			"bitplane32"
+		]
+	},
+	"continuousPhysics" : true,
+	"customProperties" : 
+	[
+		
+		{
+			"int" : 8675309,
+			"name" : "testCustomInt"
+		},
+		
+		{
+			"name" : "testCustomString",
+			"string" : "Excelsior!"
+		},
+		
+		{
+			"bool" : true,
+			"name" : "testCustomBool"
+		},
+		
+		{
+			"float" : 1.25,
+			"name" : "testCustomFloat"
+		},
+		
+		{
+			"name" : "testCustomVec2",
+			"vec2" : 
+			{
+				"x" : 314159.0,
+				"y" : 21718.0
+			}
+		},
+		
+		{
+			"color" : [ 17, 29, 43, 61 ],
+			"name" : "testCustomColor"
+		}
+	],
+	"gravity" : 
+	{
+		"x" : 0,
+		"y" : -40.0
+	},
+	"image" : 
+	[
+		
+		{
+			"aspectScale" : -1,
+			"body" : -1,
+			"center" : 
+			{
+				"x" : 76.50346374511719,
+				"y" : 11.56948471069336
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					80.94193267822266,
+					72.06499481201172,
+					72.06499481201172,
+					80.94193267822266
+				],
+				"y" : 
+				[
+					7.131016731262207,
+					7.131016731262207,
+					16.00795364379883,
+					16.00795364379883
+				]
+			},
+			"file" : "images/toyzrockinghorse.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				80.94193267822266,
+				7.131016731262207,
+				72.06499481201172,
+				7.131016731262207,
+				72.06499481201172,
+				16.00795364379883,
+				80.94193267822266,
+				16.00795364379883
+			],
+			"name" : "image0",
+			"opacity" : 1,
+			"scale" : 8.876935958862305
+		},
+		
+		{
+			"aspectScale" : 1,
+			"body" : -1,
+			"center" : 
+			{
+				"x" : 23.55096244812012,
+				"y" : 10.96146392822266
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					19.11249542236328,
+					27.98942947387695,
+					27.98942947387695,
+					19.11249542236328
+				],
+				"y" : 
+				[
+					6.522995948791504,
+					6.522995948791504,
+					15.39993190765381,
+					15.39993190765381
+				]
+			},
+			"file" : "images/toyzrockinghorse.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				19.11249542236328,
+				6.522995948791504,
+				27.98942947387695,
+				6.522995948791504,
+				27.98942947387695,
+				15.39993190765381,
+				19.11249542236328,
+				15.39993190765381
+			],
+			"name" : "image0",
+			"opacity" : 1,
+			"scale" : 8.876935958862305
+		}
+	],
+	"positionIterations" : 3,
+	"stepsPerSecond" : 60.0,
+	"subStepping" : false,
+	"velocityIterations" : 8,
+	"warmStarting" : true
+}
