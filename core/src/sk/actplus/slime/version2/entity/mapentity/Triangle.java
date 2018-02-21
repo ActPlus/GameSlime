@@ -19,7 +19,7 @@ package sk.actplus.slime.version2.entity.mapentity;
     import sk.actplus.slime.version2.GameScreen;
     import sk.actplus.slime.version2.VertexShader;
     import sk.actplus.slime.version2.entity.Entity;
-    import sk.actplus.slime.version2.input.Side;
+    import sk.actplus.slime.version2.Side;
 
     import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
 
@@ -34,24 +34,14 @@ public class Triangle extends Entity {
     protected Vector2 C;
     protected Vector2 center;
     protected Graphics graphics;
-
-    public Vector2[] getSharedSide() {
-        return sharedSide;
-    }
-
-    public void setSharedSide(Vector2[] sharedSide) {
-        this.sharedSide = sharedSide;
-    }
-
-    public Vector2 getC() {
-        return C;
-    }
-
-    public void setC(Vector2 c) {
-        C = c;
-    }
-
     private OrthographicCamera camera;
+
+
+
+
+
+
+
 
     public Triangle(GameScreen screen, Vector2 []  vertex, OrthographicCamera camera) {
         super(screen);
@@ -60,6 +50,7 @@ public class Triangle extends Entity {
         this.camera = camera;
         graphics = new Graphics(new Vector2[]{sharedSide[0],sharedSide[1],C});
         center = getCenterPoint();
+        generateTriangle(world);
     }
 
     @Override
@@ -86,14 +77,26 @@ public class Triangle extends Entity {
         super.update(delta);
     }
 
+
     public Body generateTriangle(World world){
 
         Body body;
 
         Vector2[] vertices = new Vector2[3];
-        vertices[0] = sharedSide[0];
-        vertices[1] = sharedSide[1];
-        vertices[2] = C;
+
+        vertices[0] = sharedSide[0].cpy();
+        vertices[1] = sharedSide[1].cpy();
+        vertices[2] = C.cpy();
+
+        Vector2 center = getCenterPoint();
+
+
+            for(int i = 0; i < vertices.length; i ++) {
+                vertices[i].x -= center.x;
+                vertices[i].y -= center.y;
+            }
+
+
 
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);
@@ -101,10 +104,8 @@ public class Triangle extends Entity {
 
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.StaticBody;
-        def.position.set(0,0);
+        def.position.set(center);
         body = world.createBody(def);
-        //triangles.add(body);
-
 
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = shape;
@@ -126,30 +127,22 @@ public class Triangle extends Entity {
     }
 
     public Vector2 getCenterPoint() {
-        Vector2[] v = new Vector2[]{sharedSide[0],sharedSide[1],C};
+        Vector2[] v = getPoints();
 
-        float sumX=0, sumY=0;
-        for (int i = 0; i < v.length; i++) {
-            sumX+=v[i].x;
-            sumY+=v[i].y;
-        }
-
-
-        return new Vector2(sumX/v.length,sumY/v.length);
+        return getCenterPoint(v).cpy();
     }
 
     public static Vector2 getCenterPoint(Vector2[] vertex) {
-        Vector2[] v = new Vector2[]{vertex[0],vertex[1],vertex[2]};
-
         float sumX=0, sumY=0;
-        for (int i = 0; i < v.length; i++) {
-            sumX+=v[i].x;
-            sumY+=v[i].y;
+        for (int i = 0; i < vertex.length; i++) {
+            sumX+=vertex[i].x;
+            sumY+=vertex[i].y;
         }
 
-
-        return new Vector2(sumX/v.length,sumY/v.length);
+        return new Vector2(sumX/vertex.length,sumY/vertex.length);
     }
+
+
 
     public boolean isTooFar(Vector2 other) {
         float dx = other.x-center.x;
@@ -174,12 +167,97 @@ public class Triangle extends Entity {
         if(distance >= MAX_RADIUS*1.5f) {
             return true;
         }
-
-
         return false;
     }
 
-    public class Graphics{
+
+    public Side[] getSides() {
+        Side[] sides = new Side[3];
+        sides[0] = new Side(sharedSide[0].cpy(),sharedSide[1].cpy());
+        sides[1] = new Side(sharedSide[0].cpy(),C.cpy());
+        sides[2] = new Side(sharedSide[1].cpy(),C.cpy());
+
+        return sides;
+    }
+
+
+    public boolean contains(Vector2 point, boolean openInterval){
+        Side[] side = getSides();
+
+        Side normalSide = new Side(point,getCenterPoint());
+
+        for (int i = 0; i < side.length; i++) {
+            if(side[i].isIntersecting(normalSide,openInterval)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private float area(Vector2[] vertices)
+    {
+        return Math.abs((vertices[0].x*(vertices[1].y-vertices[2].y) + vertices[1].x*(vertices[2].y-vertices[0].y)+ vertices[2].x*(vertices[0].y-vertices[1].y))/2f);
+    }
+
+    /* A function to check whether point P(x, y) lies inside the triangle  */
+    public boolean contains(Vector2 point)
+    {
+        Vector2[] vertices = new Vector2[]{sharedSide[0].cpy(),sharedSide[1].cpy(),C.cpy()};
+
+
+   /* Calculate area of triangle ABC */
+        float A = area (vertices);
+
+
+        Vector2[] pbc = new Vector2[3];
+        pbc[0] = point.cpy();
+        pbc[1] = sharedSide[1].cpy();
+        pbc[2] = C.cpy();
+
+   /* Calculate area of triangle PBC */
+        float A1 = area (pbc);
+
+        Vector2[] pac = new Vector2[3];
+        pac[0] = point.cpy();
+        pac[1] = sharedSide[0].cpy();
+        pac[2] = C.cpy();
+   /* Calculate area of triangle PAC */
+        float A2 = area (pac);
+
+
+        Vector2[] pab = new Vector2[3];
+        pab[0] = point.cpy();
+        pab[1] = sharedSide[0].cpy();
+        pab[2] = sharedSide[1].cpy();
+   /* Calculate area of triangle PAB */
+        float A3 = area (pab);
+
+
+   /* Check if sum of A1, A2 and A3 is same as A */
+        return (A == A1 + A2 + A3);
+    }
+
+
+    public void setC(Vector2 c) {
+        C = c;
+    }
+    public void setSharedSide(Vector2[] sharedSide) {
+        this.sharedSide = sharedSide;
+    }
+    public Vector2 getC() {
+        return C.cpy();
+    }
+    public Vector2[] getSharedSide() {
+        return sharedSide;
+    }
+
+    public Vector2[] getPoints() {
+        return new Vector2[]{sharedSide[0].cpy(),sharedSide[1].cpy(),C.cpy()};
+    }
+
+
+    public class Graphics {
+
         private Mesh mesh;
         private VertexShader shader;
         //Position attribute - (x, y)

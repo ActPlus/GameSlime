@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import sk.actplus.slime.version2.entity.EntityArray;
 import sk.actplus.slime.version2.entity.friendly.Player;
+import sk.actplus.slime.version2.entity.mapentity.Triangle;
 
 /**
  * Created by Ja on 17.2.2018.
@@ -28,15 +29,12 @@ public class Game {
         this.mux = mux;
         entities = new EntityArray();
         array = new GameArray();
-        mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-7,-4),new Vector2(2,-6)},new Vector2(6,0));
-
+        mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-2,2),new Vector2(3,3)},new Vector2(2,-3));
 
         Player player= new Player(screen,mux);
 
         entities.add(player);
         paused = false;
-
-
     }
 
 
@@ -45,12 +43,12 @@ public class Game {
         entities.render(delta);
     }
 
-    private float dx = 0;
+    private float dt = 0;
     public void update(float delta) {
-        dx+=delta;
+        dt+=delta;
         entities.update(delta);
-        if(dx>=2) {
-            dx =0;
+        if(dt>=2) {
+            dt =0;
             System.out.println("Generating");
             array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
         }

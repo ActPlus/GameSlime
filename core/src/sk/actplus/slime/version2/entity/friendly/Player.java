@@ -122,6 +122,7 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
 
                 Vector2 circlePosition = new Vector2(x, y);
 
+
                 Vector2 v2 = body.getPosition().cpy().add(circlePosition);
                 bodyDefOrbital.position.set(v2);
 
@@ -217,7 +218,6 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     public void render(float delta) {
         //TODO : render graphics from OpenGL
     }
-
 
     @Override
     public void update(float delta) {
