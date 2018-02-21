@@ -14,4 +14,5 @@ dependencies {
     compile 'com.badlogicgames.gdx:gdx-freetype:1.9.5'
     compile 'com.badlogicgames.gdx:gdx-backend-android:1.9.5'
     compile 'net.java.jinput:jinput:2.0.5'
+    compile 'com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.5'
 }

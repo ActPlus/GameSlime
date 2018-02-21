@@ -1,29 +1,24 @@
 package sk.actplus.slime.version2.entity.mapentity;
 
-    import com.badlogic.gdx.Gdx;
-    import com.badlogic.gdx.graphics.Color;
-    import com.badlogic.gdx.graphics.GL20;
-    import com.badlogic.gdx.graphics.Mesh;
-    import com.badlogic.gdx.graphics.OrthographicCamera;
-    import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-    import com.badlogic.gdx.graphics.VertexAttribute;
-    import com.badlogic.gdx.math.Vector2;
-    import com.badlogic.gdx.physics.box2d.Body;
-    import com.badlogic.gdx.physics.box2d.BodyDef;
-    import com.badlogic.gdx.physics.box2d.Fixture;
-    import com.badlogic.gdx.physics.box2d.FixtureDef;
-    import com.badlogic.gdx.physics.box2d.PolygonShape;
-    import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
-    import java.lang.reflect.Array;
+import sk.actplus.slime.constants.Category;
+import sk.actplus.slime.version2.GameScreen;
+import sk.actplus.slime.version2.VertexShader;
+import sk.actplus.slime.version2.entity.Entity;
 
-    import sk.actplus.slime.constants.Category;
-    import sk.actplus.slime.version2.GameScreen;
-    import sk.actplus.slime.version2.VertexShader;
-    import sk.actplus.slime.version2.entity.Entity;
-    import sk.actplus.slime.version2.input.Side;
-
-    import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
+import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
 
 /**
  * Created by Ja on 17.2.2018.
@@ -32,27 +27,10 @@ package sk.actplus.slime.version2.entity.mapentity;
 public class Triangle extends Entity {
     public static final float MAX_RADIUS = 2.5f;
 
-    protected Vector2[] sharedSide;
-    protected Vector2 C;
+    protected static Vector2[] sharedSide;
+    protected static Vector2 C;
     protected Vector2 center;
     protected Graphics graphics;
-
-    public Vector2[] getSharedSide() {
-        return sharedSide;
-    }
-
-    public void setSharedSide(Vector2[] sharedSide) {
-        this.sharedSide = sharedSide;
-    }
-
-    public Vector2 getC() {
-        return C;
-    }
-
-    public void setC(Vector2 c) {
-        C = c;
-    }
-
     private OrthographicCamera camera;
 
     public Triangle(GameScreen screen, Vector2 []  vertex, OrthographicCamera camera) {
@@ -62,7 +40,62 @@ public class Triangle extends Entity {
         this.camera = camera;
         graphics = new Graphics(new Vector2[]{sharedSide[0],sharedSide[1],C});
         center = getCenterPoint();
-        gettArrayOfVerteces();
+
+    }
+
+    public static Vector2[] getSharedSide() {
+        return sharedSide;
+    }
+
+    public void setSharedSide(Vector2[] sharedSide) {
+        this.sharedSide = sharedSide;
+    }
+
+    public static Vector2 getC() {
+        return C;
+    }
+
+    public void setC(Vector2 c) {
+        C = c;
+    }
+
+    public static Vector2 getCenterPoint(Vector2[] vertex) {
+        Vector2[] v = new Vector2[]{vertex[0],vertex[1],vertex[2]};
+
+        float sumX=0, sumY=0;
+        for (int i = 0; i < v.length; i++) {
+            sumX+=v[i].x;
+            sumY+=v[i].y;
+        }
+
+
+        return new Vector2(sumX/v.length,sumY/v.length);
+    }
+
+    public static boolean isTooFar(Vector2 newTriangle, Vector2 other) {
+        float dx = other.x-newTriangle.x;
+        float dy = other.y-newTriangle.y;
+
+        float distance = (float)Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
+
+        if(distance >= MAX_RADIUS*1.5f) {
+            return true;
+        }
+
+
+        return false;
+    }
+
+    public static Vector2[] getArrayOfVertices(){
+        Vector2[] vecArray = new Vector2[3];
+        int index = 0;
+
+        //all
+        vecArray[index++] = getSharedSide()[0];
+        vecArray[index++] = getSharedSide()[1];
+        vecArray[index] = getC();
+
+        return vecArray;
     }
 
     @Override
@@ -97,6 +130,8 @@ public class Triangle extends Entity {
         vertices[0] = sharedSide[0];
         vertices[1] = sharedSide[1];
         vertices[2] = C;
+
+        System.out.println(vertices[0]);
 
 
         PolygonShape shape = new PolygonShape();
@@ -142,19 +177,6 @@ public class Triangle extends Entity {
         return new Vector2(sumX/v.length,sumY/v.length);
     }
 
-    public static Vector2 getCenterPoint(Vector2[] vertex) {
-        Vector2[] v = new Vector2[]{vertex[0],vertex[1],vertex[2]};
-
-        float sumX=0, sumY=0;
-        for (int i = 0; i < v.length; i++) {
-            sumX+=v[i].x;
-            sumY+=v[i].y;
-        }
-
-
-        return new Vector2(sumX/v.length,sumY/v.length);
-    }
-
     public boolean isTooFar(Vector2 other) {
         float dx = other.x-center.x;
         float dy = other.y-center.y;
@@ -169,51 +191,30 @@ public class Triangle extends Entity {
         return false;
     }
 
-    public static boolean isTooFar(Vector2 newTriangle, Vector2 other) {
-        float dx = other.x-newTriangle.x;
-        float dy = other.y-newTriangle.y;
-
-        float distance = (float)Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
-
-        if(distance >= MAX_RADIUS*1.5f) {
-            return true;
-        }
-
-
-        return false;
-    }
-
     public class Graphics{
-        private Mesh mesh;
-        private VertexShader shader;
         //Position attribute - (x, y)
         public static final int POSITION_COMPONENTS = 2;
-
         //Color attribute - (r, g, b, a)
         public static final int COLOR_COMPONENTS = 4;
-
         //Total number of components for all attributes
         public static final int NUM_COMPONENTS = POSITION_COMPONENTS + COLOR_COMPONENTS;
-
         //The "size" (total number of floats) for a single triangle
         public static final int PRIMITIVE_SIZE = 3 * NUM_COMPONENTS;
-
         //The maximum number of triangles our mesh will hold
         public static final int MAX_TRIS = 1;
-
         //The maximum number of vertices our mesh will hold
         public static final int MAX_VERTS = MAX_TRIS * 3;
+        protected float[] verts = new float[MAX_VERTS * NUM_COMPONENTS];
+        //The current index that we are pushing triangles into the array
+        protected int idx = 0;
 
         //The array which holds all the data, interleaved like so:
 //    x, y, r, g, b, a
 //    x, y, r, g, b, a,
 //    x, y, r, g, b, a,
 //    ... etc ...
-
-        protected float[] verts = new float[MAX_VERTS * NUM_COMPONENTS];
-
-        //The current index that we are pushing triangles into the array
-        protected int idx = 0;
+        private Mesh mesh;
+        private VertexShader shader;
 
         public Graphics(Vector2 [] vertex) {
             //shader = new VertexShader();
@@ -272,29 +273,5 @@ public class Triangle extends Entity {
         }
 
 
-    }
-    public float[] gettArrayOfVerteces(){
-        float array[] = new float[9];
-        int index = 0;
-
-        //x,y,z
-        array[index++] = (float) getSharedSide()[0].x;
-        array[index++] = (float) getSharedSide()[0].y;
-        array[index++] = 0f;
-        //x,y,z
-        array[index++] = (float) getSharedSide()[1].x;
-        array[index++] = (float) getSharedSide()[1].y;
-        array[index++] = 0f;
-        //x,y,z
-        array[index++] = (float) getC().x;
-        array[index++] = (float) getC().y;
-        array[index++] = 0f;
-
-        /*for (int i = 0; i < 9; i++){
-            System.out.println("x"+index+": "+array[i]);
-        }*/
-
-
-        return array;
     }
 }

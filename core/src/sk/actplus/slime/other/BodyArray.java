@@ -9,8 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 
 
-
-    public class BodyArray extends Array<Body>{
+public class BodyArray extends Array<Body>{
 
         public Body getBody(int index) {
             return this.get(index);

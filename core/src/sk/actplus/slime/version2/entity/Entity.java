@@ -3,7 +3,6 @@ package sk.actplus.slime.version2.entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -16,16 +15,11 @@ import sk.actplus.slime.version2.GameScreen;
  */
 
 public abstract class Entity {
+    protected static Body body;
     protected World world;
     protected GameScreen screen;
     protected boolean setToDestroy;
     protected boolean destroyed;
-
-    public Body getBody() {
-        return body;
-    }
-
-    protected Body body;
 
     public Entity(GameScreen screen) {
         this.world = screen.getWorld();
@@ -33,28 +27,6 @@ public abstract class Entity {
         setToDestroy = false;
         destroyed = false;
 
-    }
-
-
-    public abstract void render(float delta);
-    public abstract void handleCollision(short collisionBIT);
-    public abstract void destroy();
-
-    public void update(float delta) {
-        shouldDie();
-
-    }
-
-
-
-    //checks if Body should be destoroyed
-    protected void shouldDie() {
-        if (setToDestroy && !destroyed) {
-            world.destroyBody(body);
-            destroy();
-        }
-
-        //TODO: remove from Entity array
     }
 
     /**
@@ -117,7 +89,6 @@ public abstract class Entity {
         return fixDef;
     }
 
-
     /**
      * Creates Distance Joint Def with Properties.
      *
@@ -162,5 +133,30 @@ public abstract class Entity {
 
     public static void createDistanceJointAtCenter(World world,DistanceJointDef jointDef, Body firstBody, Body secondBody) {
         createDistanceJoint(world, jointDef, firstBody, secondBody, firstBody.getWorldCenter(), secondBody.getWorldCenter());
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public abstract void render(float delta);
+
+    public abstract void handleCollision(short collisionBIT);
+
+    public abstract void destroy();
+
+    public void update(float delta) {
+        shouldDie();
+
+    }
+
+    //checks if Body should be destoroyed
+    protected void shouldDie() {
+        if (setToDestroy && !destroyed) {
+            world.destroyBody(body);
+            destroy();
+        }
+
+        //TODO: remove from Entity array
     }
 }

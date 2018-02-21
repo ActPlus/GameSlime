@@ -2,7 +2,7 @@ package sk.actplus.slime.version2;
 
 import com.badlogic.gdx.utils.Array;
 
-import sk.actplus.slime.version2.entity.EntityArray;
+import sk.actplus.slime.version2.entity.PolygonGenerator;
 import sk.actplus.slime.version2.entity.mapentity.Triangle;
 
 /**
@@ -11,4 +11,5 @@ import sk.actplus.slime.version2.entity.mapentity.Triangle;
 
 public class GameArray {
     public Array<Triangle> triangles = new Array<Triangle>();
+    public Array<PolygonGenerator> polygonGenerators = new Array<PolygonGenerator>();
 }

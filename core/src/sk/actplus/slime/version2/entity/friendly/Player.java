@@ -21,39 +21,28 @@ import sk.actplus.slime.version2.input.PlayerInputProcessor;
 
 public class Player extends sk.actplus.slime.version2.entity.Entity{
     public static final BodyDef.BodyType BODY_TYPE = BodyDef.BodyType.DynamicBody;
-    public static short HITBOX_category = Category.JELLY_HITBOX;
-    public static short PARTICLES_category = Category.JELLY;
-
     public static final int NUM_SEGMENTS = 7;
     public static final boolean HITBOX_ROTATION = false;
     public static final boolean PARTICLES_ROTATION = false;
-
     public static final float HITBOX_SIDE = 3f;
-    public static float PARTICLES_RADIUS = HITBOX_SIDE / NUM_SEGMENTS / 2f;
     public static final float ORBITAL_SIDE = 3f;
-
     public static final float HITBOX_DENSITY = 0.0001f;
     public static final float PARTICLES_DENSITY = 0.01f;
-
     public static final float HITBOX_RESTITUTION = 0f;
     public static final float PARTICLES_RESTITUTION = 0f;
-
-
     public static final float HITBOX_FRICTION = 1f;
     public static final float PARTICLES_FRICTION = 1f;
-
     public static final float HITBOX_FREQUENCY_HZ = 3f;
     public static final float PARTICLES_FREQUENCY_HZ = 1.5f;
-
     public static final float HITBOX_DAMPING = 0.2f;
     public static final float PARTICLES_DAMPING = 0.2f;
-
     public static final boolean FIXED_ROTATION = false;
-
-
+    public static short HITBOX_category = Category.JELLY_HITBOX;
+    public static short PARTICLES_category = Category.JELLY;
+    public static float PARTICLES_RADIUS = HITBOX_SIDE / NUM_SEGMENTS / 2f;
+    public static BodyArray bodies;
     private int score;
     private PlayerInputProcessor inputProccesor;
-    public BodyArray bodies;
 
     public Player(GameScreen screen, InputMultiplexer mux) {
         super(screen);
@@ -63,6 +52,19 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
         mux.addProcessor(inputProccesor);
     }
 
+    public static Vector2[] getArrayOfVertices(){
+        Vector2[] vecArray = new Vector2[NUM_SEGMENTS*NUM_SEGMENTS];
+
+        //todo debug if all position are read correctly
+
+        for (int i = 0; i < (NUM_SEGMENTS*NUM_SEGMENTS - 1); i++) {
+            vecArray[i] = bodies.get(i).getPosition();
+            System.out.println(bodies.get(i).getPosition());
+        }
+
+        return vecArray;
+    }
+
     public void applyForce(float vx, float vy) {
         bodies.applyForceToCenter(vx,vy,false);
     }
@@ -70,8 +72,6 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     public void setVelocity(float vx, float vy) {
         bodies.setLinearVelocity(vx,vy);
     }
-
-
 
     private Body createJellyBody(float xi, float yi) {
 
@@ -202,7 +202,6 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
         return body;
     }
 
-
     @Override
     public void handleCollision(short collisionBIT) {
 
@@ -218,10 +217,11 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
         //TODO : render graphics from OpenGL
     }
 
-
     @Override
     public void update(float delta) {
         super.update(delta);
     }
 }
+
+
 

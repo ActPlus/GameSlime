@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
 
-import sk.actplus.slime.version2.entity.MeshGenerator;
+import sk.actplus.slime.version2.entity.PolygonGenerator;
 import sk.actplus.slime.version2.entity.mapentity.Triangle;
 import sk.actplus.slime.version2.input.Side;
 
@@ -16,16 +16,16 @@ import sk.actplus.slime.version2.input.Side;
  */
 
 class MapGenerator {
-    Random rand;
+    public static final float MAX_RADIUS = 2.5f;
+    public static final float SCREEN_GEN_BORDER_X = GameScreen.CLIENT_WIDTH*1.5f;
     protected World world;
     protected GameScreen screen;
     protected OrthographicCamera camera;
     protected Vector2 transition;
     protected int numOfFails;
     protected Triangle last;
-
-    public static final float MAX_RADIUS = 2.5f;
-    public static final float SCREEN_GEN_BORDER_X = GameScreen.CLIENT_WIDTH*1.5f;
+    protected PolygonGenerator poly;
+    Random rand;
 
     public MapGenerator(GameScreen screen, Array<Triangle> triangles,Vector2[] startingEdge, Vector2 C) {
         this.world = screen.getWorld();
@@ -35,7 +35,7 @@ class MapGenerator {
         transition = new Vector2(0,0);
         last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},screen.camera);
         generate(last,triangles);
-        MeshGenerator meshGenerator = new MeshGenerator(last.gettArrayOfVerteces(),3);
+        //poly = new PolygonGenerator(last.getArrayOfVertices(),3, Color.BLUE);
 
     }
 

@@ -1,10 +1,12 @@
 package sk.actplus.slime.version2;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import sk.actplus.slime.version2.entity.EntityArray;
+import sk.actplus.slime.version2.entity.PolygonGenerator;
 import sk.actplus.slime.version2.entity.friendly.Player;
 
 /**
@@ -12,14 +14,19 @@ import sk.actplus.slime.version2.entity.friendly.Player;
  */
 
 public class Game {
+    protected EntityArray entities;
+    GameArray array;
+    PolygonGenerator polygonGenerator;
     private World world;
     private GameScreen screen;
-    protected EntityArray entities;
     private MapGenerator mapGen;
     private boolean paused;
     private String savePath;
     private InputMultiplexer mux;
-    GameArray array;
+    private int index = 0;
+    private float dx = 0;
+
+
 
     public
     Game(GameScreen screen, InputMultiplexer mux) {
@@ -30,29 +37,37 @@ public class Game {
         array = new GameArray();
         mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-7,-4),new Vector2(2,-6)},new Vector2(6,0));
 
-
         Player player= new Player(screen,mux);
 
         entities.add(player);
         paused = false;
 
 
+        System.out.println(Player.getArrayOfVertices());
+        polygonGenerator = new PolygonGenerator(Player.getArrayOfVertices(),48,Color.BLUE);
+
+        //array.polygonGenerators.add(new PolygonGenerator(array.triangles.get(index).getArrayOfVertices(),3, Color.CHARTREUSE));
     }
-
-
 
     public void render(float delta) {
         entities.render(delta);
+        polygonGenerator.render();
+        for (int i = 0; i <= index; i++){
+            //array.polygonGenerators.get(i).render();
+        }
+
+
     }
 
-    private float dx = 0;
     public void update(float delta) {
         dx+=delta;
         entities.update(delta);
         if(dx>=2) {
+            index++;
             dx =0;
             System.out.println("Generating");
             //array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
+            //array.polygonGenerators.add(new PolygonGenerator(array.triangles.get(index).getArrayOfVertices(),3, Color.CHARTREUSE));
         }
 
     }
