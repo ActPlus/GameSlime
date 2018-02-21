@@ -31,8 +31,7 @@ class MapGenerator {
         rand = new Random();
         numOfFails = 0;
         transition = new Vector2(0,0);
-        last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},screen.camera);
-        //generate(last,triangles);
+        triangles.add(last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},screen.camera));
     }
 
 
@@ -57,9 +56,6 @@ class MapGenerator {
             newC = getRandomPoint(0, last, newShared);
         } while(isColliding(new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()},entities));
 
-        for (int i = 0; i < 4; i++) {
-            System.out.println("000000000000000000000000000000000000");
-        }
 
         tri = new Triangle(screen, new Vector2[]{newShared[0].cpy(), newShared[1].cpy(), newC.cpy()}, camera);
 
@@ -122,21 +118,21 @@ class MapGenerator {
 
         //radius = rand.nextFloat() * MAX_RADIUS/2f + MAX_RADIUS/2f;
         radius = 1;
-
-            /*if(getDeltaX()<0){
+//
+            if(getDeltaX()<0){
                 random_x=rand.nextFloat()*(limitX-MAX_RADIUS);
                 if (random_x<=0) {
                     random_y=(float)Math.sqrt(Math.abs(Math.pow(radius,2)-Math.pow(random_x,2)));
                 } else {
-                    random_y=(float)Math.sin(angle.getDeg());
+                    random_y=(float)Math.sin(Math.toRadians(angle));
                 }
             } else {
-*/
+//
                 random_x = (float)(Math.cos(Math.toRadians(angle)) * radius);
                 random_y = (float)(Math.sin(Math.toRadians(angle)) * radius);
 
         System.out.println();
-            //}
+            }
 
         Vector2 point = new Vector2(random_x+center.x,random_y+center.y);
         return point;

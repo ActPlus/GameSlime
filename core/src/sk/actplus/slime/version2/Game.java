@@ -47,7 +47,7 @@ public class Game {
     public void update(float delta) {
         dt+=delta;
         entities.update(delta);
-        if(dt>=2) {
+        if(dt>=0.5) {
             dt =0;
             System.out.println("Generating");
             array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
