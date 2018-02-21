@@ -10,5 +10,5 @@ import sk.actplus.slime.version2.entity.mapentity.Triangle;
  */
 
 public class GameArray {
-    Array<Triangle> triangles = new Array<Triangle>();
+    public Array<Triangle> triangles = new Array<Triangle>();
 }

@@ -15,6 +15,8 @@ package sk.actplus.slime.version2.entity.mapentity;
     import com.badlogic.gdx.physics.box2d.PolygonShape;
     import com.badlogic.gdx.physics.box2d.World;
 
+    import java.lang.reflect.Array;
+
     import sk.actplus.slime.constants.Category;
     import sk.actplus.slime.version2.GameScreen;
     import sk.actplus.slime.version2.VertexShader;
@@ -60,6 +62,7 @@ public class Triangle extends Entity {
         this.camera = camera;
         graphics = new Graphics(new Vector2[]{sharedSide[0],sharedSide[1],C});
         center = getCenterPoint();
+        gettArrayOfVerteces();
     }
 
     @Override
@@ -94,6 +97,7 @@ public class Triangle extends Entity {
         vertices[0] = sharedSide[0];
         vertices[1] = sharedSide[1];
         vertices[2] = C;
+
 
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);
@@ -215,9 +219,6 @@ public class Triangle extends Entity {
             //shader = new VertexShader();
             //TODO
 
-            mesh = new Mesh(true, MAX_VERTS, 0,
-                    new VertexAttribute(Usage.Position, POSITION_COMPONENTS, "a_position"),
-                    new VertexAttribute(Usage.ColorUnpacked, COLOR_COMPONENTS, "a_color"));
         }
 
         public int createVertex(int idx,Vector2 point, Color seed) {
@@ -271,5 +272,29 @@ public class Triangle extends Entity {
         }
 
 
+    }
+    public float[] gettArrayOfVerteces(){
+        float array[] = new float[9];
+        int index = 0;
+
+        //x,y,z
+        array[index++] = (float) getSharedSide()[0].x;
+        array[index++] = (float) getSharedSide()[0].y;
+        array[index++] = 0f;
+        //x,y,z
+        array[index++] = (float) getSharedSide()[1].x;
+        array[index++] = (float) getSharedSide()[1].y;
+        array[index++] = 0f;
+        //x,y,z
+        array[index++] = (float) getC().x;
+        array[index++] = (float) getC().y;
+        array[index++] = 0f;
+
+        /*for (int i = 0; i < 9; i++){
+            System.out.println("x"+index+": "+array[i]);
+        }*/
+
+
+        return array;
     }
 }

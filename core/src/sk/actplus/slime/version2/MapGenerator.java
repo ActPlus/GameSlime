@@ -7,8 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
 
-import sk.actplus.slime.version2.entity.Entity;
-import sk.actplus.slime.version2.entity.EntityArray;
+import sk.actplus.slime.version2.entity.MeshGenerator;
 import sk.actplus.slime.version2.entity.mapentity.Triangle;
 import sk.actplus.slime.version2.input.Side;
 
@@ -36,6 +35,8 @@ class MapGenerator {
         transition = new Vector2(0,0);
         last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},screen.camera);
         generate(last,triangles);
+        MeshGenerator meshGenerator = new MeshGenerator(last.gettArrayOfVerteces(),3);
+
     }
 
 
@@ -155,6 +156,7 @@ class MapGenerator {
         Side[] newSide = new Side[]{
                 new Side(vertex[0],vertex[2]),
                 new Side(vertex[1],vertex[2])};
+        //System.out.print();
 
         for (Triangle triangle: entities) {
 
@@ -174,6 +176,7 @@ class MapGenerator {
                     }
                 }
 
+            System.out.println("colision test");
             //}
             return false;
         }
