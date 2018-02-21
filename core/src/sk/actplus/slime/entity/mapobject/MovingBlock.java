@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import sk.actplus.slime.constants.Category;
 import sk.actplus.slime.entity.Entity;
 
 import static sk.actplus.slime.constants.Values.PLAYER_SPEED;
@@ -31,7 +32,7 @@ public class MovingBlock extends Entity {
     public MovingBlock(World world, float xi, float yi, Vector2 direction, String userData) {
         super(world);
         /**
-         * Creates Main Player Body, controlled by Input
+         * Creates Main ExpectsInput Body, controlled by Input
          */
 
         BodyDef bodyDefMain = defineBody(BODY_TYPE, xi-0.1f, yi, FIXED_ROTATION);
@@ -54,13 +55,13 @@ public class MovingBlock extends Entity {
     public MovingBlock(World world, float xi, float yi, float width, float height, Vector2 direction, String userData) {
         super(world);
         /**
-         * Creates Main Player Body, controlled by Input
+         * Creates Main ExpectsInput Body, controlled by Input
          */
 
         BodyDef bodyDefMain = defineBody(BODY_TYPE, xi-0.1f, yi, FIXED_ROTATION);
         PolygonShape shapeMain = new PolygonShape();
         shapeMain.setAsBox(width / 2f, height / 2f);
-        FixtureDef fixtureDefMain = defineFixture(shapeMain, DENSITY, RESTITUTION, FRICTION);
+        FixtureDef fixtureDefMain = defineFixture(shapeMain, DENSITY, RESTITUTION, FRICTION, Category.ENEMY,Category.JELLY_HITBOX);
 
 
 

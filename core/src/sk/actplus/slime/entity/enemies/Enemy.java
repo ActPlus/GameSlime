@@ -8,11 +8,11 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
 
+import sk.actplus.slime.constants.Category;
 import sk.actplus.slime.entity.interfaces.Updateable;
 import sk.actplus.slime.entity.mapobject.MovingBlock;
-import sk.actplus.slime.entity.player.Jelly;
+import sk.actplus.slime.entity.player.JellyFix;
 import sk.actplus.slime.entity.player.Player;
-import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.other.LogicalOperations;
 
 import static sk.actplus.slime.constants.Values.FOLLOWER_SPEED;
@@ -26,7 +26,7 @@ import static sk.actplus.slime.constants.Values.SHOOT_SPEED;
 
 public class Enemy extends Player implements Updateable {
     Random rand = new Random();
-    Jelly player;
+    JellyFix player;
 
     public static final BodyDef.BodyType BODY_TYPE = BodyDef.BodyType.KinematicBody;
     public static final boolean FIXED_ROTATION = true;
@@ -41,16 +41,16 @@ public class Enemy extends Player implements Updateable {
 
 
 
-    public Enemy(World world, int x, int y, Jelly player) {
+    public Enemy(World world, int x, int y, JellyFix player) {
         super(world);
 
         /**
-         * Creates Main Player Body, controlled by Input
+         * Creates Main ExpectsInput Body, controlled by Input
          */
         BodyDef bodyDefMain = defineBody(BODY_TYPE, x,y,FIXED_ROTATION);
         PolygonShape shapeMain = new PolygonShape();
         shapeMain.setAsBox(SIDE_WIDTH/2f,SIDE_HEIGHT/2f);
-        FixtureDef fixtureDefMain = defineFixture(shapeMain,DENSITY,RESTITUTION,FRICTION);
+        FixtureDef fixtureDefMain = defineFixture(shapeMain,DENSITY,RESTITUTION,FRICTION, Category.ENEMY,(short)(Category.JELLY|Category.JELLY_HITBOX));
         body = createBody(bodyDefMain,fixtureDefMain);
 
         this.player = player;

@@ -2,6 +2,7 @@ package sk.actplus.slime.inputs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.physics.box2d.Body;
 
 import sk.actplus.slime.screens.PlayScreen;
 
@@ -49,7 +50,7 @@ public class GameInputHandler {
 
             if (DEBUG) {
                 /**
-                 * If in DEBUG mode, you can move with Player
+                 * If in DEBUG mode, you can move with ExpectsInput
                  */
                 horizontalForce = 0;
 
@@ -68,7 +69,11 @@ public class GameInputHandler {
                 screen.jumped = true;
                 //PPM = PPM/3f;
                 //screen.camera.update();
-                screen.player.body.applyForceToCenter(0, -7 * GRAVITY.y, false);
+                //screen.player.body.applyForceToCenter(0, PLAYER_JUMP/10f, false);
+
+
+                    screen.player.bodies.applyForceToCenter(0, PLAYER_JUMP/100f, false);
+
 
 
             }

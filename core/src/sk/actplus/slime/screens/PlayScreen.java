@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -14,7 +15,7 @@ import java.util.Random;
 
 import box2dLight.RayHandler;
 import sk.actplus.slime.entity.mapobject.MovingBlock;
-import sk.actplus.slime.entity.player.Jelly;
+import sk.actplus.slime.entity.player.JellyFix;
 import sk.actplus.slime.inputs.GameInputHandler;
 import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.other.CollisionListener;
@@ -48,7 +49,6 @@ public class PlayScreen implements Screen {
      * Box2D Declaration
      */
     public SpriteBatch batch;
-    Sprite sprite;
     public MovableCamera camera;
 
 
@@ -64,7 +64,8 @@ public class PlayScreen implements Screen {
     public BodyArray destroyBodies;
     EnemyArray enemies;
     LightArray lights;
-    public Jelly player;
+    public JellyFix player;
+    public JellyFix jfix;
 
     public GUI gui = new GUI();
 
@@ -98,9 +99,13 @@ public class PlayScreen implements Screen {
         batch.begin();
         for (Body body: blocks) {
 
+            if(body.getFixtureList().get(0).toString() == "nogravity"){
+                body.setType(BodyDef.BodyType.DynamicBody);
+            }
+
 
             if (body.getUserData() != null) {
-                sprite = (Sprite) body.getUserData();
+                Sprite sprite = (Sprite) body.getUserData();
                 sprite.setBounds(((body.getPosition().x-0.5f - camera.position.x)*PPM/camera.zoom+WIDTH_CLIENT/2f), ((body.getPosition().y-0.5f- camera.position.y)*PPM/camera.zoom+HEIGHT_CLIENT/2f),PPM/camera.zoom,PPM/camera.zoom);
                 sprite.draw(batch);
             }
@@ -113,13 +118,13 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float delta) {
-        //world.setGravity(GRAVITY);
         world.step(WORLD_STEP * ((paused) ? 0 : 1), 6, 2);
-        //world.setGravity(GRAVITY);
         checkGameOver();
 
         camera.cameraUpdate();
         mapGenerator.update(world,blocks,camera,enemies,player,lights,rayHandler);
+
+//        batch.draw();
 
 
         input.handle(delta);
@@ -127,7 +132,6 @@ public class PlayScreen implements Screen {
 
 
         ellapsedTime++;
-       // world.setGravity(GRAVITY);
         /*if (zoomState==1) {
             camera.zoomOut();
         } else {
@@ -163,18 +167,21 @@ public class PlayScreen implements Screen {
         gui.updateScore(0);
 
         world = new World(GRAVITY, false);
-        world.setContactListener(new CollisionListener(this,gui));
+        world.setContactListener(new CollisionListener(this,gui,blocks));
         input = new GameInputHandler(this);
         b2ddr = new Box2DDebugRenderer();
-        b2ddr.setDrawJoints(false);
+        b2ddr.setDrawJoints(true);
 
         rayHandler = new RayHandler(world);
-        player = new Jelly(world, 0, 15);
+        player = new JellyFix(world, 0, 15);
         camera = new MovableCamera(player.body, new Vector2(0, 2),WIDTH_CLIENT/PPM, HEIGHT_CLIENT/PPM);
         mapGenerator = new MapGenerator(world, camera, new Vector2(-WIDTH_CLIENT / 2, 0), blocks, lights, rayHandler);
         fps = new FpsCounter(gui);
         jumped= false;
         zoomState = 0;
+
+        //TriGen.setStartingPoint(new Vector2(2,1));
+        //TriGen.generateMore(world,300);
 
     }
 

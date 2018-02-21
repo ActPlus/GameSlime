@@ -21,7 +21,7 @@ import sk.actplus.slime.other.BodyArray;
  * Created by Admin on 20.12.2016.
  */
 
-public class Jelly extends Player {
+public class Jelly2 extends Player {
     public static final BodyDef.BodyType BODY_TYPE = BodyDef.BodyType.DynamicBody;
     public static final int NUM_SEGMENTS = 10;
 
@@ -38,8 +38,8 @@ public class Jelly extends Player {
     public static final float OUTER_RESTITUTION = 0f;
     public static final float INNER_RESTITUTION = 0f;
 
-    public static final float INNER_FRICTION = 0f;
-    public static final float OUTER_FRICTION = 0f;
+    public static final float INNER_FRICTION = 1f;
+    public static final float OUTER_FRICTION = 1f;
 
     public static final float INNER_FREQUENCY_HZ = 14f;
     public static final float OUTER_FREQUENCY_HZ = 16f;
@@ -64,7 +64,7 @@ public class Jelly extends Player {
     public Body body;
 
 
-    public Jelly(World world, float xi, float yi) {
+    public Jelly2(World world, float xi, float yi) {
         super(world);
         this.world = world;
 
@@ -102,6 +102,7 @@ public class Jelly extends Player {
         float x;
         float y;
         float space = (ORBITAL_SIDE / ((float) NUM_SEGMENTS));
+
 
         for (int i = 1; i < NUM_SEGMENTS; i++) {
             x = ORBITAL_SIDE / 2f - i * space - space / 2f;

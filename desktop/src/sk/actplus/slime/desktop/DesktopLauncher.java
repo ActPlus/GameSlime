@@ -10,6 +10,6 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new GameSlime(), config);
-		new MapGenJava(1);
+		//new MapGenJava(1);
 	}
 }

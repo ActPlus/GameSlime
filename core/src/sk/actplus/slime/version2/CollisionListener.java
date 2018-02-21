@@ -1,10 +1,11 @@
-package sk.actplus.slime.other;
+package sk.actplus.slime.version2;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
+import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.screens.GUI;
 import sk.actplus.slime.screens.PlayScreen;
 
