@@ -30,8 +30,8 @@ package sk.actplus.slime.version2.entity.mapentity;
 public class Triangle extends Entity {
     public static final float MAX_RADIUS = 2.5f;
 
-    protected Vector2[] sharedSide;
-    protected Vector2 C;
+    protected static Vector2[] sharedSide;
+    protected static Vector2 C;
     protected Vector2 center;
     protected Graphics graphics;
     private OrthographicCamera camera;
@@ -244,10 +244,10 @@ public class Triangle extends Entity {
     public void setSharedSide(Vector2[] sharedSide) {
         this.sharedSide = sharedSide;
     }
-    public Vector2 getC() {
+    public static Vector2 getC() {
         return C.cpy();
     }
-    public Vector2[] getSharedSide() {
+    public static Vector2[] getSharedSide() {
         return sharedSide;
     }
 
@@ -349,5 +349,17 @@ public class Triangle extends Entity {
         }
 
 
+    }
+
+    public static Vector2[] getArrayOfVertices(){
+        Vector2[] vecArray = new Vector2[3];
+        int index = 0;
+
+        //all
+        vecArray[index++] = getSharedSide()[0];
+        vecArray[index++] = getSharedSide()[1];
+        vecArray[index] = getC();
+
+        return vecArray;
     }
 }

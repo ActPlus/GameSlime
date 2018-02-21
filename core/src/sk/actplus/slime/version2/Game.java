@@ -1,10 +1,12 @@
 package sk.actplus.slime.version2;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import sk.actplus.slime.version2.entity.EntityArray;
+import sk.actplus.slime.version2.entity.PolygonGenerator;
 import sk.actplus.slime.version2.entity.friendly.Player;
 import sk.actplus.slime.version2.entity.mapentity.Triangle;
 
@@ -21,6 +23,7 @@ public class Game {
     private String savePath;
     private InputMultiplexer mux;
     GameArray array;
+    //PolygonGenerator polygonGenerator;
 
     public
     Game(GameScreen screen, InputMultiplexer mux) {
@@ -30,6 +33,7 @@ public class Game {
         entities = new EntityArray();
         array = new GameArray();
         mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-2,2),new Vector2(3,3)},new Vector2(2,-3));
+        array.polygonGenerators.add(new PolygonGenerator(array.triangles.get(0).getArrayOfVertices(),3, Color.BLUE));
 
         Player player= new Player(screen,mux);
 
@@ -41,10 +45,12 @@ public class Game {
 
     public void render(float delta) {
         entities.render(delta);
+        array.polygonGenerators.get(0).render();
     }
 
     private float dt = 0;
     public void update(float delta) {
+
         dt+=delta;
         entities.update(delta);
         if(dt>=0.5) {
