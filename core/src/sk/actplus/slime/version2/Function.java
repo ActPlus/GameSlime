@@ -18,11 +18,14 @@ public class Function {
 
     @Override
     public String toString() {
-        return "Function(x) = slope * x + yAxisIntersection";
+        return "f(x) = "+ String.format(java.util.Locale.US,"%.2f", slope) + " * x " + String.format(java.util.Locale.US,"%.2f", yAxisIntesection);
     }
 
     public float getSlope() {
         return slope;
+    }
+    public float getAngle() {
+        return (float)((180*slope)/Math.PI);
     }
 
     public void setSlope(float slope) {
@@ -35,6 +38,20 @@ public class Function {
 
     public void setyAxisIntesection(float yAxisIntesection) {
         this.yAxisIntesection = yAxisIntesection;
+    }
+    /***
+     * 0 --> pod
+     * 1 --> nad
+     * -1 --> na
+     */
+    public int isAbovePoint(Vector2 point) {
+        if(point.y>getSlope()*point.x+getyAxisIntesection()) {
+            return 1;
+        } else if(point.y<getSlope()*point.x+getyAxisIntesection()) {
+            return 0;
+        }
+
+        return -1; //na funkcii
     }
 
     public boolean contains(Vector2  point) {
@@ -58,8 +75,9 @@ public class Function {
      */
     public Vector2 getIntersection(Function function) {
         if((slope-function.slope) != 0) {
-            float x = function.yAxisIntesection-yAxisIntesection/slope-function.slope;
+            float x = (function.yAxisIntesection-yAxisIntesection)/(slope-function.slope);
             float y = getSlope()*x+yAxisIntesection;
+            System.out.println("found intersection at " + x + " , " + y);
             return new Vector2(x, y);
         }
 

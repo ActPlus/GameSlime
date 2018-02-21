@@ -15,15 +15,6 @@ public abstract class Enemy extends sk.actplus.slime.version2.entity.Entity {
         super(screen);
     }
 
-    @Override
-    public void handleCollision(short collisionBIT) {
-
-    }
-
-    @Override
-    public void render(float delta) {
-
-    }
 
     public abstract void action();
 }

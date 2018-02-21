@@ -5,24 +5,20 @@ package sk.actplus.slime.version2;
  */
 
 public class Angle {
-
-
-    private float deg;
-
-    public Angle(float deg) {
-        this.deg = deg;
+    public static double toDeg(double rad) {
+        return (180*rad)/Math.PI;
     }
 
-    public float getDeg(){
-        return deg;
+    public static double toDeg(float rad) {
+        return toDeg((double)rad);
     }
 
-    public float getRad(){
-        //TODO
-        return 0;
+    public static double toRad(double angle) {
+        return (angle*Math.PI)/180;
     }
-    public void setDeg(float deg) {
-        this.deg = deg;
+
+    public static double toRad(float angle) {
+        return toDeg((double)angle);
     }
 
 }

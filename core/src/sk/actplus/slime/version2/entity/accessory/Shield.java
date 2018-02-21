@@ -108,6 +108,7 @@ public class Shield extends sk.actplus.slime.version2.entity.Entity  {
 
     @Override
     public void update(float delta) {
+        super.update(delta);
         if(active) {
             //TODO optimize conditions
             if (((!infinite) && duration > 0)||infinite) {

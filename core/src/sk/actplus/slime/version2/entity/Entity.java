@@ -21,10 +21,6 @@ public abstract class Entity {
     protected boolean setToDestroy;
     protected boolean destroyed;
 
-    public Body getBody() {
-        return body;
-    }
-
     protected Body body;
 
     public Entity(GameScreen screen) {
@@ -35,14 +31,12 @@ public abstract class Entity {
 
     }
 
-
     public abstract void render(float delta);
     public abstract void handleCollision(short collisionBIT);
     public abstract void destroy();
 
     public void update(float delta) {
         shouldDie();
-
     }
 
 
@@ -115,6 +109,10 @@ public abstract class Entity {
     public  static FixtureDef ignoreCollision(FixtureDef fixDef, short maskbit) {
         //TODO : Set Collision to ignore
         return fixDef;
+    }
+
+    public Body getBody() {
+        return body;
     }
 
 
