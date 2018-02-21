@@ -121,37 +121,21 @@ public class Side extends Function {
 
 
     public boolean contains(Vector2 point, boolean openInterval) {
-        if (isOnInterval(point,openInterval)){
-            return super.contains(point);
-        }
+        if (isOnInterval(point,openInterval))
+            return true;
 
         return false;
     }
     public boolean isIntersecting(Side side, boolean openInterval) {
-        System.out.println("Is " + toString() +  " intersectiong " + side.toString() +" ?");
-
-        System.out.println("first function A" + getA() ) ;
-        System.out.println("first function B" + getB() ) ;
-        System.out.println("---------------------------------");
-        System.out.println("second function A" + side.getA() ) ;
-        System.out.println("second function B" + side.getB() ) ;
-        System.out.println("##################################");
-
-
-
 
         Vector2 intersection = getIntersectionPoint(side);
         if(intersection!=null){
-            System.out.println("intersection point at: " + intersection);
             if(contains(intersection,openInterval)&&side.contains(intersection,openInterval)) {
-                System.out.println("Intersection is on Interval");
                 for (int i = 0; i < 10; i++) {
-                    System.err.println("#############---------#############");
                 }
                 return true;
             }
         }
-        System.out.println("no intersection");
         return false;
     }
 
@@ -167,17 +151,14 @@ public class Side extends Function {
             x=this.x;
             y=side.slope*x+side.yAxisIntesection;
             intersection = new Vector2(x,y);
-            System.out.println("shit");
         } else if(this.function&&!side.isFunction()) {
             x=side.getX();
             y=slope*x+yAxisIntesection;
             intersection = new Vector2(x,y);
-            System.out.println("shit2");
         } else if(!this.function&&!side.isFunction()) {
             if(getX() == side.getX())
-                //todo good intersection to all
+                //todo good intersection to allY
             intersection = new Vector2(getX(),0);
-            System.out.println("shit3");
         }
 
 

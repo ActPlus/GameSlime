@@ -77,7 +77,6 @@ public class Function {
         if((slope-function.slope) != 0) {
             float x = (function.yAxisIntesection-yAxisIntesection)/(slope-function.slope);
             float y = getSlope()*x+yAxisIntesection;
-            System.out.println("found intersection at " + x + " , " + y);
             return new Vector2(x, y);
         }
 
