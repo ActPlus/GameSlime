@@ -1,0 +1,15 @@
+atribute vec4 a_color;
+atribute vec3 a_position;
+atribute vec2 a_texCoordd0;
+
+uniform mat4 u_projTrans;
+
+varying vec4 v_color;
+varying vec2 v_tectCoord0;
+
+void main() {
+	v_color = a_color;
+	v_tectCoord0 = a_texCoordd0;
+	gl_Position = u_projTrans * a_position;
+
+}
