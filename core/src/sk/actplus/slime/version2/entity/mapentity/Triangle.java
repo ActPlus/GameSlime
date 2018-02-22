@@ -20,7 +20,9 @@ package sk.actplus.slime.version2.entity.mapentity;
     import sk.actplus.slime.version2.VertexShader;
     import sk.actplus.slime.version2.entity.Entity;
     import sk.actplus.slime.version2.Side;
+    import sk.actplus.slime.version2.entity.PolygonGenerator;
 
+    import static com.badlogic.gdx.graphics.Color.*;
     import static sk.actplus.slime.constants.Values.BLOCK_USER_DATA;
 
 /**
@@ -35,6 +37,7 @@ public class Triangle extends Entity {
     protected Vector2 center;
     protected Graphics graphics;
     private OrthographicCamera camera;
+    protected PolygonGenerator polygonGenerator;
 
 
 
@@ -51,10 +54,13 @@ public class Triangle extends Entity {
         graphics = new Graphics(new Vector2[]{sharedSide[0],sharedSide[1],C});
         center = getCenterPoint();
         generateTriangle(world);
+        polygonGenerator = new PolygonGenerator(this.getArrayOfVertices(),3,BLUE);
     }
 
     @Override
     public void render(float delta) {
+       // System.out.println();
+        polygonGenerator.render();
         //TODO OpenGL Triangle graphics radial gradients in vertex, depending on seed color:-> darker, normal, light
         //graphics.flush(camera);
     }

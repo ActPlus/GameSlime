@@ -22,7 +22,9 @@ public class PolygonGenerator {
     private static PolygonSprite polygonSprite;
     private static PolygonSpriteBatch polyBatch;
     ShapeRenderer shapeRenderer;
-    FloatArray vertices;
+    private FloatArray vertices;
+    private int numberOfVertices;
+    private EarClippingTriangulator triangulator;
     Vector2 center;
     Texture texture;
 
@@ -34,6 +36,7 @@ public class PolygonGenerator {
      * @param color Color of the polygon
      */
     public PolygonGenerator(Vector2[] vector2s, int numberOfVertices, Color color){
+        this.numberOfVertices = numberOfVertices;
         shapeRenderer = new ShapeRenderer();
         polyBatch = new PolygonSpriteBatch();
 
@@ -53,22 +56,32 @@ public class PolygonGenerator {
         for (int i = 0; i < numberOfVertices; i++){
             vertices.add(vector2s[i].x * 32 + center.x);
             vertices.add(vector2s[i].y * 32 + center.y);
-            System.out.println(vertices.get(i));
+            //System.out.println(vertices.get(i));
         }
 
-        EarClippingTriangulator triangulator = new EarClippingTriangulator();
+        triangulator = new EarClippingTriangulator();
         ShortArray triangleINdeces = triangulator.computeTriangles(vertices);
         PolygonRegion polygonRegion = new PolygonRegion(textureRegion,vertices.toArray(),triangleINdeces.toArray());
         polygonSprite = new PolygonSprite(polygonRegion);
+
+        //System.out.println("hello from constructor");
+
 
     }
 
     //todo add update to update vertices
 
-    public static void render(){
+    public void update(){
+        //ShortArray triangleINdeces = triangulator.computeTriangles(vertices);
+    }
+
+    public void render(){
+        System.out.println("render "+ this  + "camera position" + );
         polyBatch.begin();
         polygonSprite.draw(polyBatch);
         polyBatch.end();
     }
+
+
 
 }
