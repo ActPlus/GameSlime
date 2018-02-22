@@ -52,16 +52,6 @@ public class Side extends Function {
         return (B.x == A.x)?false:true;
     }
 
-    private static float getYAxisIntersection(Vector2 point, float slope) {
-        return point.y-slope*point.x;
-    }
-
-    public static float getSlope(Vector2 A, Vector2 B) throws IllegalArgumentException{
-        float deltaX = B.x-A.x;
-
-        return (B.y-A.y) / deltaX;
-    }
-
     @Override
     public String toString() {
         if(isFunction())

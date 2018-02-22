@@ -16,6 +16,23 @@ public class Function {
         this.yAxisIntesection = yAxisIntesection;
     }
 
+    public Function(Vector2 A, Vector2 B) {
+        this.slope = getSlope(A,B);
+        this.yAxisIntesection = getYAxisIntersection(A,slope);
+    }
+
+    public static float getYAxisIntersection(Vector2 point, float slope) {
+        return point.y-slope*point.x;
+    }
+
+    public static float getSlope(Vector2 A, Vector2 B) throws IllegalArgumentException{
+        float deltaX = B.x-A.x;
+
+        return (B.y-A.y) / deltaX;
+    }
+
+
+
     @Override
     public String toString() {
         return "f(x) = "+ String.format(java.util.Locale.US,"%.2f", slope) + " * x " + String.format(java.util.Locale.US,"%.2f", yAxisIntesection);

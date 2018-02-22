@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import java.util.Random;
 
 import sk.actplus.slime.version2.entity.mapentity.Triangle;
+import sun.security.provider.certpath.Vertex;
 
 /**
  * Created by Ja on 17.2.2018.
@@ -18,7 +19,7 @@ class MapGenerator {
     protected World world;
     protected GameScreen screen;
     protected OrthographicCamera camera;
-    protected Vector2 transition;
+    protected Vector2 negativeDeltaX_transition;
     protected Triangle last;
 
     public static final float MAX_RADIUS = 5f;
@@ -29,7 +30,6 @@ class MapGenerator {
         this.screen = screen;
         this.camera = screen.camera;
         rand = new Random();
-        transition = new Vector2(0,0);
         triangles.add(last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},screen.camera));
     }
 
@@ -54,12 +54,16 @@ class MapGenerator {
 
         newShared[0]= last.getSharedSide()[triedIdx].cpy();
         newShared[1]= last.getC().cpy();
-
+        Vector2[] vertices;
         do {
-            if(numFails>=5) newShared[0] = last.getSharedSide()[getOtherVertexIdx(triedIdx)].cpy();
-            newC = getRandomPoint(0, last, newShared);
+            if(numFails>=20) System.out.println("fails : " +numFails);
+            if((numFails % 100)==299) {
+                triedIdx=getOtherVertexIdx(triedIdx);
+                newShared[0] = last.getSharedSide()[triedIdx].cpy();}
+            newC = getRandomPoint(last, newShared);
             numFails++;
-        } while((isColliding(new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()},entities))||((getDeltaX()<0)&&newC.x<Triangle.getCenterPoint(newShared).x));
+            vertices= new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()};
+        } while((isColliding(vertices,entities)) && !isValidTriangle(vertices));
 
 
         tri = new Triangle(screen, new Vector2[]{newShared[0].cpy(), newShared[1].cpy(), newC.cpy()}, camera);
@@ -67,12 +71,18 @@ class MapGenerator {
         camera.position.set(tri.getCenterPoint().x,tri.getCenterPoint().y,0);
         camera.update();
 
-        Vector2 tempTransition = new Vector2(tri.getC().x-last.getC().x,tri.getC().y - last.getC().y);
+        Vector2 lastTransition = tri.getCenterPoint().cpy().sub(last.getCenterPoint().cpy());
 
-        if(tempTransition.x<0){
-            transition = new Vector2(tempTransition.x + transition.x,tempTransition.y);
-        } else {
-            transition = tempTransition.cpy();
+        if((negativeDeltaX_transition!=null) &&(negativeDeltaX_transition.x>0)) {
+            negativeDeltaX_transition = null;
+        }
+
+        if((negativeDeltaX_transition== null)&&(lastTransition.x<0)){
+            negativeDeltaX_transition = lastTransition.cpy();
+        }
+
+        if((lastTransition.x<0)||(negativeDeltaX_transition != null)){
+            negativeDeltaX_transition.add(lastTransition.cpy());
         }
 
         setLast(tri);
@@ -114,7 +124,7 @@ class MapGenerator {
     }
 
 
-    public Vector2 getRandomPoint(float limitX, Triangle last, Vector2[] newShared){
+    public Vector2 getRandomPoint(Triangle last, Vector2[] newShared){
 
 
         float radius;
@@ -127,30 +137,33 @@ class MapGenerator {
         radius = rand.nextFloat() * MAX_RADIUS/2f + MAX_RADIUS/2f;
         //radius = 1;
 //
-            /*if(getDeltaX()<0){
-                random_x=rand.nextFloat()*(2*radius-limitX)-radius+limitX;
-                //if (random_x<=0) {
-                random_y=getDirectionY()*(float)Math.sqrt(Math.abs(Math.pow(radius,2)-Math.pow(random_x,2)));
-                //} else {
-                //    random_y=(float)Math.sin(Math.toRadians(angle));
-                //}
-            } else {*/
+            if(negativeDeltaX_transition!= null && getDeltaX()<0){
+                float limitX = Math.abs(negativeDeltaX_transition.x/1.2f);
+                System.out.println("x% blocked "+limitX/MAX_RADIUS*100);
+                if(limitX<MAX_RADIUS)
+                random_x = rand.nextFloat()*(2*MAX_RADIUS-limitX)-MAX_RADIUS+limitX;
+                else
+                    random_x=rand.nextFloat()*(MAX_RADIUS);
+                random_y = getDirectionY()*(float)Math.sqrt(Math.pow(MAX_RADIUS,2)-Math.pow(random_x,2));
+            } else {
 //
                 random_x = (float)(Math.cos(Math.toRadians(angle)) * radius);
                 random_y = (float)(Math.sin(Math.toRadians(angle)) * radius);
 
-            //}
+            }
 
         Vector2 point = new Vector2(random_x+center.x,random_y+center.y);
         return point;
 
     }
 
-    public boolean  isReturning() {
-        if(getDeltaX()<0) {
-            return true;
+
+    public boolean isValidTriangle(Vector2 [] vertices) {
+        try {
+            return !(new Function(vertices[0],vertices[1]).contains(vertices[2]));}
+        catch(Exception e) {
+            return !(vertices[0].x == vertices[1].x) && (vertices[1].x == vertices[2].x);
         }
-        return false;
     }
 
     public boolean isColliding(Vector2[] vertex, Array<Triangle> entities) {
@@ -159,12 +172,12 @@ class MapGenerator {
                 new Side(vertex[1].cpy(), vertex[2].cpy())};
 
 
-        for (int idx =0; idx < entities.size-1; idx++) {
+        for (int idx = 0; idx < entities.size; idx++) {
 
             //if (!Triangle.isTooFar(Triangle.getCenterPoint(vertex), triangle.getCenterPoint())) {
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (newSide[i].isIntersecting(entities.get(idx).getSides()[j], true)) {
+                    if ((newSide[i].isIntersecting(entities.get(idx).getSides()[j], true))||(entities.get(idx).contains(vertex[2]))) {
                         return true;
                     }
                 }
@@ -176,11 +189,11 @@ class MapGenerator {
     }
 
     public float getDeltaX() {
-        return transition.x;
+        return negativeDeltaX_transition.x;
     }
 
     public int getDirectionY() {
-        return (int)Math.signum(transition.y);
+        return (int)Math.signum(negativeDeltaX_transition.y);
     }
 
     public int getRandomIdx() {
