@@ -19,7 +19,7 @@ import static sk.actplus.slime.constants.Values.WORLD_STEP;
 
 public class GameScreen implements Screen{
     private final Vector2 GRAVITY = new Vector2(0,-10);
-    public static float PPM = 32;
+    public static float PPM = 16;
     public static final float CLIENT_WIDTH = Gdx.graphics.getWidth();
     public static final float CLIENT_HEIGHT = Gdx.graphics.getHeight();
 

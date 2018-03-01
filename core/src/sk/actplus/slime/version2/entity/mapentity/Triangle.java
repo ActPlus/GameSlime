@@ -58,6 +58,11 @@ public class Triangle extends Entity {
     }
 
     @Override
+    public String toString() {
+        return getSides()[0] + " , " + getSides()[1] + " , " + getSides()[2];
+    }
+
+    @Override
     public void render(float delta) {
        // System.out.println();
         polygonGenerator.render();

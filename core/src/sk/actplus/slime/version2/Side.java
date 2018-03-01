@@ -120,9 +120,7 @@ public class Side extends Function {
 
         Vector2 intersection = getIntersectionPoint(side);
         if(intersection!=null){
-            if(contains(intersection,openInterval)&&side.contains(intersection,openInterval)) {
-                for (int i = 0; i < 10; i++) {
-                }
+            if(this.contains(intersection,openInterval)&&side.contains(intersection,openInterval)) {
                 return true;
             }
         }

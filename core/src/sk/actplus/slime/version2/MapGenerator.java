@@ -57,13 +57,14 @@ class MapGenerator {
         Vector2[] vertices;
         do {
             if(numFails>=20) System.out.println("fails : " +numFails);
-            if((numFails % 100)==299) {
-                triedIdx=getOtherVertexIdx(triedIdx);
+            if((numFails % 50)==49) {
+                System.out.println("Switching");
+                triedIdx = getOtherVertexIdx(triedIdx);
                 newShared[0] = last.getSharedSide()[triedIdx].cpy();}
             newC = getRandomPoint(last, newShared);
             numFails++;
-            vertices= new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()};
-        } while((isColliding(vertices,entities)) && !isValidTriangle(vertices));
+            vertices = new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()};
+        } while(isColliding(vertices,entities)); // || !isValidTriangle(vertices)
 
 
         tri = new Triangle(screen, new Vector2[]{newShared[0].cpy(), newShared[1].cpy(), newC.cpy()}, camera);
@@ -75,10 +76,12 @@ class MapGenerator {
 
         if((negativeDeltaX_transition!=null) &&(negativeDeltaX_transition.x>0)) {
             negativeDeltaX_transition = null;
+
         }
 
         if((negativeDeltaX_transition== null)&&(lastTransition.x<0)){
             negativeDeltaX_transition = lastTransition.cpy();
+
         }
 
         if((lastTransition.x<0)||(negativeDeltaX_transition != null)){
@@ -138,10 +141,10 @@ class MapGenerator {
         //radius = 1;
 //
             if(negativeDeltaX_transition!= null && getDeltaX()<0){
-                float limitX = Math.abs(negativeDeltaX_transition.x/1.2f);
-                System.out.println("x% blocked "+limitX/MAX_RADIUS*100);
+                float limitX = Math.abs(negativeDeltaX_transition.x/2f);
+                //System.out.println("x% blocked "+limitX/MAX_RADIUS*100);
                 if(limitX<MAX_RADIUS)
-                random_x = rand.nextFloat()*(2*MAX_RADIUS-limitX)-MAX_RADIUS+limitX;
+                    random_x = rand.nextFloat()*(2*MAX_RADIUS-limitX)-MAX_RADIUS+limitX;
                 else
                     random_x=rand.nextFloat()*(MAX_RADIUS);
                 random_y = getDirectionY()*(float)Math.sqrt(Math.pow(MAX_RADIUS,2)-Math.pow(random_x,2));
@@ -160,9 +163,9 @@ class MapGenerator {
 
     public boolean isValidTriangle(Vector2 [] vertices) {
         try {
-            return !(new Function(vertices[0],vertices[1]).contains(vertices[2]));}
+            return !(new Function(vertices[0],vertices[1])).contains(vertices[2]);}
         catch(Exception e) {
-            return !(vertices[0].x == vertices[1].x) && (vertices[1].x == vertices[2].x);
+            return !((vertices[0].x == vertices[1].x) && (vertices[1].x == vertices[2].x));
         }
     }
 
@@ -175,13 +178,18 @@ class MapGenerator {
         for (int idx = 0; idx < entities.size; idx++) {
 
             //if (!Triangle.isTooFar(Triangle.getCenterPoint(vertex), triangle.getCenterPoint())) {
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if ((newSide[i].isIntersecting(entities.get(idx).getSides()[j], true))||(entities.get(idx).contains(vertex[2]))) {
-                        return true;
+            if(entities.get(idx).contains(vertex[2])) {
+                return true;
+            } else {
+                for (int i = 0; i < 2; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        //if ((newSide[i].isIntersecting(entities.get(idx).getSides()[j], true))||(entities.get(idx).contains(vertex[2]))) {
+                        if ((newSide[i].isIntersecting(entities.get(idx).getSides()[j], true))) {
+                            return true;
+                        }
                     }
+                    //}
                 }
-                //}
             }
         }
 
