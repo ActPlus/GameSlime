@@ -31,6 +31,7 @@ class MapGenerator {
         rand = new Random();
         transition = new Vector2(0,0);
         triangles.add(last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},screen.camera));
+
     }
 
 
@@ -48,6 +49,7 @@ class MapGenerator {
         Vector2[] newShared = new Vector2[2];
         Vector2 newC;
         int numFails = 0;
+
 
 
         int triedIdx = getRandomIdx();
