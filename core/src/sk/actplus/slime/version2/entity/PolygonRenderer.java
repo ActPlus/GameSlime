@@ -64,8 +64,6 @@ public class PolygonRenderer {
         PolygonRegion polygonRegion = new PolygonRegion(textureRegion,vertices.toArray(),triangleINdeces.toArray());
         polygonSprite = new PolygonSprite(polygonRegion);
 
-        //System.out.println("hello from constructor");
-
 
     }
 

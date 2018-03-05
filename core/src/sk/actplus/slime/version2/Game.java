@@ -52,16 +52,20 @@ public class Game {
 
         for (int i = 0; i < array.triangles.size;i++){
             array.triangles.get(i).render(delta);
-            System.out.println(array.polygonRenderers.size);
+
+
             try {
+
+                System.out.println("X:" + array.polygonRenderers.get(i).getPolygonSprite().getX() + " Y: "+array.polygonRenderers.get(i).getPolygonSprite().getX());
                 array.polygonRenderers.get(i).getPolygonSprite().draw(polyBatch);
             }catch (Exception e){
                 System.out.println(e);
             }
 
-        }
 
+        }
         polyBatch.end();
+
     }
 
     private int index = 0;
