@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -29,6 +32,7 @@ public class GameScreen implements Screen{
     protected MovableCamera camera;
     private Game game;
     private GUI gui;
+    private PolygonSpriteBatch polygonBatch;
 
 
 
@@ -39,7 +43,8 @@ public class GameScreen implements Screen{
         b2ddr = new Box2DDebugRenderer();
         muxInput = new InputMultiplexer();
         Gdx.input.setInputProcessor(muxInput);
-        game = new Game(this,muxInput);
+        game = new Game(this,muxInput,camera);
+        polygonBatch = new PolygonSpriteBatch();
         //TODO GUI
         //gui = new DebugInGameGUI();
 
@@ -106,4 +111,5 @@ public class GameScreen implements Screen{
     public World getWorld() {
         return world;
     }
+
 }

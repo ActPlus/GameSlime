@@ -223,5 +223,15 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     public void update(float delta) {
         super.update(delta);
     }
+
+    public Vector2[] arrayOfVec2(){
+        Vector2[] vec = new Vector2[49];
+        for (int  i = 0; i < bodies.size; i++) {
+            vec[i] = bodies.get(i).getPosition();
+        }
+
+        return vec;
+    }
+
 }
 

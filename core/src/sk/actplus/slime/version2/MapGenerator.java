@@ -19,7 +19,6 @@ class MapGenerator {
     protected GameScreen screen;
     protected OrthographicCamera camera;
     protected Vector2 transition;
-    protected int numOfFails;
     protected Triangle last;
 
     public static final float MAX_RADIUS = 5f;
@@ -28,10 +27,11 @@ class MapGenerator {
     public MapGenerator(GameScreen screen, Array<Triangle> triangles,Vector2[] startingEdge, Vector2 C) {
         this.world = screen.getWorld();
         this.screen = screen;
+        this.camera = screen.camera;
         rand = new Random();
-        numOfFails = 0;
         transition = new Vector2(0,0);
         triangles.add(last = new Triangle(screen,new Vector2[]{startingEdge[0],startingEdge[1],C},screen.camera));
+
     }
 
 
@@ -48,16 +48,26 @@ class MapGenerator {
         Triangle tri;
         Vector2[] newShared = new Vector2[2];
         Vector2 newC;
+        int numFails = 0;
 
-        newShared[0]= last.getSharedSide()[getRandomIdx()];
-        newShared[1]= last.getC();
+
+
+        int triedIdx = getRandomIdx();
+
+        newShared[0]= last.getSharedSide()[triedIdx].cpy();
+        newShared[1]= last.getC().cpy();
 
         do {
+            if(numFails>=5) newShared[0] = last.getSharedSide()[getOtherVertexIdx(triedIdx)].cpy();
             newC = getRandomPoint(0, last, newShared);
-        } while(isColliding(new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()},entities));
+            numFails++;
+        } while((isColliding(new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()},entities))||((getDeltaX()<0)&&newC.x<Triangle.getCenterPoint(newShared).x));
 
 
         tri = new Triangle(screen, new Vector2[]{newShared[0].cpy(), newShared[1].cpy(), newC.cpy()}, camera);
+
+        camera.position.set(tri.getCenterPoint().x,tri.getCenterPoint().y,0);
+        camera.update();
 
         Vector2 tempTransition = new Vector2(tri.getC().x-last.getC().x,tri.getC().y - last.getC().y);
 
@@ -116,23 +126,22 @@ class MapGenerator {
         float random_x;
         float random_y;
 
-        //radius = rand.nextFloat() * MAX_RADIUS/2f + MAX_RADIUS/2f;
-        radius = 1;
+        radius = rand.nextFloat() * MAX_RADIUS/2f + MAX_RADIUS/2f;
+        //radius = 1;
 //
-            if(getDeltaX()<0){
-                random_x=rand.nextFloat()*(limitX-MAX_RADIUS);
-                if (random_x<=0) {
-                    random_y=(float)Math.sqrt(Math.abs(Math.pow(radius,2)-Math.pow(random_x,2)));
-                } else {
-                    random_y=(float)Math.sin(Math.toRadians(angle));
-                }
-            } else {
+            /*if(getDeltaX()<0){
+                random_x=rand.nextFloat()*(2*radius-limitX)-radius+limitX;
+                //if (random_x<=0) {
+                random_y=getDirectionY()*(float)Math.sqrt(Math.abs(Math.pow(radius,2)-Math.pow(random_x,2)));
+                //} else {
+                //    random_y=(float)Math.sin(Math.toRadians(angle));
+                //}
+            } else {*/
 //
                 random_x = (float)(Math.cos(Math.toRadians(angle)) * radius);
                 random_y = (float)(Math.sin(Math.toRadians(angle)) * radius);
 
-        System.out.println();
-            }
+            //}
 
         Vector2 point = new Vector2(random_x+center.x,random_y+center.y);
         return point;
