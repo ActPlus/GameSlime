@@ -354,7 +354,7 @@ public class Triangle extends Entity {
             //reset index to zero
             idx = 0;
         }
-
+//
 
     }
 
