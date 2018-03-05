@@ -93,6 +93,54 @@ class MapGenerator {
         return tri;
     }
 
+    public Vector2 predictNext(int sideIdx, Array<Triangle> entities){
+        Vector2[] newShared = new Vector2[2];
+        Vector2 newC;
+
+        newShared[0]= last.getSharedSide()[sideIdx];
+        newShared[1]= last.getC();
+        Vector2[] vertices;
+        newC = getRandomPoint(last, newShared);
+        vertices = new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()};
+        // || !isValidTriangle(vertices)
+        if(!isColliding(vertices,entities)){
+            return newC;
+        }
+
+        return null;
+    }
+/*
+    public Vector2[] predict(int howMany, int useHowMany, Array<Triangle> entities){
+        Array<Vector2> newCVertices = new Array<Vector2>();
+        int [] idxUsed = new int[howMany];
+        int idx = 0;
+
+        while (idx<=10) {
+            if(newCVertices.get(idx)!=null){
+                idxUsed[idx]=getOtherVertexIdx(idxUsed[idx]);
+
+                Vector2 attempt = new Vector2();
+                int fails = 0;
+                while((attempt = predictNext(idxUsed[idx],entities))==null){
+                    fails++;
+                    if (fails >=20) {
+                        idx--;
+                    } else if(fails>=10) {
+                        idxUsed[idx]=getOtherVertexIdx(idxUsed[idx]);
+                    }
+                }
+
+                newCVertices.get(idx).set();
+            } else {
+                idxUsed[idx] = getRandomIdx();
+                newCVertices.add(predictNext(idxUsed[idx],entities));
+            }
+        }
+
+    }
+*/
+
+
     public double getAngleFromSlope(float slope) {
         return Math.toDegrees(Math.atan(slope));
     }
@@ -141,13 +189,14 @@ class MapGenerator {
         //radius = 1;
 //
             if(negativeDeltaX_transition!= null && getDeltaX()<0){
-                float limitX = Math.abs(negativeDeltaX_transition.x/2f);
+                float limitX = Math.abs(negativeDeltaX_transition.x/4f);
+                float limitYX = Math.abs(negativeDeltaX_transition.y/20f);
                 //System.out.println("x% blocked "+limitX/MAX_RADIUS*100);
                 if(limitX<MAX_RADIUS)
                     random_x = rand.nextFloat()*(2*MAX_RADIUS-limitX)-MAX_RADIUS+limitX;
                 else
                     random_x=rand.nextFloat()*(MAX_RADIUS);
-                random_y = getDirectionY()*(float)Math.sqrt(Math.pow(MAX_RADIUS,2)-Math.pow(random_x,2));
+                    random_y = Math.signum(rand.nextInt(2)*2-1)*rand.nextFloat()*MAX_RADIUS;
             } else {
 //
                 random_x = (float)(Math.cos(Math.toRadians(angle)) * radius);
@@ -159,6 +208,8 @@ class MapGenerator {
         return point;
 
     }
+
+
 
 
     public boolean isValidTriangle(Vector2 [] vertices) {
