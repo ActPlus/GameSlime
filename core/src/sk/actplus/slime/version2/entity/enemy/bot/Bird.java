@@ -9,7 +9,7 @@ import sk.actplus.slime.version2.entity.Entity;
  * Created by Ja on 17.2.2018.
  */
 
-public class Bird extends Entity {
+public abstract class Bird extends Entity {
     public Bird(GameScreen screen) {
         super(screen);
     }
@@ -24,8 +24,4 @@ public class Bird extends Entity {
 
     }
 
-    @Override
-    public void render(float delta) {
-
-    }
 }

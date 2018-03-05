@@ -2,9 +2,12 @@ package sk.actplus.slime.version2.entity.friendly;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 import sk.actplus.slime.version2.GameScreen;
+import sk.actplus.slime.version2.entity.PolygonGenerator;
 import sk.actplus.slime.version2.entity.accessory.Shield;
 
 /**
@@ -21,9 +24,8 @@ public class PlayerShield extends Player {
 
 
     @Override
-    public void render(float delta) {
-        super.render(delta);
-        shield.render(delta);
+    public void render(float delta, PolygonSpriteBatch polyBatch) {
+
     }
 
     @Override

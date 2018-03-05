@@ -1,6 +1,7 @@
 package sk.actplus.slime.version2.entity.friendly;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -13,6 +14,7 @@ import sk.actplus.slime.constants.Category;
 import sk.actplus.slime.entity.player.Neighbors;
 import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.version2.GameScreen;
+import sk.actplus.slime.version2.entity.PolygonGenerator;
 import sk.actplus.slime.version2.input.PlayerInputProcessor;
 
 /**
@@ -114,8 +116,7 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
          */
         for (int i = 0; i < NUM_SEGMENTS; i++) {
             for (int j = 0; j < NUM_SEGMENTS; j++) {
-                //if ((j==0)||(i==0)||(i==NUM_SEGMENTS-1)||(j==NUM_SEGMENTS-1)) {
-                //crete body
+
                 float x, y;
                 x = ORBITAL_SIDE / 2f - j * space - space / 2f;
                 y = ORBITAL_SIDE / 2f - i * space - space / 2f;
@@ -205,6 +206,11 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
 
 
     @Override
+    public void render(float delta, PolygonSpriteBatch polyBatch) {
+
+    }
+
+    @Override
     public void handleCollision(short collisionBIT) {
 
     }
@@ -214,10 +220,6 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
         screen.removeInputProcessor(inputProccesor);
     }
 
-    @Override
-    public void render(float delta) {
-        //TODO : render graphics from OpenGL
-    }
 
     @Override
     public void update(float delta) {

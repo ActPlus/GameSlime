@@ -1,5 +1,6 @@
 package sk.actplus.slime.version2.entity.accessory;
 
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import sk.actplus.slime.version2.Angle;
 import sk.actplus.slime.version2.GameScreen;
 import sk.actplus.slime.version2.entity.ExpectsInput;
+import sk.actplus.slime.version2.entity.PolygonGenerator;
 import sk.actplus.slime.version2.enums.Types;
 import sk.actplus.slime.version2.enums.Types.TimePeriod;
 import sk.actplus.slime.version2.input.ShieldInputProcessor;
@@ -90,6 +92,11 @@ public class Shield extends sk.actplus.slime.version2.entity.Entity  {
 
 
     @Override
+    public void render(float delta, PolygonSpriteBatch polyBatch) {
+
+    }
+
+    @Override
     public void handleCollision(short collisionBIT) {
         //TODO deflects bullets, kamiqazees
     }
@@ -99,12 +106,6 @@ public class Shield extends sk.actplus.slime.version2.entity.Entity  {
         screen.removeInputProcessor(inputProcessor);
     }
 
-    @Override
-    public void render(float delta) {
-        if(active) {
-            //TODO graphics
-        }
-    }
 
     @Override
     public void update(float delta) {

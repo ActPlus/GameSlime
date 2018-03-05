@@ -1,6 +1,8 @@
 package sk.actplus.slime.version2;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -22,6 +24,8 @@ public class Game {
     private InputMultiplexer mux;
     GameArray array;
 
+    PolygonSpriteBatch polyBatch;
+
     public
     Game(GameScreen screen, InputMultiplexer mux) {
         this.world = screen.getWorld();
@@ -32,25 +36,33 @@ public class Game {
         mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-2,2),new Vector2(3,3)},new Vector2(2,-3));
 
         Player player= new Player(screen,mux);
+        //entities.add(player);
 
-        entities.add(player);
+        polyBatch = new PolygonSpriteBatch();
         paused = false;
     }
 
 
 
     public void render(float delta) {
-        entities.render(delta);
+        update(delta);
+
+        polyBatch.begin();
+        for (int i = 0; i < array.triangles.size;i++){
+            array.triangles.get(i).render(delta,polyBatch);
+        }
+        polyBatch.end();
     }
 
     private float dt = 0;
     public void update(float delta) {
         dt+=delta;
         entities.update(delta);
-        if(dt>=0.1) {
+        if(dt>=0.1f) {
             dt =0;
-            array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
+array.triangles = (mapGen.generate(mapGen.last,array.triangles));
         }
+
 
     }
 

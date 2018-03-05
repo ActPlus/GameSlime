@@ -19,8 +19,8 @@ import com.badlogic.gdx.utils.ShortArray;
  */
 
 public class PolygonGenerator {
-    private static PolygonSprite polygonSprite;
-    private static PolygonSpriteBatch polyBatch;
+    private PolygonSprite polygonSprite;
+    public PolygonSpriteBatch polyBatch;
     ShapeRenderer shapeRenderer;
     private FloatArray vertices;
     private int numberOfVertices;
@@ -29,16 +29,16 @@ public class PolygonGenerator {
     Texture texture;
 
 
+
     /**
      *
      * @param vector2s  array of vertices of polygon
      * @param numberOfVertices number of vertices of polygon
      * @param color Color of the polygon
      */
-    public PolygonGenerator(Vector2[] vector2s, int numberOfVertices, Color color){
+    public PolygonGenerator(Vector2[] vector2s, int numberOfVertices, Color color ){
         this.numberOfVertices = numberOfVertices;
         shapeRenderer = new ShapeRenderer();
-        polyBatch = new PolygonSpriteBatch();
 
         //todo put values insted fo method getWidth/getHeight
         center = new Vector2(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
@@ -76,10 +76,11 @@ public class PolygonGenerator {
     }
 
     public void render(){
-        System.out.println("render "+ this  + "camera position" + );
-        polyBatch.begin();
-        polygonSprite.draw(polyBatch);
-        polyBatch.end();
+
+    }
+
+    public PolygonSprite getPolygonSprite(){
+        return polygonSprite;
     }
 
 

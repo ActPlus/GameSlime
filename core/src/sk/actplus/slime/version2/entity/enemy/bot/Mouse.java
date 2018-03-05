@@ -8,7 +8,7 @@ import sk.actplus.slime.version2.GameScreen;
  * Created by Ja on 17.2.2018.
  */
 
-public class Mouse extends sk.actplus.slime.version2.entity.WithTarget {
+public abstract class Mouse extends sk.actplus.slime.version2.entity.WithTarget {
     //Maybe exact object/body
     public Object contraband[];
     //TODO Make mouse be able to steal and remember what it stole
@@ -48,8 +48,4 @@ public class Mouse extends sk.actplus.slime.version2.entity.WithTarget {
 
     }
 
-    @Override
-    public void render(float delta) {
-
-    }
 }

@@ -33,7 +33,7 @@ import static sk.actplus.slime.version2.GameScreen.PPM;
             update();
         }
 
-        public void goTo(int x,int y) {
+        public void goTo(float x,float y) {
             transition = new Vector2(x,y);
             position.set(x,y,0);
             update();

@@ -8,7 +8,7 @@ import sk.actplus.slime.version2.GameScreen;
  * Created by Ja on 17.2.2018.
  */
 
-public class Spike extends sk.actplus.slime.version2.entity.WithTarget {
+public abstract class Spike extends sk.actplus.slime.version2.entity.WithTarget {
 
 
     public Spike(GameScreen screen) {
@@ -40,8 +40,4 @@ public class Spike extends sk.actplus.slime.version2.entity.WithTarget {
 
     }
 
-    @Override
-    public void render(float delta) {
-
-    }
 }

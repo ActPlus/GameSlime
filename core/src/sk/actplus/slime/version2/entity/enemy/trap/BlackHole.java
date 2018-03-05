@@ -8,7 +8,7 @@ import sk.actplus.slime.version2.GameScreen;
  * Created by Ja on 17.2.2018.
  */
 
-public class BlackHole extends sk.actplus.slime.version2.entity.Entity {
+public abstract class BlackHole extends sk.actplus.slime.version2.entity.Entity {
     //mask ill ignore collision
     private short mask;
     private float strength;
@@ -38,8 +38,4 @@ public class BlackHole extends sk.actplus.slime.version2.entity.Entity {
 
     }
 
-    @Override
-    public void render(float delta) {
-
-    }
 }
