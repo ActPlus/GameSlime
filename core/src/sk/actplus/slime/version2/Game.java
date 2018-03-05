@@ -1,15 +1,19 @@
 package sk.actplus.slime.version2;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 
 import sk.actplus.slime.version2.entity.EntityArray;
 import sk.actplus.slime.version2.entity.PolygonRenderer;
 import sk.actplus.slime.version2.entity.friendly.Player;
+import sk.actplus.slime.version2.entity.mapentity.Triangle;
 
 /**
  * Created by Ja on 17.2.2018.
@@ -26,19 +30,23 @@ public class Game {
     GameArray array;
     PolygonSpriteBatch polyBatch;
     Player player;
+    Camera camera;
+    private Vector2 deltaTranslation;
 
     public
-    Game(GameScreen screen, InputMultiplexer mux) {
+    Game(GameScreen screen, InputMultiplexer mux, OrthographicCamera camera) {
         this.world = screen.getWorld();
         this.screen = screen;
         this.mux = mux;
+        this.camera = camera;
         entities = new EntityArray();
         array = new GameArray();
         mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-2,2),new Vector2(3,3)},new Vector2(2,-3));
-        //array.polygonGenerators.add(new PolygonRenderer(array.triangles.get(0).getArrayOfVertices(),3, Color.BLUE));
         polyBatch = new PolygonSpriteBatch();
 
         player= new Player(screen,mux);
+
+        deltaTranslation = new Vector2(0,0);
 
         entities.add(player);
         paused = false;
@@ -47,17 +55,23 @@ public class Game {
 
 
 
+
+
     public void render(float delta) {
         entities.render(delta);
         polyBatch.begin();
 
-        for (int i = 0; i < array.triangles.size;i++){
+
+
+        //todo array.triangles.size
+        for (int i = 0; i < array.triangles.size ;i++){
             array.triangles.get(i).render(delta);
+            array.triangles.get(i).getPolygonRenderer().getPolygonSprite().setPosition(- camera.position.x*GameScreen.PPM,  - camera.position.y*GameScreen.PPM);
             array.triangles.get(i).getPolygonRenderer().getPolygonSprite().draw(polyBatch);
         }
 
-        PolygonRenderer polygonRenderer = new PolygonRenderer(player.arrayOfVec2(),49,Color.RED);
-        polygonRenderer.getPolygonSprite().draw(polyBatch);
+        //PolygonRenderer polygonRenderer = new PolygonRenderer(player.arrayOfVec2(),49,Color.RED);
+        //polygonRenderer.getPolygonSprite().draw(polyBatch);
 
         polyBatch.end();
 

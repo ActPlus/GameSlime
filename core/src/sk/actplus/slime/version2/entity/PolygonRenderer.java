@@ -11,8 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
+
+import sk.actplus.slime.version2.GameScreen;
 
 /**
  * Created by Timotej on 21.2.2018.
@@ -40,8 +43,10 @@ public class PolygonRenderer {
         shapeRenderer = new ShapeRenderer();
         //polyBatch = new PolygonSpriteBatch();
 
+
+
         //todo put values insted fo method getWidth/getHeight
-        center = new Vector2(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+        center = new Vector2(GameScreen.CLIENT_WIDTH/2,GameScreen.CLIENT_HEIGHT/2);
 
 
         Pixmap pix = new Pixmap(1,1,Pixmap.Format.RGBA8888);
@@ -54,9 +59,8 @@ public class PolygonRenderer {
         // ordered array of x,y coordinates of all vertices
         vertices = new FloatArray(numberOfVertices *2);
         for (int i = 0; i < numberOfVertices; i++){
-            vertices.add(vector2s[i].x * 32 + center.x);
-            vertices.add(vector2s[i].y * 32 + center.y);
-            //System.out.println(vertices.get(i));
+            vertices.add(vector2s[i].x * GameScreen.PPM + center.x);
+            vertices.add(vector2s[i].y * GameScreen.PPM + center.y);
         }
 
         triangulator = new EarClippingTriangulator();
@@ -70,7 +74,7 @@ public class PolygonRenderer {
     //todo add update to update vertices
 
     public void update(){
-        //ShortArray triangleINdeces = triangulator.computeTriangles(vertices);
+
     }
 
     public void render(){
