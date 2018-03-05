@@ -54,8 +54,7 @@ public class Triangle extends Entity {
         graphics = new Graphics(new Vector2[]{sharedSide[0],sharedSide[1],C});
         center = getCenterPoint();
         generateTriangle(world);
-
-        //polygonRenderer = new PolygonRenderer(this.getArrayOfVertices(),3,BLUE);
+        polygonRenderer = new PolygonRenderer(this.getArrayOfVertices(),3,BLUE);
     }
 
     @Override
@@ -358,7 +357,7 @@ public class Triangle extends Entity {
 
     }
 
-    public static Vector2[] getArrayOfVertices(){
+    public Vector2[] getArrayOfVertices(){
         Vector2[] vecArray = new Vector2[3];
         int index = 0;
 

@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.ShortArray;
  */
 
 public class PolygonRenderer {
-    private static PolygonSprite polygonSprite;
+    private PolygonSprite polygonSprite;
    // private static PolygonSpriteBatch polyBatch;
     ShapeRenderer shapeRenderer;
     private FloatArray vertices;

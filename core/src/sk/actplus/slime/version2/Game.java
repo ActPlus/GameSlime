@@ -25,6 +25,7 @@ public class Game {
     private InputMultiplexer mux;
     GameArray array;
     PolygonSpriteBatch polyBatch;
+    Player player;
 
     public
     Game(GameScreen screen, InputMultiplexer mux) {
@@ -37,7 +38,7 @@ public class Game {
         //array.polygonGenerators.add(new PolygonRenderer(array.triangles.get(0).getArrayOfVertices(),3, Color.BLUE));
         polyBatch = new PolygonSpriteBatch();
 
-        Player player= new Player(screen,mux);
+        player= new Player(screen,mux);
 
         entities.add(player);
         paused = false;
@@ -52,18 +53,12 @@ public class Game {
 
         for (int i = 0; i < array.triangles.size;i++){
             array.triangles.get(i).render(delta);
-
-
-            try {
-
-                System.out.println("X:" + array.polygonRenderers.get(i).getPolygonSprite().getX() + " Y: "+array.polygonRenderers.get(i).getPolygonSprite().getX());
-                array.polygonRenderers.get(i).getPolygonSprite().draw(polyBatch);
-            }catch (Exception e){
-                System.out.println(e);
-            }
-
-
+            array.triangles.get(i).getPolygonRenderer().getPolygonSprite().draw(polyBatch);
         }
+
+        PolygonRenderer polygonRenderer = new PolygonRenderer(player.arrayOfVec2(),49,Color.RED);
+        polygonRenderer.getPolygonSprite().draw(polyBatch);
+
         polyBatch.end();
 
     }
@@ -78,7 +73,7 @@ public class Game {
             index++;
             dt =0;
             array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
-            array.polygonRenderers.add(new PolygonRenderer(array.triangles.get(index).getArrayOfVertices(),3, Color.BLUE));
+            //array.polygonRenderers.add(new PolygonRenderer(array.triangles.get(index).getArrayOfVertices(),3, Color.BLUE));
         }
 
     }
