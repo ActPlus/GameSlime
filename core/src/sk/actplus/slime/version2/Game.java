@@ -62,16 +62,12 @@ public class Game {
         polyBatch.begin();
 
 
-
-        //todo array.triangles.size
         for (int i = 0; i < array.triangles.size ;i++){
             array.triangles.get(i).render(delta);
             array.triangles.get(i).getPolygonRenderer().getPolygonSprite().setPosition(- camera.position.x*GameScreen.PPM,  - camera.position.y*GameScreen.PPM);
             array.triangles.get(i).getPolygonRenderer().getPolygonSprite().draw(polyBatch);
         }
 
-        //PolygonRenderer polygonRenderer = new PolygonRenderer(player.arrayOfVec2(),49,Color.RED);
-        //polygonRenderer.getPolygonSprite().draw(polyBatch);
 
         polyBatch.end();
 
