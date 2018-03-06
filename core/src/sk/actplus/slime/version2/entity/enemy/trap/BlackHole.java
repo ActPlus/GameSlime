@@ -1,5 +1,6 @@
 package sk.actplus.slime.version2.entity.enemy.trap;
 
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 
 import sk.actplus.slime.version2.GameScreen;
@@ -40,6 +41,11 @@ public class BlackHole extends sk.actplus.slime.version2.entity.Entity {
 
     @Override
     public void render(float delta) {
+
+    }
+
+    @Override
+    public void render(float delta, PolygonSpriteBatch polyBatch) {
 
     }
 }

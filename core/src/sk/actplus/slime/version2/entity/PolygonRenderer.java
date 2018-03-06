@@ -30,6 +30,8 @@ public class PolygonRenderer {
     private EarClippingTriangulator triangulator;
     Vector2 center;
     Texture texture;
+    private TextureRegion textureRegion;
+    private PolygonRegion polygonRegion;
 
 
     /**
@@ -53,7 +55,7 @@ public class PolygonRenderer {
         pix.setColor(color);
         pix.fill();
         texture = new Texture(pix);
-        TextureRegion textureRegion = new TextureRegion(texture);
+        textureRegion = new TextureRegion(texture);
 
 
         // ordered array of x,y coordinates of all vertices
@@ -65,7 +67,7 @@ public class PolygonRenderer {
 
         triangulator = new EarClippingTriangulator();
         ShortArray triangleINdeces = triangulator.computeTriangles(vertices);
-        PolygonRegion polygonRegion = new PolygonRegion(textureRegion,vertices.toArray(),triangleINdeces.toArray());
+        polygonRegion = new PolygonRegion(textureRegion,vertices.toArray(),triangleINdeces.toArray());
         polygonSprite = new PolygonSprite(polygonRegion);
 
 
@@ -73,7 +75,16 @@ public class PolygonRenderer {
 
     //todo add update to update vertices
 
-    public void update(){
+    public void update(Vector2[] vector2s){
+        // ordered array of x,y coordinates of all vertices
+       for (int i = 0; i < numberOfVertices; i++){
+            vertices.add(vector2s[i].x * GameScreen.PPM + center.x);
+            vertices.add(vector2s[i].y * GameScreen.PPM + center.y);
+        }
+
+        ShortArray triangleINdeces = triangulator.computeTriangles(vertices);
+        polygonRegion = new PolygonRegion(this.textureRegion,vertices.toArray(),triangleINdeces.toArray());
+        polygonSprite.setRegion(polygonRegion);
 
     }
 

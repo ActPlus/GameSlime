@@ -55,18 +55,17 @@ public class Game {
 
 
 
-
-
     public void render(float delta) {
         entities.render(delta);
         polyBatch.begin();
 
-
+        //render of all triangles in array
         for (int i = 0; i < array.triangles.size ;i++){
-            array.triangles.get(i).render(delta);
-            array.triangles.get(i).getPolygonRenderer().getPolygonSprite().setPosition(- camera.position.x*GameScreen.PPM,  - camera.position.y*GameScreen.PPM);
-            array.triangles.get(i).getPolygonRenderer().getPolygonSprite().draw(polyBatch);
+            array.triangles.get(i).render(delta,polyBatch);
         }
+
+
+        //player.getPolygonRenderer().getPolygonSprite().draw(polyBatch);
 
 
         polyBatch.end();
@@ -76,14 +75,13 @@ public class Game {
     private int index = 0;
     private float dt = 0;
     public void update(float delta) {
-        //array.polygonGenerators.get(0).update();
+        //player.getPolygonRenderer().update(player.getOutlineArray());
         dt+=delta;
         entities.update(delta);
         if(dt>=0.5) {
             index++;
             dt =0;
             array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
-            //array.polygonRenderers.add(new PolygonRenderer(array.triangles.get(index).getArrayOfVertices(),3, Color.BLUE));
         }
 
     }
@@ -114,4 +112,6 @@ public class Game {
     public void load() {
         //TODO: load from file method
     }
+
+    public GameArray getGameArray(){return array;}
 }

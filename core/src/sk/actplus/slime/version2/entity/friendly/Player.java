@@ -1,6 +1,8 @@
 package sk.actplus.slime.version2.entity.friendly;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -13,6 +15,7 @@ import sk.actplus.slime.constants.Category;
 import sk.actplus.slime.entity.player.Neighbors;
 import sk.actplus.slime.other.BodyArray;
 import sk.actplus.slime.version2.GameScreen;
+import sk.actplus.slime.version2.entity.PolygonRenderer;
 import sk.actplus.slime.version2.input.PlayerInputProcessor;
 
 /**
@@ -54,6 +57,7 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     private int score;
     private PlayerInputProcessor inputProccesor;
     public BodyArray bodies;
+    public PolygonRenderer polygonRenderer;
 
     public Player(GameScreen screen, InputMultiplexer mux) {
         super(screen);
@@ -61,6 +65,7 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
 
         body = createJellyBody(0, 4);
         mux.addProcessor(inputProccesor);
+        polygonRenderer = new PolygonRenderer(getOutlineArray(), ((NUM_SEGMENTS-1) * 4), Color.BLUE);
     }
 
     public void applyForce(float vx, float vy) {
@@ -220,18 +225,29 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void render(float delta, PolygonSpriteBatch polyBatch) {
+
     }
 
-    public Vector2[] arrayOfVec2(){
-        Vector2[] vec = new Vector2[49];
-        for (int  i = 0; i < bodies.size; i++) {
-            vec[i] = bodies.get(i).getPosition();
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+        polygonRenderer.update(getOutlineArray());
+    }
+
+    public Vector2[] getOutlineArray(){
+        Vector2[] vec = new Vector2[(NUM_SEGMENTS-1) * 4];
+        for (int i = 0; i < NUM_SEGMENTS - 1; i++){
+            vec[i] = bodies.get(i).getPosition().cpy();
+            vec[NUM_SEGMENTS -1 + i] = bodies.get((i+1) * NUM_SEGMENTS - 1).getPosition().cpy();
+            vec[NUM_SEGMENTS + NUM_SEGMENTS - 2 +i] = bodies.get(NUM_SEGMENTS * NUM_SEGMENTS - i -1).getPosition().cpy();
+            vec[3 * NUM_SEGMENTS -3 +i] = bodies.get(NUM_SEGMENTS*(NUM_SEGMENTS-1) - i* NUM_SEGMENTS).getPosition().cpy();
         }
 
         return vec;
     }
+
+    public PolygonRenderer getPolygonRenderer(){return polygonRenderer;}
 
 }
 

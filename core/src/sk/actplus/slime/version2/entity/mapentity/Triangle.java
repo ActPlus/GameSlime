@@ -7,6 +7,7 @@ package sk.actplus.slime.version2.entity.mapentity;
     import com.badlogic.gdx.graphics.OrthographicCamera;
     import com.badlogic.gdx.graphics.VertexAttributes.Usage;
     import com.badlogic.gdx.graphics.VertexAttribute;
+    import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
     import com.badlogic.gdx.math.Vector2;
     import com.badlogic.gdx.math.Vector3;
     import com.badlogic.gdx.physics.box2d.Body;
@@ -66,10 +67,14 @@ public class Triangle extends Entity {
 
     @Override
     public void render(float delta) {
-       // System.out.println();
-        //polygonRenderer.render();
-        //TODO OpenGL Triangle graphics radial gradients in vertex, depending on seed color:-> darker, normal, light
-        //graphics.flush(camera);
+
+    }
+
+    @Override
+    public void render(float delta, PolygonSpriteBatch polyBatch) {
+
+        this.getPolygonRenderer().getPolygonSprite().setPosition(- camera.position.x*GameScreen.PPM,  - camera.position.y*GameScreen.PPM);
+        this.getPolygonRenderer().getPolygonSprite().draw(polyBatch);
     }
 
     @Override
@@ -286,5 +291,15 @@ public class Triangle extends Entity {
     }
 
     public Vector3 getCameraPosition(){return camera.position;}
+
+
+    //todo resize
+    private int  width = (int) GameScreen.CLIENT_WIDTH;
+    private int height = (int) GameScreen.CLIENT_HEIGHT;
+    public void resize(int width, int height){
+        this.width += width;
+        this.height += height;
+        this.getPolygonRenderer().getPolygonSprite().setScale(this.width,this.height);
+    }
 }
 

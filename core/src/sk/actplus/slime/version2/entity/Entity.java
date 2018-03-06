@@ -1,5 +1,7 @@
 package sk.actplus.slime.version2.entity;
 
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -32,6 +34,7 @@ public abstract class Entity {
     }
 
     public abstract void render(float delta);
+    public abstract void render(float delta, PolygonSpriteBatch polyBatch);
     public abstract void handleCollision(short collisionBIT);
     public abstract void destroy();
 

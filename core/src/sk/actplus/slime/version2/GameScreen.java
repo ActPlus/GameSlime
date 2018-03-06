@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
+import sk.actplus.slime.version2.entity.mapentity.Triangle;
 import sk.actplus.slime.version2.gui.DebugInGameGUI;
 import sk.actplus.slime.version2.gui.GUI;
 
@@ -80,6 +81,7 @@ public class GameScreen implements Screen{
     @Override
     public void resize(int width, int height) {
         camera.resize(width,height);
+        //todo scaling of all objects
         //gui.resize(width,height);
     }
 
