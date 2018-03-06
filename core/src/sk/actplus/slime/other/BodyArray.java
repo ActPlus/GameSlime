@@ -29,4 +29,5 @@ import com.badlogic.gdx.utils.Array;
                 body.setLinearVelocity(vx,vy);
             }
         }
+
     }

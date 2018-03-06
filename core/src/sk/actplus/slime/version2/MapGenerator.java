@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
 
+import sk.actplus.slime.version2.entity.friendly.Player;
 import sk.actplus.slime.version2.entity.mapentity.Triangle;
 
 import static sk.actplus.slime.version2.GameScreen.PPM;
@@ -35,10 +36,10 @@ class MapGenerator {
     }
 
 
-    public Array<Triangle> generateIfNeeded(Array<Triangle> entities){
+    public Array<Triangle> generateIfNeeded(Player player, Array<Triangle> entities){
 
-        while (last.getCenterPoint().x < SCREEN_GEN_BORDER_X) {
-            //entities.add(generate(last,entities));
+        while (last.getCenterPoint().x < 250+player.getBody().getPosition().x) {
+            entities = generate(last,entities);
         }
 
         return entities;
@@ -116,7 +117,7 @@ class MapGenerator {
         tri = new Triangle(screen, newTriangleVertices, camera);
         triangles.add(tri);
 
-        camera.goTo(tri.getCenterPoint().x,tri.getCenterPoint().y*1.5f);
+
 
         Vector2 lastTransition = tri.getCenterPoint().cpy().sub(last.getCenterPoint().cpy());
 

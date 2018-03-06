@@ -1,5 +1,7 @@
 package sk.actplus.slime.version2.input;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 import sk.actplus.slime.version2.entity.friendly.Player;
@@ -31,6 +33,17 @@ public class PlayerInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            //player.bodies.setLinearVelocity(0,0);
+            player.bodies.applyForceToCenter(0.2f,0,false);
+        }
+
+            if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+              //  player.bodies.setLinearVelocity(0,0);
+                player.bodies.applyForceToCenter(-0.2f,0,false);
+            }
+
+
         return false;
     }
 

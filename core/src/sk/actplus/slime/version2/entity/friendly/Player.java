@@ -224,6 +224,7 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     @Override
     public void update(float delta) {
         super.update(delta);
+        screen.camera.goTo(body.getPosition().x,body.getPosition().y);
     }
 }
 

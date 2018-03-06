@@ -23,7 +23,7 @@ public class Game {
     private String savePath;
     private InputMultiplexer mux;
     GameArray array;
-
+    Player player;
     PolygonSpriteBatch polyBatch;
 
     public
@@ -35,7 +35,7 @@ public class Game {
         array = new GameArray();
         mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-2,2),new Vector2(3,3)},new Vector2(2,-3));
 
-        Player player= new Player(screen,mux);
+        player= new Player(screen,mux);
         //entities.add(player);
 
         polyBatch = new PolygonSpriteBatch();
@@ -58,10 +58,8 @@ public class Game {
     public void update(float delta) {
         dt+=delta;
         entities.update(delta);
-        if(dt>=1f) {
-            dt =0;
-array.triangles = (mapGen.generate(mapGen.last,array.triangles));
-        }
+        array.triangles = mapGen.generateIfNeeded(player,array.triangles);
+        player.update(delta);
 
 
     }

@@ -26,7 +26,7 @@ public class GameScreen implements Screen{
     protected InputMultiplexer muxInput;
     private World world;
     private Box2DDebugRenderer b2ddr;
-    protected MovableCamera camera;
+    public MovableCamera camera;
     private Game game;
     private GUI gui;
 
