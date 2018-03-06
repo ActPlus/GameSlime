@@ -41,13 +41,14 @@ public class Triangle extends Entity {
     protected Vector2 center;
     private OrthographicCamera camera;
     protected PolygonRenderer polygonRenderer;
+    protected Color color;
 
 
     public Triangle(GameScreen screen, Vector2 []  vertex, OrthographicCamera camera) {
         super(screen);
 
         Random rand = new Random();
-        Color color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
+        color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
 
 
         sharedSide = new Vector2[]{vertex[0],vertex[1]};
@@ -249,6 +250,15 @@ public class Triangle extends Entity {
         return (A == A1 + A2 + A3);
     }
 
+    //todo resize
+    private int  width = (int) GameScreen.CLIENT_WIDTH;
+    private int height = (int) GameScreen.CLIENT_HEIGHT;
+    public void resize(int width, int height){
+        this.width += width;
+        this.height += height;
+        this.getPolygonRenderer().getPolygonSprite().setScale(this.width,this.height);
+    }
+
 
     public void setC(Vector2 c) {
         C = c;
@@ -267,7 +277,6 @@ public class Triangle extends Entity {
         return new Vector2[]{sharedSide[0].cpy(),sharedSide[1].cpy(),C.cpy()};
     }
 
-
     public Vector2[] getArrayOfVertices(){
         Vector2[] vecArray = new Vector2[3];
         int index = 0;
@@ -283,17 +292,7 @@ public class Triangle extends Entity {
     public PolygonRenderer getPolygonRenderer(){
         return polygonRenderer;
     }
-
     public Vector3 getCameraPosition(){return camera.position;}
-
-
-    //todo resize
-    private int  width = (int) GameScreen.CLIENT_WIDTH;
-    private int height = (int) GameScreen.CLIENT_HEIGHT;
-    public void resize(int width, int height){
-        this.width += width;
-        this.height += height;
-        this.getPolygonRenderer().getPolygonSprite().setScale(this.width,this.height);
-    }
+    public Color getColor(){return color;}
 }
 

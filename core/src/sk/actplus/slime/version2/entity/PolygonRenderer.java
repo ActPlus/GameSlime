@@ -43,11 +43,7 @@ public class PolygonRenderer {
     public PolygonRenderer(Vector2[] vector2s, int numberOfVertices, Color color){
         this.numberOfVertices = numberOfVertices;
         shapeRenderer = new ShapeRenderer();
-        //polyBatch = new PolygonSpriteBatch();
 
-
-
-        //todo put values insted fo method getWidth/getHeight
         center = new Vector2(GameScreen.CLIENT_WIDTH/2,GameScreen.CLIENT_HEIGHT/2);
 
 

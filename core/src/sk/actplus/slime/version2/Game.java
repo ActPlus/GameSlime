@@ -65,7 +65,7 @@ public class Game {
         }
 
 
-        //player.getPolygonRenderer().getPolygonSprite().draw(polyBatch);
+        player.getPolygonRenderer().getPolygonSprite().draw(polyBatch);
 
 
         polyBatch.end();
@@ -75,7 +75,7 @@ public class Game {
     private int index = 0;
     private float dt = 0;
     public void update(float delta) {
-        //player.getPolygonRenderer().update(player.getOutlineArray());
+        player.getPolygonRenderer().update(player.getOutlineArray());
         dt+=delta;
         entities.update(delta);
         if(dt>=0.5) {
