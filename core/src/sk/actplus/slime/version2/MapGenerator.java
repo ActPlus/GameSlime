@@ -23,7 +23,7 @@ class MapGenerator {
     protected Vector2 negativeDeltaX_transition;
     protected Triangle last;
 
-    public static final float MAX_RADIUS = 5f;
+    public static final float MAX_RADIUS = 10f;
     public static final float SCREEN_GEN_BORDER_X = GameScreen.CLIENT_WIDTH*1.5f;
 
     public MapGenerator(GameScreen screen, Array<Triangle> triangles,Vector2[] startingEdge, Vector2 C) {
@@ -61,7 +61,6 @@ class MapGenerator {
         Vector2[] newTriangleVertices;
         int returnBefore = returnBy;
         do {
-            //if(numFails>=20) System.out.println("fails : " +numFails);
             if((numFails )==5) {
                 System.out.println("Switching");
                 triedIdx = getOtherVertexIdx(triedIdx);
@@ -104,7 +103,7 @@ class MapGenerator {
             newC = getRandomPoint(last, newShared);
             numFails++;
         newTriangleVertices = new Vector2[]{newShared[0].cpy(),newShared[1].cpy(),newC.cpy()};
-        } while(isColliding(newTriangleVertices,triangles)); // || !isValidTriangle(vertices)
+        } while(isColliding(newTriangleVertices,triangles) || !isValidTriangle(newTriangleVertices) || (Triangle.getArea(newTriangleVertices)<20));
 
         if((returnBy!=0)&&(returnBefore==returnBy)){
             genAfter++;
@@ -207,11 +206,7 @@ class MapGenerator {
 
 
     public boolean isValidTriangle(Vector2 [] vertices) {
-        try {
-            return !(new Function(vertices[0],vertices[1])).contains(vertices[2]);}
-        catch(Exception e) {
-            return !((vertices[0].x == vertices[1].x) && (vertices[1].x == vertices[2].x));
-        }
+            return !(new Function(vertices[0],vertices[1])).contains(vertices[2]);
     }
 
     public boolean isColliding(Vector2[] vertex, Array<Triangle> triangles) {
@@ -222,7 +217,7 @@ class MapGenerator {
 
         for (int idx = 0; idx < triangles.size; idx++) {
 
-            //if (!Triangle.isTooFar(Triangle.getCenterPoint(vertex), triangle.getCenterPoint())) {
+            //if (!triangles.get(idx).isTooFar(Triangle.getCenterPoint(vertex))) {
             if(triangles.get(idx).pointInArea(vertex[2])) {
                 return true;
             } else {
@@ -233,8 +228,8 @@ class MapGenerator {
                             return true;
                         }
                     }
-                    //}
-                }
+                    }
+              //  }
             }
         }
 

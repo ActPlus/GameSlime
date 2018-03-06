@@ -146,7 +146,7 @@ public class Triangle extends Entity {
         Vector2 distanceVector = otherPoint.cpy().sub(center);
 
         //TODO is too far radius to constant
-        if(distanceVector.len() >= MAX_RADIUS*1.5f) {
+        if(distanceVector.len() >= MAX_RADIUS*5f) {
             return true;
         }
         return false;
@@ -166,7 +166,7 @@ public class Triangle extends Entity {
         return Triangle.getArea(vertices);
     }
 
-    private static float getArea(Vector2[] vertices)
+    public static float getArea(Vector2[] vertices)
     {
         if(vertices.length!=3){
             System.err.println("Triangle get Area only works on triangles!!! ");

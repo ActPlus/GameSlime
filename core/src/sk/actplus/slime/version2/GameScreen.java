@@ -35,9 +35,10 @@ public class GameScreen implements Screen{
 
     public GameScreen() {
         world = new World(GRAVITY,false);
-        camera = new MovableCamera(0,0,CLIENT_WIDTH/PPM,CLIENT_HEIGHT/PPM);
-        b2ddr = new Box2DDebugRenderer();
         muxInput = new InputMultiplexer();
+        camera = new MovableCamera(0,0,CLIENT_WIDTH/PPM,CLIENT_HEIGHT/PPM,muxInput);
+        b2ddr = new Box2DDebugRenderer();
+
         Gdx.input.setInputProcessor(muxInput);
         game = new Game(this,muxInput);
         //TODO GUI
