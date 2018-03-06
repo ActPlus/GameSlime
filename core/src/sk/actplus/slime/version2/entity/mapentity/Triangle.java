@@ -43,12 +43,6 @@ public class Triangle extends Entity {
     protected PolygonRenderer polygonRenderer;
 
 
-
-
-
-
-
-
     public Triangle(GameScreen screen, Vector2 []  vertex, OrthographicCamera camera) {
         super(screen);
 
