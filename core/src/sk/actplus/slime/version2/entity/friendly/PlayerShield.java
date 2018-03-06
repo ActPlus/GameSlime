@@ -11,7 +11,7 @@ import sk.actplus.slime.version2.entity.accessory.Shield;
  * Created by Ja on 17.2.2018.
  */
 
-public class PlayerShield extends Player {
+/*public class PlayerShield extends Player {
     Shield shield;
 
     public PlayerShield(GameScreen screen, InputMultiplexer mux) {
@@ -31,4 +31,4 @@ public class PlayerShield extends Player {
         super.update(delta);
         shield.update(delta);
     }
-}
+}*/

@@ -44,7 +44,7 @@ public class Game {
         mapGen= new MapGenerator(screen,array.triangles,new Vector2[]{new Vector2(-2,2),new Vector2(3,3)},new Vector2(2,-3));
         polyBatch = new PolygonSpriteBatch();
 
-        player= new Player(screen,mux);
+        player= new Player(screen,mux, camera);
 
         deltaTranslation = new Vector2(0,0);
 
@@ -65,7 +65,8 @@ public class Game {
         }
 
 
-        player.getPolygonRenderer().getPolygonSprite().draw(polyBatch);
+        player.render(delta,polyBatch);
+        //player.getPolygonRenderer().getPolygonSprite().draw(polyBatch);
 
 
         polyBatch.end();
@@ -75,7 +76,7 @@ public class Game {
     private int index = 0;
     private float dt = 0;
     public void update(float delta) {
-        player.getPolygonRenderer().update(player.getOutlineArray());
+        //player.getPolygonRenderer().update(player.getOutlineArray());
         dt+=delta;
         entities.update(delta);
         if(dt>=0.5) {

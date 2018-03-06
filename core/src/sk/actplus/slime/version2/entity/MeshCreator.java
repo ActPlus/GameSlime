@@ -1,5 +1,6 @@
 package sk.actplus.slime.version2.entity;
 
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -8,13 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 
 public class MeshCreator {
     private float[] verts;
+    private Mesh mesh;
 
     //TODO mesh creator for jelly
     public MeshCreator(Vector2[] vetVector2s) {
-
         //dont know why this size will find out later
         //probably x,y,z and 2 roattion floats ???
         verts = new float[vetVector2s.length * 2 + 1];
+
 
         for (int i = 0; i < vetVector2s.length * 2 + 1;i += 5){
                 verts[i] = vetVector2s[i].x;    //xi
@@ -24,5 +26,7 @@ public class MeshCreator {
                 verts[i+4] = 0f;                //??i
 
         }
+
+       // mesh = new Mesh(false,(vetVector2s.length * 2 + 1),)
     }
 }

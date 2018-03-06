@@ -2,7 +2,10 @@ package sk.actplus.slime.version2.entity.friendly;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g3d.utils.MeshBuilder;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,9 +14,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 
+import java.util.Random;
+
 import sk.actplus.slime.constants.Category;
 import sk.actplus.slime.entity.player.Neighbors;
 import sk.actplus.slime.other.BodyArray;
+import sk.actplus.slime.version2.Game;
 import sk.actplus.slime.version2.GameScreen;
 import sk.actplus.slime.version2.entity.PolygonRenderer;
 import sk.actplus.slime.version2.input.PlayerInputProcessor;
@@ -27,7 +33,7 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     public static short HITBOX_category = Category.JELLY_HITBOX;
     public static short PARTICLES_category = Category.JELLY;
 
-    public static final int NUM_SEGMENTS = 7;
+    public static final int NUM_SEGMENTS = 9;
     public static final boolean HITBOX_ROTATION = false;
     public static final boolean PARTICLES_ROTATION = false;
 
@@ -58,14 +64,23 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     private PlayerInputProcessor inputProccesor;
     public BodyArray bodies;
     public PolygonRenderer polygonRenderer;
+    private OrthographicCamera camera;
+    private ShapeRenderer shapeRenderer;
 
-    public Player(GameScreen screen, InputMultiplexer mux) {
+    public Player(GameScreen screen, InputMultiplexer mux, OrthographicCamera camera) {
         super(screen);
+        this.camera = camera;
+
         inputProccesor = new PlayerInputProcessor(this);
 
         body = createJellyBody(0, 4);
         mux.addProcessor(inputProccesor);
-        polygonRenderer = new PolygonRenderer(getOutlineArray(), ((NUM_SEGMENTS-1) * 4), Color.BLUE);
+
+
+        shapeRenderer = new ShapeRenderer();
+
+        //polygonRenderer = new PolygonRenderer(getOutlineArray(), 3, Color.BLUE);
+        //polygonRenderer = new PolygonRenderer(getOutlineArray(), ((NUM_SEGMENTS-1) * 4), Color.BLUE);
     }
 
     public void applyForce(float vx, float vy) {
@@ -224,20 +239,47 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
         //TODO : render graphics from OpenGL
     }
 
+    private float[] vects = new float[6];
+    private Color color;
+
     @Override
     public void render(float delta, PolygonSpriteBatch polyBatch) {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
+
+        Random rand = new Random();
+        color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
+
+        for (int j = 1; j < NUM_SEGMENTS; j++) {
+            for (int i = (NUM_SEGMENTS * (j-1)); i < NUM_SEGMENTS * j - 1; i++) {
+                color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
+                shapeRenderer.setColor(color);
+                shapeRenderer.triangle( (bodies.getBody(0 + i).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH / 2, (bodies.getBody(0 + i).getPosition().y - camera.position.y)* GameScreen.PPM + GameScreen.CLIENT_HEIGHT / 2,
+                        (bodies.getBody(1 + i).getPosition().x  - camera.position.x ) * GameScreen.PPM + GameScreen.CLIENT_WIDTH / 2, (bodies.getBody(1 + i).getPosition().y - camera.position.y)* GameScreen.PPM + GameScreen.CLIENT_HEIGHT / 2,
+                        (bodies.getBody(NUM_SEGMENTS + i).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH / 2, (bodies.getBody(NUM_SEGMENTS + i).getPosition().y - camera.position.y)* GameScreen.PPM + GameScreen.CLIENT_HEIGHT / 2);
+                color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
+                shapeRenderer.setColor(color);
+                shapeRenderer.triangle( (bodies.getBody(1 + i).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH/2,(bodies.getBody(1 + i).getPosition().y - camera.position.y) * GameScreen.PPM + GameScreen.CLIENT_HEIGHT/2,
+                        (bodies.getBody(NUM_SEGMENTS + i).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH/2,(bodies.getBody(NUM_SEGMENTS + i).getPosition().y  - camera.position.y)* GameScreen.PPM + GameScreen.CLIENT_HEIGHT/2,
+                        (bodies.getBody(NUM_SEGMENTS + i + 1 ).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH/2,(bodies.getBody(NUM_SEGMENTS + i + 1).getPosition().y - camera.position.y )* GameScreen.PPM + GameScreen.CLIENT_HEIGHT/2 );
+            }
+        }
+
+        shapeRenderer.end();
+
+        //this.getPolygonRenderer().getPolygonSprite().draw(polyBatch);
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
-        polygonRenderer.update(getOutlineArray());
+        //polygonRenderer.update(getOutlineArray());
     }
 
     public Vector2[] getOutlineArray(){
+
         Vector2[] vec = new Vector2[(NUM_SEGMENTS-1) * 4];
-        for (int i = 0; i < NUM_SEGMENTS - 1; i++){
+        for (int i = 0; i < (NUM_SEGMENTS - 1); i++){
             vec[i] = bodies.get(i).getPosition().cpy();
             vec[NUM_SEGMENTS -1 + i] = bodies.get((i+1) * NUM_SEGMENTS - 1).getPosition().cpy();
             vec[NUM_SEGMENTS + NUM_SEGMENTS - 2 +i] = bodies.get(NUM_SEGMENTS * NUM_SEGMENTS - i -1).getPosition().cpy();
