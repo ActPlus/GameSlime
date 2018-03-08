@@ -22,7 +22,16 @@ public class PlayerInputProcessor implements InputProcessor {
     }
 
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean keyDown(int keycode){
+    if(keycode ==Input.Keys.RIGHT) {
+        player.bodies.applyForceToCenter(0.3f,0,false);
+    }
+
+            if(keycode == (Input.Keys.LEFT)){
+        player.bodies.applyForceToCenter(-0.3f,0,false);
+    }
+
+
         return false;
     }
 
@@ -33,15 +42,6 @@ public class PlayerInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            //player.bodies.setLinearVelocity(0,0);
-            player.bodies.applyForceToCenter(0.2f,0,false);
-        }
-
-            if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-              //  player.bodies.setLinearVelocity(0,0);
-                player.bodies.applyForceToCenter(-0.2f,0,false);
-            }
 
 
         return false;
