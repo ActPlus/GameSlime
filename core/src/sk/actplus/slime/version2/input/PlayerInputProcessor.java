@@ -39,7 +39,7 @@ public class PlayerInputProcessor implements InputProcessor {
 
         System.out.println("Pressed");
         player.bodies.setLinearVelocity(0,0);
-        player.bodies.applyForceToCenter(0,0.5f,false);
+        player.bodies.applyForceToCenter(0,0.2f,false);
         return false;
     }
 

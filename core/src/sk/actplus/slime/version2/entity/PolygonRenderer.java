@@ -72,7 +72,7 @@ public class PolygonRenderer {
     //todo add update to update vertices
 
     public void update(Vector2[] vector2s){
-        // ordered array of x,y coordinates of all vertices
+       /* // ordered array of x,y coordinates of all vertices
        for (int i = 0; i < numberOfVertices; i++){
             vertices.add(vector2s[i].x * GameScreen.PPM + center.x);
             vertices.add(vector2s[i].y * GameScreen.PPM + center.y);
@@ -80,7 +80,7 @@ public class PolygonRenderer {
 
         ShortArray triangleINdeces = triangulator.computeTriangles(vertices);
         polygonRegion = new PolygonRegion(this.textureRegion,vertices.toArray(),triangleINdeces.toArray());
-        polygonSprite.setRegion(polygonRegion);
+        polygonSprite.setRegion(polygonRegion);*/
 
     }
 

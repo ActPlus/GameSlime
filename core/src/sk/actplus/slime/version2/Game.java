@@ -1,19 +1,15 @@
 package sk.actplus.slime.version2;
 
+
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 
 import sk.actplus.slime.version2.entity.EntityArray;
-import sk.actplus.slime.version2.entity.PolygonRenderer;
 import sk.actplus.slime.version2.entity.friendly.Player;
-import sk.actplus.slime.version2.entity.mapentity.Triangle;
 
 /**
  * Created by Ja on 17.2.2018.
@@ -50,6 +46,7 @@ public class Game {
 
         entities.add(player);
         paused = false;
+
     }
 
 
@@ -61,11 +58,14 @@ public class Game {
 
         //render of all triangles in array
         for (int i = 0; i < array.triangles.size ;i++){
+            //System.out.println(array.triangles.size);
             array.triangles.get(i).render(delta,polyBatch);
         }
 
 
         player.render(delta,polyBatch);
+
+
         //player.getPolygonRenderer().getPolygonSprite().draw(polyBatch);
 
 
@@ -76,14 +76,27 @@ public class Game {
     private int index = 0;
     private float dt = 0;
     public void update(float delta) {
-        //player.getPolygonRenderer().update(player.getOutlineArray());
-        dt+=delta;
+        player.setVelocity(0f,player.getBody().getLinearVelocity().y);
+        camera.position.set(player.getBody().getPosition(), 0f);
+       ;
+
         entities.update(delta);
-        if(dt>=0.5) {
+
+        dt+=delta;
+        //generate based on time
+        if (dt > 1f){
+            index++;
+            dt =0;
+            array.triangles.add(mapGen.generate(mapGen.getLast(),array.triangles).);
+
+        }
+
+        //generate based on camera position
+        /*if((mapGen.last.getCenterPoint().x == 1 ) || (mapGen.last.getCenterPoint().x < camera.position.x + 5) ) {
             index++;
             dt =0;
             array.triangles.add(mapGen.generate(mapGen.last,array.triangles));
-        }
+        }*/
 
     }
 

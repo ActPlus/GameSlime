@@ -33,7 +33,7 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
     public static short HITBOX_category = Category.JELLY_HITBOX;
     public static short PARTICLES_category = Category.JELLY;
 
-    public static final int NUM_SEGMENTS = 9;
+    public static final int NUM_SEGMENTS = 15;
     public static final boolean HITBOX_ROTATION = false;
     public static final boolean PARTICLES_ROTATION = false;
 
@@ -78,6 +78,10 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
 
 
         shapeRenderer = new ShapeRenderer();
+
+        Random rand = new Random();
+        color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
+        color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
 
         //polygonRenderer = new PolygonRenderer(getOutlineArray(), 3, Color.BLUE);
         //polygonRenderer = new PolygonRenderer(getOutlineArray(), ((NUM_SEGMENTS-1) * 4), Color.BLUE);
@@ -247,18 +251,18 @@ public class Player extends sk.actplus.slime.version2.entity.Entity{
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
 
-        Random rand = new Random();
-        color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
+
+
 
         for (int j = 1; j < NUM_SEGMENTS; j++) {
             for (int i = (NUM_SEGMENTS * (j-1)); i < NUM_SEGMENTS * j - 1; i++) {
-                color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
+                //color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
                 shapeRenderer.setColor(color);
                 shapeRenderer.triangle( (bodies.getBody(0 + i).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH / 2, (bodies.getBody(0 + i).getPosition().y - camera.position.y)* GameScreen.PPM + GameScreen.CLIENT_HEIGHT / 2,
                         (bodies.getBody(1 + i).getPosition().x  - camera.position.x ) * GameScreen.PPM + GameScreen.CLIENT_WIDTH / 2, (bodies.getBody(1 + i).getPosition().y - camera.position.y)* GameScreen.PPM + GameScreen.CLIENT_HEIGHT / 2,
                         (bodies.getBody(NUM_SEGMENTS + i).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH / 2, (bodies.getBody(NUM_SEGMENTS + i).getPosition().y - camera.position.y)* GameScreen.PPM + GameScreen.CLIENT_HEIGHT / 2);
-                color = new Color(rand.nextFloat(),rand.nextFloat(),rand.nextFloat(),1.00f);
-                shapeRenderer.setColor(color);
+
+                //shapeRenderer.setColor(color);
                 shapeRenderer.triangle( (bodies.getBody(1 + i).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH/2,(bodies.getBody(1 + i).getPosition().y - camera.position.y) * GameScreen.PPM + GameScreen.CLIENT_HEIGHT/2,
                         (bodies.getBody(NUM_SEGMENTS + i).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH/2,(bodies.getBody(NUM_SEGMENTS + i).getPosition().y  - camera.position.y)* GameScreen.PPM + GameScreen.CLIENT_HEIGHT/2,
                         (bodies.getBody(NUM_SEGMENTS + i + 1 ).getPosition().x - camera.position.x)* GameScreen.PPM + GameScreen.CLIENT_WIDTH/2,(bodies.getBody(NUM_SEGMENTS + i + 1).getPosition().y - camera.position.y )* GameScreen.PPM + GameScreen.CLIENT_HEIGHT/2 );
