@@ -1,6 +1,5 @@
 package sk.actplus.slime.version2;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -34,14 +33,14 @@ class MapGenerator {
     }
 
 
-    public Array<Triangle> generateIfNeeded(Player player, Array<Triangle> entities){
+    /*public Array<Triangle> generateIfNeeded(Player player, Array<Triangle> entities){
 
         while (last.getCenterPoint().x < 250+player.getBody().getPosition().x) {
             entities = generate(last,entities);
         }
 
         return entities;
-    }
+    }*/
 
     int returnBy = 0;
     int genAfter = 0;
@@ -224,7 +223,7 @@ class MapGenerator {
                 for (int i = 0; i < 2; i++) {
                     for (int j = 0; j < 3; j++) {
                         //if ((newSide[i].isIntersecting(entities.get(idx).getSides()[j], true))||(entities.get(idx).contains(vertex[2]))) {
-                        if ((newSide[i].isIntersecting(triangles.get(idx).getSides()[j], true))) {
+                        if ((newSide[i].isIntersecting(triangles.get(idx).getVertices()[j], true))) {
                             return true;
                         }
                     }
@@ -256,8 +255,8 @@ class MapGenerator {
         this.last = tri;
     }
 
-    public Triangle getLast(){
-        return this.last;
-    }
+    //public Triangle getLast(){return this.last;}
+
+
 
 }

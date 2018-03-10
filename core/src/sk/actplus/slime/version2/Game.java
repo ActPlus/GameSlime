@@ -87,8 +87,6 @@ public class Game {
         if (dt > 1f){
             index++;
             dt =0;
-            array.triangles.add(mapGen.generate(mapGen.getLast(),array.triangles).);
-
         }
 
         //generate based on camera position

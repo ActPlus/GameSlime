@@ -216,5 +216,7 @@ public class Triangle extends Entity {
     public Vector2[] getVertices() {
         return vertices;
     }
+
+    //public Vector2 getSide(int index){return }
 }
 
